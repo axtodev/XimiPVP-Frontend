@@ -1,0 +1,94 @@
+.staff-container {
+  max-width: 900px;
+  margin: 80px auto 40px;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box);
+  font-family: var(--font);
+}
+
+.staff-title {
+  font-size: 2.4rem;
+  color: var(--primary);
+  font-weight: bold;
+  margin-bottom: 2rem;
+  padding-left: 0.5rem;
+  border-left: 6px solid var(--primary);
+}
+
+.role-group {
+  margin-bottom: 2.5rem;
+}
+
+.role-title {
+  font-size: 1.6rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.staff-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-left: 0;
+  margin: 0;
+}
+
+.staff-member {
+  color: var(--primary);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  flex: 1 1 220px;
+  min-width: 270px;
+  cursor: default;
+}
+
+.staff-member:hover {
+  cursor: pointer;
+}
+
+.staff-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  box-shadow: var(--text-shadow);
+  flex-shrink: 0;
+}
+
+.staff-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.staff-username {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.staff-role {
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+  
+
+.loading-text, .error-text {
+  font-size: 1.3rem;
+  color: var(--primary);
+  text-align: center;
+  padding: 2rem 0;
+  font-weight: 600;
+}

@@ -1,0 +1,79 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+
+.header{
+    height: 400px;
+    background-image: url('../assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header img{
+    position: absolute;
+    width: 250px;
+    animation: upAndDown 2s linear infinite;
+}
+
+.auth{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  box-shadow: 10px 10px 10px 10px rgba(0,0,0, 0.1);
+  height: 70px;
+  margin-top: -325px;
+}
+
+.auth button{
+  display: flex;
+  align-items: center; 
+  gap: 8px;
+  height: 30px;
+  margin-left: 20px;
+  width: 100px;
+  padding-left: 5px;
+}
+
+.auth button:nth-child(2){
+  margin-right: 20px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.auth button:nth-child(2):hover{
+  background-color: white;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.auth button:first-child{
+  background-color: white;
+  color: var(--primary);
+  border: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.auth button:first-child:hover{
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes upAndDown {
+  0%, 100%{
+    transform: translateY(0);
+  }
+  50%{
+    transform: translateY(-10px);
+  }
+}

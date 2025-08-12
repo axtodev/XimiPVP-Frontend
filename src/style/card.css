@@ -1,0 +1,37 @@
+.card {
+  flex: 1;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: var(--box);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 150px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  cursor: pointer;
+}
+
+.card p {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--box-hover);
+}
+
+.icon {
+  transition: transform 0.5s ease;
+  width: 48px;
+  height: 48px;
+}
+
+.card:hover .icon {
+  transform: scale(1.1);
+}
