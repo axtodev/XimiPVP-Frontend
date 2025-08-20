@@ -51,20 +51,12 @@
   font-size: 0.85rem;
 }
 
-
-
-/*Preview*/
-
-/* ===== Wrapper principale del post ===== */
 .post-wrapper {
-  display: flex;
-  justify-content: center;
   max-width: 1200px;
   margin: 60px auto;
   padding: 0 2rem;
 }
 
-/* ===== Colonna principale del thread ===== */
 .main-content {
   flex: 2;
   background: white;
@@ -75,7 +67,6 @@
   margin-top: -60px;
 }
 
-/* ===== Pulsante "Torna ai post" ===== */
 .back-button {
   padding: 0.7rem 1.3rem;
   font-size: 1rem;
@@ -95,7 +86,6 @@
   background-color: #e67600;
 }
 
-/* Titolo del thread */
 .thread-title {
   font-size: 1.8rem;
   font-weight: bold;
@@ -105,7 +95,6 @@
   border-left: 4px solid var(--primary);
 }
 
-/* Contenuto del thread */
 .thread-content .par {
   font-size: 1rem;
   color: #333;
@@ -113,7 +102,6 @@
   margin-bottom: 1.2rem;
 }
 
-/* ===== Animazione apertura ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;

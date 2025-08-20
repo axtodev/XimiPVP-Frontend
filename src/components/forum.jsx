@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReplyBlock from './reply';
 
 export default function ForumPage({ user = null }) {
   const [selectedPost, setSelectedPost] = useState(null);
@@ -203,42 +204,43 @@ return (
           )}
         </>
       ) : selectedPost ? (
-        <div className="post-wrapper">
-          {/* Colonna principale del thread */}
-          <section className="main-content">
-            <button 
-              className="btn back-button"
-              onClick={() => setSelectedPost(null)}
-            >
-              ← Torna ai post
-            </button>
-            
-            <div className="thread-container">
-  <h1 className="thread-title">{selectedPost.title}</h1>
+  <div className="post-wrapper">
+    {/* Colonna principale del thread */}
+    <section className="main-content">
+      <button 
+        className="btn back-button"
+        onClick={() => setSelectedPost(null)}
+      >
+        ← Torna ai post
+      </button>
+      
+      <div className="thread-container">
+        <h1 className="thread-title">{selectedPost.title}</h1>
         <div className="thread-content">
           {selectedPost.content.split('\n').map((paragraph, i) => (
             <p key={i} className="par">{paragraph}</p>
           ))}
 
-           <div className="thread-meta">
-          <span className="author">Autore: {selectedPost.author}</span>
-          <span className="timestamp">{selectedPost.timestamp}</span>
-          {selectedPost.tags && selectedPost.tags.length > 0 && (
-            <div className="tags">
-              {selectedPost.tags.map((tag, i) => (
-                <span key={i} className="tag">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="thread-meta">
+            <span className="author">Autore: {selectedPost.author}</span>
+            <span className="timestamp">{selectedPost.timestamp}</span>
+            {selectedPost.tags && selectedPost.tags.length > 0 && (
+              <div className="tags">
+                {selectedPost.tags.map((tag, i) => (
+                  <span key={i} className="tag">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-        </div>
+      </div>
+    </section>
+    <ReplyBlock postId={selectedPost.id} user={user} />
+  </div>
+) : null}
 
-            </div>
-          </section>
-        </div>
-      ) : null}
     </div>
   );
 
