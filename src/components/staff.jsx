@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../style/staff.css';
 
 function StaffList() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // <- qui inizializziamo navigate
 
   const roleOrder = ["Owner", "Amministratore", "Developer", "Moderatore", "Builder"];
 
@@ -56,7 +58,11 @@ function StaffList() {
           <h3 className={`role-title ${role}`}>{role}</h3>
           <ul className="staff-list">
             {staffByRole[role].map((member, idx) => (
-              <li key={idx} className="staff-member">
+              <li
+                key={idx}
+                className="staff-member"
+                onClick={() => navigate(`/profile/${member.username}`)} // <- naviga al profilo dello staffer
+              >
                 <img
                   src={member.pfp}      
                   alt={member.username} 

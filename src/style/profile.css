@@ -194,6 +194,10 @@
     color: var(--success-color) !important;
 }
 
+.last-seen{
+  color: #444 !important;
+}
+
 .Owner{
   color: var(--Owner);
 }
@@ -226,4 +230,8 @@
 .Utente{
     color: #333;
     opacity: 0.6;
+}
+
+.user-profile-details p{
+  color: var(--primary)
 }

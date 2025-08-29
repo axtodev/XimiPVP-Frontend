@@ -45,7 +45,7 @@ function App() {
         <Route path="/login" element={<Logins />} />
         <Route path="/confirm" element={<Confirm />} />
         <Route path="/forum" element={<Forum />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
 
       {location.pathname === '/' && (

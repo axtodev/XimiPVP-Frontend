@@ -1,39 +1,40 @@
 import React from 'react';
-import '../style/header.css'
-import Logo from '../assets/logo.png'
-import { LogIn, UserPlus, LogOut, User   } from 'lucide-react';
+import '../style/header.css';
+import Logo from '../assets/logo.png';
+import { LogIn, UserPlus, LogOut, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-function Head(){
+function Head() {
     const navigate = useNavigate();
-
     const isLogged = localStorage.getItem('token');
+    const myUsername = localStorage.getItem('username'); 
 
-    const handleLogout = () =>{
+    const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
         navigate('/login');
     }
-    return(
-        <>
+
+    return (
         <div className="header">
             <div className="auth">
                 {isLogged ? (
                     <>
-                        <button onClick={()=> navigate('/profile')}> <User />Profilo</button>
-                        <button onClick={() => handleLogout()}><LogOut />Logout</button>
+                        <button onClick={() => navigate(`/profile/${myUsername}`)}>
+                            <User /> Profilo
+                        </button>
+                        <button onClick={() => handleLogout()}><LogOut /> Logout</button>
                     </>
                 ) : (
                     <>
-                        <button onClick={()=> navigate('/login')}><LogIn />Login</button>
-                        <button onClick={()=> navigate('/register')}><UserPlus />Register</button>
+                        <button onClick={() => navigate('/login')}><LogIn /> Login</button>
+                        <button onClick={() => navigate('/register')}><UserPlus /> Register</button>
                     </>
                 )}
             </div>
-
-            <img src={Logo} alt="" draggable="false"/>
+            <img src={Logo} alt="Logo" draggable="false"/>
         </div>
-        </>
-    )
+    );
 }
 
 export default Head;

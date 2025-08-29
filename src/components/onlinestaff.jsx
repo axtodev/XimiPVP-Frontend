@@ -1,21 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import '../style/onlineStaff.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function StaffOnline({ token }) {
   const [staffOnline, setStaffOnline] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
+
+  const roleNames = {
+    '68b1b97a0042c37ceb374d8c': 'Owner',
+    '68825b15b31d59e453e3061f': 'Amministratore',
+    '68825b15b31d59e453e30623': 'Developer',
+    '68825b15b31d59e453e30626': 'Moderatore',
+    '68b1b5ad2069d4ab1f40868a': 'Builder',
+  };
+
+  const roleOrder = ["Owner", "Amministratore", "Developer", "Moderatore", "Builder"];
 
   useEffect(() => {
     const fetchStaff = async () => {
       setLoading(true);
       setError(null);
-
       try {
         const res = await fetch('http://localhost:3000/users/staff/online');
         if (!res.ok) throw new Error(`Errore: ${res.status}`);
         const data = await res.json();
-        setStaffOnline(data);
+
+        const sorted = data.sort((a, b) => {
+          const roleA = Array.isArray(a.roles) && a.roles.length ? roleNames[a.roles[0]] : 'Utente';
+          const roleB = Array.isArray(b.roles) && b.roles.length ? roleNames[b.roles[0]] : 'Utente';
+          return roleOrder.indexOf(roleA) - roleOrder.indexOf(roleB);
+        });
+        setStaffOnline(sorted);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -24,39 +41,27 @@ export default function StaffOnline({ token }) {
     };
 
     fetchStaff();
-    const interval = setInterval(fetchStaff, 5 * 60 * 1000); 
+    const interval = setInterval(fetchStaff, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (!token) return;
-
     const updateLastSeen = async () => {
       try {
         const res = await fetch('http://localhost:3000/users/lastseen', {
           method: 'PATCH',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Token non valido');
-        console.log('lastSeen aggiornato');
       } catch (e) {
         console.error('Errore updateLastSeen:', e.message);
       }
     };
-
     updateLastSeen();
-    const interval = setInterval(updateLastSeen, 60 * 1000); 
+    const interval = setInterval(updateLastSeen, 60 * 1000);
     return () => clearInterval(interval);
   }, [token]);
-
-  const roleNames = {
-    '68825b15b31d59e453e3061f': 'Amministratore',
-    '68825b15b31d59e453e30623': 'Developer',
-    '68825b15b31d59e453e30626': 'Moderatore',
-    '68b1b5ad2069d4ab1f40868a': 'Builder'
-  };
 
   return (
     <aside>
@@ -64,19 +69,23 @@ export default function StaffOnline({ token }) {
       {error ? (
         <p style={{ color: 'var(--error-color)' }}>Staff non disponibile</p>
       ) : loading ? (
-        <p style={{color: 'var(--primary)'}}>Caricamento...</p>
+        <p style={{ color: 'var(--primary)' }}>Caricamento...</p>
       ) : staffOnline.length ? (
         <ul className="staff-lists">
           {staffOnline.map(user => {
-            const rolesLabels = Array.isArray(user.roles)
-              ? user.roles.map(roleId => roleNames[roleId] || 'Ruolo sconosciuto')
-              : [];
-
+            const roleLabel = Array.isArray(user.roles) && user.roles.length ? roleNames[user.roles[0]] : 'Utente';
             return (
-              <div key={user._id} className={`staff-card ${rolesLabels[0]?.toLowerCase()}`}>
-                <strong>{user.username}</strong>
-                <p>{rolesLabels.join(', ')}</p>
-              </div>
+              <li key={user._id} className={`staff-card ${roleLabel.toLowerCase()}`} onClick={() => navigate(`/profile/${user.username}`)}>
+                <img
+                  src={user.pfp || 'https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg'}
+                  alt={user.username}
+                  className="staff-pfp"
+                />
+                <div className="staff-info">
+                  <strong>{user.username}</strong>
+                  <p>{roleLabel}</p>
+                </div>
+              </li>
             );
           })}
         </ul>

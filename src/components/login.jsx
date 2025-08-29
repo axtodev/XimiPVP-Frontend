@@ -31,6 +31,7 @@ function Login({ onLoginSuccess }) {
     // Se tutto ok, salva token e user
     localStorage.setItem('token', data.access_token);
     localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('username', data.user.username);
 
     onLoginSuccess();
   } catch (err) {
