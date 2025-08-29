@@ -55,6 +55,7 @@ export default function StaffOnline({ token }) {
     '68825b15b31d59e453e3061f': 'Amministratore',
     '68825b15b31d59e453e30623': 'Developer',
     '68825b15b31d59e453e30626': 'Moderatore',
+    '68b1b5ad2069d4ab1f40868a': 'Builder'
   };
 
   return (

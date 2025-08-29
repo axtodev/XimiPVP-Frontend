@@ -6,24 +6,33 @@ function StaffList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const roleOrder = ["Owner", "Amministratore", "Developer", "Moderatore", "Builder"];
+
   useEffect(() => {
-    fetch('http://146.19.215.186:1044/staff')
-      .then((res) => res.json())
-      .then((data) => {
-        setStaff(data);
+    const fetchStaffByRoles = async () => {
+      try {
+        const allStaff = [];
+        for (const role of roleOrder) {
+          const res = await fetch(`http://localhost:3000/users/by-role?role=${encodeURIComponent(role)}`);
+          const data = await res.json();
+          const membersWithRole = data.map(member => ({ ...member, role }));
+          allStaff.push(...membersWithRole);
+        }
+        setStaff(allStaff);
         setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error('Errore nel fetch:', err);
-        setError("Errore nel caricamento dello staff");
+        setError("Staff non disponibile");
         setLoading(false);
-      });
+      }
+    };
+
+    fetchStaffByRoles();
   }, []);
 
   const groupStaffByRole = () => {
     return staff.reduce((groups, member) => {
-      const role = Array.isArray(member.roles) ? member.roles[member.roles.length-1] : (member.roles || "Staff Member");
-      
+      const role = member.role || "Staff Member";
       if (!groups[role]) {
         groups[role] = [];
       }
@@ -36,25 +45,21 @@ function StaffList() {
   if (error) return <p className="error-text">{error}</p>;
 
   const staffByRole = groupStaffByRole();
-  
-  const roleOrder = ["Owner", "Manager", "Admin", "Mod", "Trial-Mod"];
-  const sortedRoles = Object.keys(staffByRole).sort((a, b) => {
-    return roleOrder.indexOf(a) - roleOrder.indexOf(b);
-  });
+  const sortedRoles = roleOrder.filter(role => staffByRole[role]);
 
-  return (  
+  return (
     <div className="staff-container">
       <h2 className="staff-title">STAFF DEL SERVER</h2>
-      
+
       {sortedRoles.map((role) => (
         <div key={role} className="role-group">
-          <h3 className="role-title">{role}</h3>
+          <h3 className={`role-title ${role}`}>{role}</h3>
           <ul className="staff-list">
             {staffByRole[role].map((member, idx) => (
               <li key={idx} className="staff-member">
                 <img
-                  src={member.avatar}
-                  alt={member.username}
+                  src={member.pfp}      
+                  alt={member.username} 
                   className="staff-avatar"
                 />
                 <div className="staff-info">

@@ -1,0 +1,229 @@
+.body{
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.user-profile-wrapper {
+  width: 1500px;  
+  margin: 60px auto;
+  padding: 0 2rem;
+}
+
+.user-profile-main-content {
+  flex: 2;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: var(--box);
+  min-width: 600px;
+  margin-top: -60px;
+  
+}
+
+.user-profile-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  border-left: 4px solid var(--primary);
+}
+
+.user-profile-thread {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  width: 90%; 
+  margin-bottom: 1.5rem; 
+  animation: fadeIn 0.3s ease-out;
+}
+
+.user-profile-card-header {
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+}
+
+.user-profile-card-header h3 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: var(--primary);
+}
+
+.user-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.user-profile-picture-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.user-profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.user-profile-image:hover {
+  opacity: 0.8;
+}
+
+.user-profile-info {
+  flex: 1;
+}
+
+.user-profile-username {
+  font-size: 1.6rem;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.user-profile-roles-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.user-profile-role-tag {
+  display: inline-block;
+  color: var(--primary);
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.user-profile-file-input {
+  display: none;
+}
+
+.user-profile-save-button-container {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.user-profile-save-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.user-profile-save-button:hover {
+  background-color: #e67600;
+}
+
+.user-profile-details {
+  margin-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 1.5rem;
+}
+
+.user-profile-detail-item {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-profile-detail-item strong {
+  color: #333;
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .user-profile-wrapper {
+    padding: 0 1rem;
+    margin: 40px auto;
+  }
+  
+  .user-profile-main-content {
+    padding: 1.5rem;
+    min-width: unset;
+    margin-top: -40px;
+  }
+  
+  .user-profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .user-profile-detail-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+  
+  .user-profile-detail-item strong {
+    min-width: unset;
+  }
+  
+  .user-profile-thread {
+    width: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Online{
+    color: var(--success-color) !important;
+}
+
+.Owner{
+  color: var(--Owner);
+}
+
+.Amministratore{
+  color: var(--Amministratore);
+}
+
+.Developer{
+    color: var(--Developer)
+}
+
+.Moderatore{
+    color: var(--Moderatore)
+}
+
+.Media{
+  color: var(--Media)
+}
+
+.Vip{
+  color: var(--Vip)
+}
+
+.Builder{
+  color: var(--Builder);
+}
+
+
+.Utente{
+    color: #333;
+    opacity: 0.6;
+}

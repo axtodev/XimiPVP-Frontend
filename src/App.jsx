@@ -11,6 +11,7 @@ import Logins from './pages/auth/login.jsx';
 import Registers from './pages/auth/register.jsx';
 import Confirm from './pages/auth/confirm.jsx';
 import Forum from './pages/forum.jsx';
+import Profile from './pages/profile.jsx';
 import './style/Root.css';
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
 
   return (
     <>
-      {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' && (
+      {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' &&(  
         <>
           <Head />
           <Nav />
@@ -43,7 +44,8 @@ function App() {
         <Route path="/staff" element={<Staff />} />
         <Route path="/login" element={<Logins />} />
         <Route path="/confirm" element={<Confirm />} />
-        <Route path="forum" element={<Forum />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
       {location.pathname === '/' && (
@@ -52,7 +54,7 @@ function App() {
           <Slider />
         </>
       )}
-      {location.pathname !== '/login' && location.pathname !== '/register' && (
+      {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/profile' && (
         <>
           <Footer />
         </>

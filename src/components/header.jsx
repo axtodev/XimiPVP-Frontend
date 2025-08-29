@@ -19,7 +19,7 @@ function Head(){
             <div className="auth">
                 {isLogged ? (
                     <>
-                        <button> <User />Profilo</button>
+                        <button onClick={()=> navigate('/profile')}> <User />Profilo</button>
                         <button onClick={() => handleLogout()}><LogOut />Logout</button>
                     </>
                 ) : (

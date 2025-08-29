@@ -11,4 +11,11 @@
   --error-color: #e74c3c;
   --border-radius: 10px;
   --background: #f4f4f4;
+  --Owner: #8e44ad;
+  --Amministratore: #e74c3c;
+  --Developer: #2980b9;
+  --Moderatore: #27ae60;
+  --Media: #ed78d0;
+  --Vip: #1abc9c;
+  --builder: #FFC107;
 }
