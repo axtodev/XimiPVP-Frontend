@@ -91,17 +91,22 @@
 }
 
 .staff-container .Owner{
-  border-bottom: 2px solid var(--Owner)
+  color: var(--Owner);
+  border-bottom: 2px solid var(--Owner) 
 }
 .staff-container .Amministratore{
+  color: var(--Amministratore);
   border-bottom: 2px solid var(--Amministratore)
 }
 .staff-container .Developer{
+  color: var(--Developer);
   border-bottom: 2px solid var(--Developer);
 }
 .staff-container .Moderatore{
+  color: var(--Moderatore);
   border-bottom: 2px solid var(--Moderatore);
 }
 .staff-container .Builder{
+  color: var(--Builder);
   border-bottom: 2px solid var(--Builder)
 }
