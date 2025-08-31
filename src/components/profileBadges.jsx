@@ -5,7 +5,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
   const [saving, setSaving] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Lista di tutti i badge disponibili
   const allBadges = [
     { _id: '68b22595f070ae56104991c6', name: 'Donator' },
     { _id: '68b22595f070ae56104991ca', name: 'Veterano' },
@@ -17,7 +16,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
     { _id: '68b22a1bd1132a4472812809', name: '1# Donator' },
   ];
 
-  // Verifica se l'utente corrente può modificare i badge
   const canEditBadges = () => {
     console.log('currentUserRoles per badge:', currentUserRoles);
     console.log('is Array?', Array.isArray(currentUserRoles));
@@ -34,7 +32,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
     return canEdit;
   };
 
-  // DEBUG: aggiungi questo console.log
   useEffect(() => {
     console.log('Ruoli utente corrente per badge:', currentUserRoles);
     console.log('Può modificare badge:', canEditBadges());
@@ -92,7 +89,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
       const updatedUser = await res.json();
       console.log('Badge aggiornati dal backend:', updatedUser.badges);
       
-      // Normalizza i badge ricevuti dal backend
       const normalizedBadges = updatedUser.badges ? updatedUser.badges.map(badge => ({
         _id: badge._id,
         name: badge.name

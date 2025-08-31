@@ -15,7 +15,7 @@ export default function Profile() {
     pfp: '',
     username: '',
     roles: [],
-    badges: [], // Aggiungi badges allo stato iniziale
+    badges: [], 
     createdAt: '',
     lastSeen: '',
     bio: '',
@@ -28,7 +28,6 @@ export default function Profile() {
   const [error, setError] = useState(null);
   const [currentUserRoles, setCurrentUserRoles] = useState([]);
 
-  // Nel componente Profile, modifica così:
 useEffect(() => {
   const fetchCurrentUser = async () => {
     try {
@@ -38,13 +37,11 @@ useEffect(() => {
       });
       if (res.ok) {
         const data = await res.json();
-        console.log('Dati utente corrente COMPLETI:', data); // DEBUG
+        console.log('Dati utente corrente COMPLETI:', data); 
         
-        // Controlla la struttura effettiva dei ruoli
+
         const roleNames = data.roles ? data.roles.map(role => {
-          // Se i ruoli sono stringhe
           if (typeof role === 'string') return role;
-          // Se sono oggetti con proprietà name
           if (role.name) return role.name;
           return role;
         }) : [];
@@ -246,7 +243,7 @@ useEffect(() => {
                   <ProfileRoles 
                     userData={userData} 
                     updateUserRoles={updateUserRoles}
-                    currentUserRoles={currentUserRoles} // Passa direttamente l'array dei ruoli
+                    currentUserRoles={currentUserRoles} 
                   />
                   </div>
                   

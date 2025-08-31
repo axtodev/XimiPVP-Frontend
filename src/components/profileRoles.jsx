@@ -16,8 +16,6 @@ export default function ProfileRoles({ userData, updateUserRoles, currentUserRol
     { _id: '68825b15b31d59e453e30629', name: 'Utente' },
   ];
 
-  // Verifica se l'utente corrente può modificare i ruoli
-  // In ProfileRoles, modifica la funzione:
 const canEditRoles = () => {
   console.log('currentUserRoles:', currentUserRoles);
   console.log('is Array?', Array.isArray(currentUserRoles));
@@ -34,7 +32,6 @@ const canEditRoles = () => {
   return canEdit;
 };
 
-  // DEBUG: aggiungi questo console.log
   useEffect(() => {
     console.log('Ruoli utente corrente:', currentUserRoles);
     console.log('Può modificare ruoli:', canEditRoles());
