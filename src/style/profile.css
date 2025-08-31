@@ -121,6 +121,11 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
+  margin-left: 10px;
+}
+
+.profile-role-tag:first-child, .profile-role-tag:nth-child(6){
+  margin-left: -10px;
 }
 
 .profile-bio {
@@ -217,7 +222,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* SIDEBAR */
 .profile-sidebar {
   flex: 1;
   display: flex;
@@ -506,5 +510,125 @@
   color: #4CAF50;
   background-color: rgba(76, 175, 80, 0.1);
 }
+
+.user-badge.beta-tester{
+  color: #FFA726;
+  background-color: rgba(255, 167, 38, 0.1);
+}
+
+.user-badge.vip{
+  color: #1ABC9C;
+  background-color: rgba(26, 188, 156, 0.1);
+}
+
+.user-badge.founder{
+  color: #8E44AD;
+  background-color: rgba(142, 68, 173, 0.1);
+}
+
+.user-badge.sviluppo{
+  color: #546E7A;
+  background-color: rgba(84, 110, 122, 0.1);
+}
+
+.user-badge.veterano{
+  color: #A0522D;
+  background-color: rgba(160, 82, 45, 0.1);
+}
+
+.role-dropdown-btn{
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.role-dropdown-menu, .badge-dropdown-menu {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--box);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.5s ease-out;
+  position: absolute;
+}
+
+.role-checkbox, .badge-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.role-checkbox:hover, .badge-checkbox:hover {
+  background-color: #f9f9f9;
+}
+
+.role-checkbox input[type="checkbox"], .badge-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.role-dropdown-menu div, .badge-dropdown-menu div {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.role-checkbox .Owner {
+  color: var(--Owner);
+  background-color: rgba(var(--Owner-rgb), 0.1);
+}
+
+.role-checkbox .Amministratore {
+  color: var(--Amministratore);
+  background-color: rgba(var(--Amministratore-rgb), 0.1);
+}
+
+.role-checkbox .Developer {
+  color: var(--Developer);
+  background-color: rgba(var(--Developer-rgb), 0.1);
+}
+
+.role-checkbox .Moderatore {
+  color: var(--Moderatore);
+  background-color: rgba(var(--Moderatore-rgb), 0.1);
+}
+
+.role-checkbox .Media {
+  color: var(--Media);
+  background-color: rgba(var(--Media-rgb), 0.1);
+}
+
+.role-checkbox .Vip {
+  color: var(--Vip);
+  background-color: rgba(var(--Vip-rgb), 0.1);
+}
+
+.role-checkbox .Builder {
+  color: var(--Builder);
+  background-color: rgba(var(--Builder-rgb), 0.1);
+}
+
+.role-checkbox .Utente {
+  color: #666;
+  background-color: #f0f0f0;
+}
+
+/* Stato di salvataggio */
+.role-dropdown-menu div {
+  font-style: italic;
+  text-align: center;
+  padding: 8px 0;
+  color: var(--primary);
+}
+
 
 

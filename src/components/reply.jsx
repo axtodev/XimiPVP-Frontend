@@ -2,8 +2,21 @@ import React, { useState, useEffect } from 'react';
 import '../style/reply.css';
 
 async function fetchReplies(postId) {
-  const res = await fetch(`http://localhost:3000/replies/post/${postId}`);
-  if (!res.ok) throw new Error('Errore nel caricamento delle reply');
+  const token = localStorage.getItem('token');
+  
+  const res = await fetch(`http://localhost:3000/replies/post/${postId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`, // AGGIUNGI QUESTA RIGA
+    }
+  });
+  
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    throw new Error('Errore nel caricamento delle reply');
+  }
   return res.json();
 }
 
