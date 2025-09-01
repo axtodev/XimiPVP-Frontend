@@ -83,13 +83,12 @@ export default function ForumPage({ user = null }) {
         posts.forEach(post => {
           const tagNames = post.tags?.map(tag => tag.name.toLowerCase()) || [];
           let category = 'altri';
-
           for (const tag of tagNames) {
             if (tagCategories[tag]) {
               category = tagCategories[tag];
-              break;
             }
           }
+
 
           organized[category].posts.push({
             id: post._id,
@@ -142,7 +141,6 @@ export default function ForumPage({ user = null }) {
 return (
     <div className="Forum XimiPVP">
       {!selectedSubCategory && !selectedPost ? (
-        // Lista categorie
         <div className="categories-vertical">
           <h1 className="title">Forum XimiPVP</h1>
           {Object.entries(categories).map(([catKey, catData]) => (
@@ -152,8 +150,6 @@ return (
                 <span>Discussioni: {catData.stats.total}</span>
                 {catData.stats.resolved !== undefined && (
                   <>
-                    <span>Risolte: {catData.stats.resolved}</span>
-                    <span>In attesa: {catData.stats.pending}</span>
                   </>
                 )}
               </div>

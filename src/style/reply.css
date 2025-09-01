@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  max-height: 400px;
+  max-height: 800px;
   overflow-y: auto;
 }
 
@@ -108,19 +108,63 @@
   text-align: center;
 }
 
+.owner {
+  color: var(--Owner);
+}
 .admin{
-    color: #c0392c;
+    color: var(--Amministratore);
 }
 
 .dev{
-    color: #2980b9;
+    color: var(--Developer);
 }
 
 .mod{
-    color: #27ae60;
+    color: var(--Moderatore);
 }
 
 .conts{
     color: #666;
     opacity: 0.8;
+}
+
+.vip{
+  color: var(--Vip)
+}
+
+.reply-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reply-author-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  margin-bottom: 10px;
+}
+
+.reply-author {
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+}
+
+.reply-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vip-username{
+  color: var(--Vip);
+  font-weight: bold
+}
+
+.media{
+  color: var(--Media);
+  font-weight: bold;
 }

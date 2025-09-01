@@ -42,44 +42,50 @@ function CreatePost({ user, onClose }) {
   }, []);
 
   useEffect(() => {
-    async function fetchTags() {
-      try {
-        const response = await fetch('http://localhost:3000/tags');
-        if (response.ok) {
-          const data = await response.json();
+  async function fetchTags() {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('http://localhost:3000/tags', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-          const roles = {
-            Amministratore: [],
-            Moderatore: ['regolamento', 'candidatura staff'],
-            Developer: ['regolamento', 'candidatura developer'],
-            Utente: ['novita', 'annunci', 'eventi', 'regolamento'],
-          };
+      if (res.ok) {
+        const data = await res.json();
 
-          const roleIdToName = {
-            '68825b15b31d59e453e3061f': 'Amministratore',
-            '68825b15b31d59e453e30623': 'Developer',     
-            '68825b15b31d59e453e30626': 'Moderatore',
-            '68825b15b31d59e453e30629': 'Utente'    
-          };
+        const roles = {
+          Amministratore: [],
+          Moderatore: ['regolamento', 'candidatura staff'],
+          Developer: ['regolamento', 'candidatura developer'],
+          Utente: ['novita', 'annunci', 'eventi', 'regolamento'],
+        };
 
-          const roleId = user?.roles?.[0] || '';
-          const roleName = roleIdToName[roleId] || 'Utente';
-          const hiddenTags = roles[roleName] || roles.Utente;
+        const roleIdToName = {
+          '68825b15b31d59e453e3061f': 'Amministratore',
+          '68825b15b31d59e453e30623': 'Developer',     
+          '68825b15b31d59e453e30626': 'Moderatore',
+          '68825b15b31d59e453e30629': 'Utente'    
+        };
 
-          setAvailableTags(
-            data.filter(tag => !hiddenTags.includes(tag.name.toLowerCase().trim()))
-          );
-        }
-      } catch (err) {
-        console.error("Errore nel caricamento dei tag", err);
-        setError("Impossibile caricare i tag");
-      } finally {
-        setIsLoadingTags(false);
+        const roleId = user?.roles?.[0] || '';
+        const roleName = roleIdToName[roleId] || 'Utente';
+        const hiddenTags = roles[roleName] || roles.Utente;
+
+        setAvailableTags(
+          data.filter(tag => !hiddenTags.includes(tag.name.toLowerCase().trim()))
+        );
+      } else {
+        throw new Error('Errore nel caricamento dei tag');
       }
+    } catch (err) {
+      console.error("Errore nel caricamento dei tag", err);
+      setError("Impossibile caricare i tag");
+    } finally {
+      setIsLoadingTags(false);
     }
+  }
 
-    fetchTags();
-  }, [user]);
+  fetchTags();
+}, [user]);
 
   const candidaturaTag = availableTags.find(
     tag => tag.name.toLowerCase() === 'candidatura staff'

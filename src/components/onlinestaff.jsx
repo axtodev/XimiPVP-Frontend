@@ -16,7 +16,24 @@ export default function StaffOnline({ token }) {
     '68b1b5ad2069d4ab1f40868a': 'Builder',
   };
 
+
   const roleOrder = ["Owner", "Amministratore", "Developer", "Moderatore", "Builder"];
+
+
+  const rolePriority = roleOrder.reduce((acc, role, index) => {
+    acc[role] = index;
+    return acc;
+  }, {});
+
+  const getMainRole = (roles) => {
+    if (!Array.isArray(roles) || !roles.length) return 'Utente';
+    const roleLabels = roles.map(r => roleNames[r]).filter(Boolean);
+    if (!roleLabels.length) return 'Utente';
+    return roleLabels.reduce((best, current) => {
+      if (best === null) return current;
+      return rolePriority[current] < rolePriority[best] ? current : best;
+    }, null);
+  };
 
   useEffect(() => {
     const fetchStaff = async () => {
@@ -28,10 +45,11 @@ export default function StaffOnline({ token }) {
         const data = await res.json();
 
         const sorted = data.sort((a, b) => {
-          const roleA = Array.isArray(a.roles) && a.roles.length ? roleNames[a.roles[0]] : 'Utente';
-          const roleB = Array.isArray(b.roles) && b.roles.length ? roleNames[b.roles[0]] : 'Utente';
-          return roleOrder.indexOf(roleA) - roleOrder.indexOf(roleB);
+          const roleA = getMainRole(a.roles);
+          const roleB = getMainRole(b.roles);
+          return (rolePriority[roleA] ?? 999) - (rolePriority[roleB] ?? 999);
         });
+
         setStaffOnline(sorted);
       } catch (err) {
         setError(err.message);
@@ -73,9 +91,13 @@ export default function StaffOnline({ token }) {
       ) : staffOnline.length ? (
         <ul className="staff-lists">
           {staffOnline.map(user => {
-            const roleLabel = Array.isArray(user.roles) && user.roles.length ? roleNames[user.roles[0]] : 'Utente';
+            const roleLabel = getMainRole(user.roles);
             return (
-              <li key={user._id} className={`staff-card ${roleLabel.toLowerCase()}`} onClick={() => navigate(`/profile/${user.username}`)}>
+              <li 
+                key={user._id} 
+                className={`staff-card ${roleLabel.toLowerCase()}`} 
+                onClick={() => navigate(`/profile/${user.username}`)}
+              >
                 <img
                   src={user.pfp || 'https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg'}
                   alt={user.username}
