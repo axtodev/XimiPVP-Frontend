@@ -622,7 +622,7 @@
   background-color: #f0f0f0;
 }
 
-/* Stato di salvataggio */
+
 .role-dropdown-menu div {
   font-style: italic;
   text-align: center;
@@ -630,5 +630,46 @@
   color: var(--primary);
 }
 
+.recent-posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
+.recent-post-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.recent-post-item:hover {
+  background-color: #f9f9f9;
+}
+
+.post-content-preview {
+  margin-bottom: 5px;
+  line-height: 1.4;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.post-likes {
+  display: flex;
+  align-items: center;
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #666;
+}
 

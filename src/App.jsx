@@ -12,6 +12,7 @@ import Registers from './pages/auth/register.jsx';
 import Confirm from './pages/auth/confirm.jsx';
 import Forum from './pages/forum.jsx';
 import Profile from './pages/profile.jsx';
+import Bans from './pages/ban.jsx'
 import './style/Root.css';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/confirm" element={<Confirm />} />
         <Route path="/forum" element={<Forum />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/bans" element={<Bans />} />
       </Routes>
 
       {location.pathname === '/' && (

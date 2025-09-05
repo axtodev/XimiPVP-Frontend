@@ -1,0 +1,403 @@
+.profile-full-width {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.bans-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.bans-content {
+  display: flex;
+  gap: 24px;
+  position: relative;
+  z-index: 10;
+  margin-top: 100px;
+}
+
+.bans-main {
+  flex: 2;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--box);
+  overflow: hidden;
+}
+
+.bans-main-header {
+  padding: 24px;
+  border-bottom: 1px solid #eee;
+  background: linear-gradient(to right, #f9f9f9, #fff);
+}
+
+.bans-main-header h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.bans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 24px;
+}
+
+.ban-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ban-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.ban-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ban-header .player-avatar, .staff-header .staff-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  border: 2px solid #e0e0e0;
+  object-fit: cover;
+}
+
+.player-info {
+  flex: 1;
+}
+
+.player-name {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ban-status {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.ban-status.active {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.ban-status.inactive {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.ban-details {
+  margin-bottom: 15px;
+}
+
+.ban-reason {
+  margin: 0 0 12px 0;
+  color: #555;
+  line-height: 1.4;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+}
+
+.ban-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.meta-item {
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-item strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.bans-grid .staff-info {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.staff-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staff-name {
+  font-size: 13px;
+  color: #666;
+}
+
+.loading, .error, .no-bans {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #666;
+}
+
+.error {
+  color: #d32f2f;
+}
+
+.error-banner {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.error-banner button {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.bans-stats {
+  display: flex;
+  gap: 32px;
+  margin: 24px 0;
+  padding: 20px;
+  background: linear-gradient(to right, #f8f9fa, #f1f3f5);
+  border-radius: 12px;
+  width: 90%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bans-main, .ban-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@media (max-width: 1024px) {
+  .bans-content {
+    flex-direction: column;
+  }
+  
+  .bans-sidebar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .bans-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  
+  .bans-main-header {
+    padding: 16px;
+  }
+  
+  .bans-main-header h2 {
+    font-size: 24px;
+  }
+  
+  .ban-meta {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .bans-stats {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .stat-number {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bans-container {
+    padding: 0 16px;
+  }
+  
+  .ban-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .player-info {
+    text-align: center;
+  }
+  
+  .staff-header {
+    justify-content: center;
+  }
+  
+  .ban-card {
+    padding: 16px;
+  }
+}
+
+.bans-count {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.no-bans {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.no-bans-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.no-bans h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.no-bans p {
+  margin: 0;
+  text-align: center;
+  max-width: 400px;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+  padding: 0 24px;
+}
+
+.load-more-btn {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--primary), #e67600);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 119, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 119, 0, 0.4);
+  background: linear-gradient(135deg, #e67600, var(--primary));
+}
+
+.load-more-btn:active {
+  transform: translateY(0);
+}
+
+.load-more-count {
+  font-size: 12px;
+  opacity: 0.8;
+  font-weight: normal;
+}
+
+.all-bans-loaded {
+  text-align: center;
+  padding: 24px;
+  color: #4caf50;
+  background-color: #f1f8e9;
+  border-radius: 8px;
+  margin: 24px;
+  border: 1px solid #c5e1a5;
+}
+
+.all-bans-loaded p {
+  margin: 0;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .load-more-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+  }
+  
+  .load-more-count {
+    font-size: 11px;
+  }
+}

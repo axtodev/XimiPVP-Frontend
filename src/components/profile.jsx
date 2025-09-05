@@ -27,36 +27,38 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUserRoles, setCurrentUserRoles] = useState([]);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(false);
 
-useEffect(() => {
-  const fetchCurrentUser = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:3000/users/profile', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        console.log('Dati utente corrente COMPLETI:', data); 
-        
-
-        const roleNames = data.roles ? data.roles.map(role => {
-          if (typeof role === 'string') return role;
-          if (role.name) return role.name;
-          return role;
-        }) : [];
-        
-        setCurrentUserRoles(roleNames);
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:3000/users/profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          console.log('Dati utente corrente:', data); 
+          
+          const roleNames = data.roles ? data.roles.map(role => {
+            if (typeof role === 'string') return role;
+            if (role.name) return role.name;
+            return role;
+          }) : [];
+          
+          setCurrentUserRoles(roleNames);
+        }
+      } catch (error) {
+        console.error('Errore nel fetching utente:', error);
       }
-    } catch (error) {
-      console.error('Errore nel fetching utente:', error);
+    };
+    
+    if (localStorage.getItem('token')) {
+      fetchCurrentUser();
     }
-  };
-  
-  if (localStorage.getItem('token')) {
-    fetchCurrentUser();
-  }
-}, []);
+  }, []);
+
   const inputRef = useRef(null);
 
   const updateUserRoles = (newRoles) => {
@@ -73,28 +75,65 @@ useEffect(() => {
     }));
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const res = await fetch(`http://localhost:3000/users/info/${username}`);
-        if (!res.ok) throw new Error('Utente non disponibile');
+  // Funzione per recuperare i post recenti dell'utente
+  const fetchRecentPosts = async (userId) => {
+    setLoadingPosts(true);
+    try {
+      const res = await fetch(`http://localhost:3000/posts/user/${userId}?limit=5`);
+      if (res.ok) {
         const data = await res.json();
-        setUserData({
-          ...data,
-          roles: data.roles ? data.roles.map(role => ({ _id: role._id, name: role.name })) : [],
-          badges: data.badges ? data.badges.map(badge => ({ _id: badge._id, name: badge.name })) : []
-        });
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+        setRecentPosts(data.posts || []);
+      } else {
+        console.error('Errore nel caricamento dei post');
       }
-    };
-    fetchUser();
-  }, [username]);
+    } catch (err) {
+      console.error('Errore di connessione:', err);
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
+
+useEffect(() => {
+  const fetchUser = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`http://localhost:3000/users/info/${username}`);
+      if (!res.ok) throw new Error('Utente non disponibile');
+      const data = await res.json();
+
+      setUserData({
+        ...data,
+        roles: data.roles ? data.roles.map(role => ({ _id: role._id, name: role.name })) : [],
+        badges: data.badges ? data.badges.map(badge => ({ _id: badge._id, name: badge.name })) : [],
+        postsCount: 0 
+      });
+
+  if (data._id) {
+    fetchRecentPosts(data._id);
+
+    const countPostsRes = await fetch(`http://localhost:3000/posts/count/${data._id}`);
+    if (countPostsRes.ok) {
+      const { count } = await countPostsRes.json();
+      setUserData(prev => ({ ...prev, postsCount: count }));
+    }
+
+    const countRepliesRes = await fetch(`http://localhost:3000/replies/count/${data._id}`);
+    if (countRepliesRes.ok) {
+      const { count } = await countRepliesRes.json();
+      setUserData(prev => ({ ...prev, threadsCount: count }));
+    }
+  }
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  fetchUser();
+}, [username]);
+
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -258,7 +297,7 @@ useEffect(() => {
                     </div>
                     <div className="stat-item">
                       <span className="stat-number">{userData.likesReceived || 0}</span>
-                      <span className="stat-label">Mi piace</span>
+                      <span className="stat-label">Prossimamente</span>
                     </div>
                   </div>
                 </div>
@@ -310,18 +349,39 @@ useEffect(() => {
             <div className="sidebar-section">
               <h3>Attività Recente</h3>
               <div className="recent-activity">
-                <p>Nessuna attività recente</p>
+                {loadingPosts ? (
+                  <p>Caricamento attività...</p>
+                ) : recentPosts.length > 0 ? (
+                  <ul className="recent-posts-list">
+                    {recentPosts.map(post => (
+                      <li key={post._id} className="recent-post-item">
+                        <div className="post-content-preview">
+                          {post.content.length > 100 
+                            ? `${post.title.substring(0, 100)}...` 
+                            : post.title
+                          }
+                        </div>
+                        <div className="post-meta">
+                          <span className="post-date">
+                            {formatDate(post.createdAt)}
+                          </span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Nessuna attività recente</p>
+                )}
               </div>
             </div>
             
             <div className="sidebar-section">
               <h3>Badge</h3>
-
-            <ProfileBadges 
-              userData={userData} 
-              updateUserBadges={updateUserBadges}
-              currentUserRoles={currentUserRoles} 
-            />
+              <ProfileBadges 
+                userData={userData} 
+                updateUserBadges={updateUserBadges}
+                currentUserRoles={currentUserRoles} 
+              />
             </div>
           </div>
         </div>

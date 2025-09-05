@@ -1,6 +1,6 @@
 import React from 'react';
 import '../style/nav.css';
-import { LayoutDashboard, MessageCircle, ShoppingCart, Users, Book } from 'lucide-react';
+import { LayoutDashboard, MessageCircle, ShoppingCart, Users, ShieldBan} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 function Nav() {
@@ -21,8 +21,8 @@ function Nav() {
         <li onClick={() => navigate('/store')}>
           <ShoppingCart /> Store
         </li>
-        <li onClick={() => navigate('/regolamento')}>
-         <Book /> Policy
+        <li onClick={() => navigate('/bans')}>
+         <ShieldBan/> Bans
         </li>
       </ul>
     </nav>
