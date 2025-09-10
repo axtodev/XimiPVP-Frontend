@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import Banner from './biscotti/biscotti.jsx';
 import './App.css';
 import Head from './components/header';
 import Nav from './components/navbar';
@@ -13,6 +14,8 @@ import Confirm from './pages/auth/confirm.jsx';
 import Forum from './pages/forum.jsx';
 import Profile from './pages/profile.jsx';
 import Bans from './pages/ban.jsx'
+import Store from './pages/store.jsx';
+import PolicyPage from './pages/policy.jsx';
 import './style/Root.css';
 
 function App() {
@@ -48,6 +51,8 @@ function App() {
         <Route path="/forum" element={<Forum />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/bans" element={<Bans />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/policy" element={<PolicyPage />} />
       </Routes>
 
       {location.pathname === '/' && (
@@ -60,7 +65,8 @@ function App() {
         <>
           <Footer />
         </>
-      )}
+      )}  
+      <Banner />
     </>
   );
 }

@@ -15,6 +15,7 @@ export default function ForumPage({ user = null }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(user); // Stato locale per l'utente
 
   const tagCategories = {
     'supporto': 'assistenza',
@@ -71,6 +72,37 @@ export default function ForumPage({ user = null }) {
     ]
   };
 
+  // Aggiorna l'utente quando cambia il prop
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [user]);
+
+  // Ascolta gli eventi di aggiornamento ruoli
+  useEffect(() => {
+    const handleUserRolesUpdated = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const res = await fetch('http://localhost:3000/users/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setCurrentUser(data);
+          }
+        }
+      } catch (error) {
+        console.error('Errore nell\'aggiornamento utente:', error);
+      }
+    };
+
+    window.addEventListener('userRolesUpdated', handleUserRolesUpdated);
+    
+    return () => {
+      window.removeEventListener('userRolesUpdated', handleUserRolesUpdated);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchAndOrganizePosts = async () => {
       setLoading(true);
@@ -89,7 +121,6 @@ export default function ForumPage({ user = null }) {
             }
           }
 
-
           organized[category].posts.push({
             id: post._id,
             title: post.content.substring(0, 50),
@@ -101,7 +132,7 @@ export default function ForumPage({ user = null }) {
           });
 
           organized[category].stats.total++;
-          if (['assistenza', 'candidatura', 'segnalazioni'].includes(category)) {
+          if (['assistenza', 'candidature', 'segnalazioni'].includes(category)) {
             if (post.status === 'resolved') organized[category].stats.resolved++;
             else if (post.status === 'pending') organized[category].stats.pending++;
           }
@@ -126,19 +157,32 @@ export default function ForumPage({ user = null }) {
   };
 
   useEffect(() => {
-    if(!user || !user.token) return;
+    if(!currentUser || !currentUser.token) return;
 
-    updateLastSeen(user.token);
+    const updateLastSeen = async (token) => {
+      try {
+        await fetch('http://localhost:3000/users/last-seen', {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        console.error('Errore nell\'aggiornamento last seen:', error);
+      }
+    };
 
-    const interval = setInterval(()=>{
-      updateLastSeen(user.token)
+    updateLastSeen(currentUser.token);
+
+    const interval = setInterval(() => {
+      updateLastSeen(currentUser.token);
     }, 5 * 60 * 1000);
 
-    return() => clearInterval(interval);
-  },
-  [user]);
+    return () => clearInterval(interval);
+  }, [currentUser]);
 
-return (
+  return (
     <div className="Forum XimiPVP">
       {!selectedSubCategory && !selectedPost ? (
         <div className="categories-vertical">
@@ -200,44 +244,41 @@ return (
           )}
         </>
       ) : selectedPost ? (
-  <div className="post-wrapper">
-    {/* Colonna principale del thread */}
-    <section className="main-content">
-      <button 
-        className="btn back-button"
-        onClick={() => setSelectedPost(null)}
-      >
-        ← Torna ai post
-      </button>
-      
-      <div className="thread-container">
-        <h1 className="thread-title">{selectedPost.title}</h1>
-        <div className="thread-content">
-          {selectedPost.content.split('\n').map((paragraph, i) => (
-            <p key={i} className="par">{paragraph}</p>
-          ))}
-
-          <div className="thread-meta">
-            <span className="author">Autore: {selectedPost.author}</span>
-            <span className="timestamp">{selectedPost.timestamp}</span>
-            {selectedPost.tags && selectedPost.tags.length > 0 && (
-              <div className="tags">
-                {selectedPost.tags.map((tag, i) => (
-                  <span key={i} className="tag">
-                    #{tag}
-                  </span>
+        <div className="post-wrapper">
+          <section className="main-content">
+            <button 
+              className="btn back-button"
+              onClick={() => setSelectedPost(null)}
+            >
+              ← Torna ai post
+            </button>
+            
+            <div className="thread-container">
+              <h1 className="thread-title">{selectedPost.title}</h1>
+              <div className="thread-content">
+                {selectedPost.content.split('\n').map((paragraph, i) => (
+                  <p key={i} className="par">{paragraph}</p>
                 ))}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-    <ReplyBlock postId={selectedPost.id} user={user} />
-  </div>
-) : null}
 
+                <div className="thread-meta">
+                  <span className="author">Autore: {selectedPost.author}</span>
+                  <span className="timestamp">{selectedPost.timestamp}</span>
+                  {selectedPost.tags && selectedPost.tags.length > 0 && (
+                    <div className="tags">
+                      {selectedPost.tags.map((tag, i) => (
+                        <span key={i} className="tag">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+          <ReplyBlock postId={selectedPost.id} user={currentUser} />
+        </div>
+      ) : null}
     </div>
   );
-
 }

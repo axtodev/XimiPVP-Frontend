@@ -1,5 +1,6 @@
 :root{
   --primary: #ff8c00;
+  --primary-rgb: 255, 140, 0;
   --secondary: rgba(255, 140, 0, 0.7);
   --font: 'Verdana', sans-serif;
   --hover-color: #ffffff;
@@ -8,6 +9,7 @@
   --box-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
   --border-radius: 10px;
   --success-color: #2ecc71;
+  --success-rgb: 46, 204, 113;
   --error-color: #e74c3c;
   --border-radius: 10px;
   --background: #f4f4f4;

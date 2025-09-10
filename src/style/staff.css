@@ -110,3 +110,14 @@
   color: var(--Builder);
   border-bottom: 2px solid var(--Builder)
 }
+
+@media (max-width: 768px){
+  .staff-container{
+    max-width: 90%;
+  }
+
+  .staff-container .staff-title{
+    font-size: 20px;
+  }
+
+}

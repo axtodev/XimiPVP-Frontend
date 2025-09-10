@@ -20,7 +20,19 @@ function Bans() {
         }
         
         const data = await res.json();
-        setBans(data);
+        
+        // Aggiungiamo il calcolo dello stato active per ogni ban
+        const now = Date.now();
+        const bansWithActiveStatus = data.map(ban => {
+          // Calcoliamo lo stato active basandoci sulla data di scadenza
+          const isActive = ban.until === -1 || ban.until > now;
+          return {
+            ...ban,
+            active: isActive // Sovrascriviamo la proprietà active
+          };
+        });
+        
+        setBans(bansWithActiveStatus);
       } catch (err) {
         console.error('Errore fetch:', err);
         setError('Impossibile caricare la lista dei ban');
@@ -62,6 +74,10 @@ function Bans() {
   const currentBans = bans.slice(0, visibleBans);
   const hasMoreBans = visibleBans < bans.length;
 
+  // Contatori aggiornati basati sulla proprietà active che abbiamo calcolato
+  const activeBansCount = bans.filter(ban => ban.active).length;
+  const expiredBansCount = bans.filter(ban => !ban.active).length;
+
   if (loading) {
     return (
       <div className="bans-container">
@@ -92,15 +108,11 @@ function Bans() {
             
             <div className="bans-stats">
               <div className="stat-item">
-                <span className="stat-number">
-                  {bans.filter(ban => ban.active).length}
-                </span>
+                <span className="stat-number">{activeBansCount}</span>
                 <span className="stat-label">Attivi</span>
               </div>
               <div className="stat-item">
-                <span className="stat-number">
-                  {bans.filter(ban => !ban.active).length}
-                </span>
+                <span className="stat-number">{expiredBansCount}</span>
                 <span className="stat-label">Scaduti</span>
               </div>
               <div className="stat-item">
@@ -115,54 +127,59 @@ function Bans() {
             ) : (
               <>
                 <div className="bans-grid">
-                  {currentBans.map((ban) => (
-                    <div key={`${ban.uuid}-${ban.time}`} className="ban-card">
-                      <div className="ban-header">
-                        <img 
-                          src={ban.skinUrl} 
-                          alt={ban.nickname} 
-                          className="player-avatar"
-                          onError={(e) => {
-                            e.target.src = 'https://crafatar.com/avatars/8667ba71b85a4004af54457a9734eed7?size=100&overlay';
-                          }}
-                        />
-                        <div className="player-info">
-                          <h3 className="player-name">{ban.nickname}</h3>
-                          <span className={`ban-status ${ban.active ? 'active' : 'inactive'}`}>
-                            {ban.active ? 'Attivo' : 'Scaduto'}
-                          </span>
+                  {currentBans.map((ban) => {
+                    // Calcoliamo lo stato per questa card specifica
+                    const isCurrentlyActive = ban.until === -1 || ban.until > Date.now();
+                    
+                    return (
+                      <div key={`${ban.uuid}-${ban.time}`} className="ban-card">
+                        <div className="ban-header">
+                          <img 
+                            src={ban.skinUrl} 
+                            alt={ban.nickname} 
+                            className="player-avatar"
+                            onError={(e) => {
+                              e.target.src = 'https://crafatar.com/avatars/8667ba71b85a4004af54457a9734eed7?size=100&overlay';
+                            }}
+                          />
+                          <div className="player-info">
+                            <h3 className="player-name">{ban.nickname}</h3>
+                            <span className={`ban-status ${isCurrentlyActive ? 'active' : 'inactive'}`}>
+                              {isCurrentlyActive ? 'Attivo' : 'Scaduto'}
+                            </span>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="ban-details">
-                        <p className="ban-reason">
-                          <strong>Motivo:</strong> {ban.reason || 'Nessun motivo specificato'}
-                        </p>
-                        
-                        <div className="ban-meta">
-                          <div className="meta-item">
-                            <strong>Durata:</strong> {getDuration(ban.until)}
+                        <div className="ban-details">
+                          <p className="ban-reason">
+                            <strong>Motivo:</strong> {ban.reason || 'Nessun motivo specificato'}
+                          </p>
+                          
+                          <div className="ban-meta">
+                            <div className="meta-item">
+                              <strong>Durata:</strong> {getDuration(ban.until)}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="staff-info">
+                          <div className="staff-header">
+                            <img 
+                              src={ban.staffSkinUrl} 
+                              alt={ban.staffer} 
+                              className="staff-avatar"
+                              onError={(e) => {
+                                e.target.src = 'https://crafatar.com/avatars/4e03150512d84609830c86121e1f86b9?size=100&overlay';
+                              }}
+                            />
+                            <span className="staff-name">
+                              Bannato da: {ban.staffer || 'Console'}
+                            </span>
                           </div>
                         </div>
                       </div>
-
-                      <div className="staff-info">
-                        <div className="staff-header">
-                          <img 
-                            src={ban.staffSkinUrl} 
-                            alt={ban.staffer} 
-                            className="staff-avatar"
-                            onError={(e) => {
-                              e.target.src = 'https://crafatar.com/avatars/4e03150512d84609830c86121e1f86b9?size=100&overlay';
-                            }}
-                          />
-                          <span className="staff-name">
-                            Bannato da: {ban.staffer || 'Console'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {hasMoreBans && (

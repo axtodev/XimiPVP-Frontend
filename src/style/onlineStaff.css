@@ -104,3 +104,9 @@ aside h3{
 .staff-card.builder .staff-info p {
   color: var(--Builder);
 }
+
+@media (max-width: 768px){
+  aside{
+    width: 100%;
+  }
+}

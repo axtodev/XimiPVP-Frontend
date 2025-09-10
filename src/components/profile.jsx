@@ -66,6 +66,20 @@ export default function Profile() {
       ...prev,
       roles: newRoles.map(role => ({ ...role }))
     }));
+    
+    // Aggiorna anche nello storage per sincronizzazione
+    const updatedUser = { 
+      ...userData, 
+      roles: newRoles,
+      // Mantieni altri dati importanti
+      username: userData.username,
+      pfp: userData.pfp
+    };
+    
+    localStorage.setItem('userData', JSON.stringify(updatedUser));
+    
+    // Invia evento per notificare altri componenti
+    window.dispatchEvent(new Event('userRolesUpdated'));
   };
 
   const updateUserBadges = (newBadges) => {
@@ -79,7 +93,7 @@ export default function Profile() {
   const fetchRecentPosts = async (userId) => {
     setLoadingPosts(true);
     try {
-      const res = await fetch(`http://localhost:3000/posts/user/${userId}?limit=5`);
+      const res = await fetch(`http://localhost:3000/posts/user/${userId}?limit=3`);
       if (res.ok) {
         const data = await res.json();
         setRecentPosts(data.posts || []);
@@ -353,7 +367,7 @@ useEffect(() => {
                   <p>Caricamento attività...</p>
                 ) : recentPosts.length > 0 ? (
                   <ul className="recent-posts-list">
-                    {recentPosts.map(post => (
+                    {recentPosts.slice(0, 3).map(post => (   
                       <li key={post._id} className="recent-post-item">
                         <div className="post-content-preview">
                           {post.content.length > 100 
@@ -369,6 +383,7 @@ useEffect(() => {
                       </li>
                     ))}
                   </ul>
+
                 ) : (
                   <p>Nessuna attività recente</p>
                 )}

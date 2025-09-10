@@ -19,30 +19,35 @@ export default function Slider() {
         <h2>Le nostre modalità</h2>
         <br />
         <br />
-      <Swiper
-        slidesPerView={2}       
-        spaceBetween={0}    
-        modules={[Autoplay, Pagination]}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        loop={true}
-        loopedSlides={slides.length} 
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="slide">
-              <div className="image">
-                <img src={slide.image} alt={`Slide ${index + 1}`} />
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={0}
+          modules={[Autoplay, Pagination]}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          loop={true}          // loop rimane
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+          }}
+        >
+
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <div className="slide">
+                <div className="image">
+                  <img src={slide.image} alt={`Slide ${index + 1}`} />
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
     </div>
   );
 }

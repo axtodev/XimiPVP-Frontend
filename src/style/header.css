@@ -79,3 +79,8 @@ body, html {
 }
 
 
+@media (max-width: 768px){
+  .header img{
+    width: 170px;
+  }
+}

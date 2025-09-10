@@ -22,13 +22,13 @@ function Login({ onLoginSuccess }) {
 
     const data = await res.json();
 
-    // Controllo se l'utente è confermato
+
     if (!data.user.isConfirmed) {
       setError("Account non verificato. Controlla la tua email.");
       return;
     }
 
-    // Se tutto ok, salva token e user
+
     localStorage.setItem('token', data.access_token);
     localStorage.setItem('user', JSON.stringify(data.user));
     localStorage.setItem('username', data.user.username);

@@ -1,0 +1,39 @@
+.store-banner{
+    background-color: rgba(var(--success-rgb), 0.1);
+    width: 600px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.store-banner h2{
+    color: var(--success-color);
+}
+
+.store-banner p{
+    color: rgba(var(--success-rgb), 0.7);
+    width: 90%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.store-banner a{
+    color: rgba(var(--success-rgb), 1);
+}
+
+.store-wrapper {
+  display: flex;
+  justify-content: center; 
+  width: 100%;             
+  margin-top: 50px;       
+}
+
+@media (max-width: 768px){
+    .store-banner{
+        width: 90%;
+        margin-bottom: -100px;
+    }
+}

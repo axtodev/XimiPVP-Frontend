@@ -16,6 +16,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
     "react-tsparticles": "^2.9.3",
+    "react-window": "^2.1.0",
     "swiper": "^11.2.10",
     "swiper-react": "^1.0.0",
     "tsparticles": "^2.9.3",
