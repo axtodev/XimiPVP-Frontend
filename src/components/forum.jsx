@@ -81,7 +81,7 @@ export default function ForumPage({ user = null }) {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const res = await fetch('http://localhost:3000/users/profile', {
+          const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (res.ok) {
@@ -104,7 +104,7 @@ export default function ForumPage({ user = null }) {
     const fetchAndOrganizePosts = async () => {
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:3000/posts');
+        const res = await fetch('https://ximipvp-backend-production.up.railway.app/posts');
         const posts = await res.json();
 
         const organized = JSON.parse(JSON.stringify(categories));
@@ -157,7 +157,7 @@ export default function ForumPage({ user = null }) {
 
     const updateLastSeen = async (token) => {
       try {
-        await fetch('http://localhost:3000/users/last-seen', {
+        await fetch('https://ximipvp-backend-production.up.railway.app/users/last-seen', {
           method: 'PATCH',
           headers: {
             'Authorization': `Bearer ${token}`,

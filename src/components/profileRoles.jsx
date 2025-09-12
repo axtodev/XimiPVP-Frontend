@@ -64,7 +64,7 @@ const canEditRoles = () => {
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/users/${userData._id}/roles`, {
+      const res = await fetch(`https://ximipvp-backend-production.up.railway.app/users/${userData._id}/roles`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

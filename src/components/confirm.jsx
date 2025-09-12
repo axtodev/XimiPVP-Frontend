@@ -13,7 +13,7 @@ function ConfirmEmail() {
       return;
     }
 
-    fetch('http://localhost:3000/auth/confirm', {
+    fetch('https://ximipvp-backend-production.up.railway.app/auth/confirm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),

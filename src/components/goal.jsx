@@ -8,7 +8,7 @@ const Goal = () => {
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const response = await fetch('http://localhost:3000/users/count');
+        const response = await fetch('https://ximipvp-backend-production.up.railway.app/users/count');
         const data = await response.json();
         setCount(data.c || 0);
       } catch (error) {

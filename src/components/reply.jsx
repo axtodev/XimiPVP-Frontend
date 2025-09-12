@@ -4,7 +4,7 @@ import '../style/reply.css';
 async function fetchReplies(postId) {
   const token = localStorage.getItem('token');
   
-  const res = await fetch(`http://localhost:3000/replies/post/${postId}`, {
+  const res = await fetch(`https://ximipvp-backend-production.up.railway.app/replies/post/${postId}`, {
     headers: { 'Authorization': `Bearer ${token}` }
   });
   
@@ -20,7 +20,7 @@ async function fetchReplies(postId) {
 
 async function createReply(postId, content) {
   const token = localStorage.getItem('token');
-  const res = await fetch('http://localhost:3000/replies', {
+  const res = await fetch('https://ximipvp-backend-production.up.railway.app/replies', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ content, post: postId }),

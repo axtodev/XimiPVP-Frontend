@@ -69,7 +69,7 @@ function CreatePost({ user, onClose }) {
     async function fetchTags() {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/tags', {
+        const res = await fetch('https://ximipvp-backend-production.up.railway.app/tags', {
           headers: { Authorization: `Bearer ${token}` }
         });
 

@@ -34,7 +34,7 @@ export default function Profile() {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/users/profile', {
+        const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/profile', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -87,7 +87,7 @@ export default function Profile() {
   const fetchRecentPosts = async (userId) => {
     setLoadingPosts(true);
     try {
-      const res = await fetch(`http://localhost:3000/posts/user/${userId}?limit=3`);
+      const res = await fetch(`https://ximipvp-backend-production.up.railway.app/posts/user/${userId}?limit=3`);
       if (res.ok) {
         const data = await res.json();
         setRecentPosts(data.posts || []);
@@ -118,7 +118,7 @@ useEffect(() => {
   if (data._id) {
     fetchRecentPosts(data._id);
 
-    const countPostsRes = await fetch(`http://localhost:3000/posts/count/${data._id}`);
+    const countPostsRes = await fetch(`https://ximipvp-backend-production.up.railway.app/posts/count/${data._id}`);
     if (countPostsRes.ok) {
       const { count } = await countPostsRes.json();
       setUserData(prev => ({ ...prev, postsCount: count }));
@@ -167,7 +167,7 @@ useEffect(() => {
     formData.append('pfp', file);
 
     try {
-      const res = await fetch('http://localhost:3000/users/profile-picture', {
+      const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/profile-picture', {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: formData,
