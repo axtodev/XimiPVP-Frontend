@@ -4,9 +4,9 @@ import "swiper/css";
 import "../style/slider.css"; 
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css/pagination";
-import Logo from '../assets/logo.png';
 
 const slides = [
+  //Sostituisci con le immagini
   { image: "https://www.coralmc.it/_next/static/media/survival.e216a487.jpg" },
   { image: "https://www.coralmc.it/_next/static/media/bwpractice.61da28cb.jpg" },
   { image: "https://www.coralmc.it/_next/static/media/sandbox.71daa8fa.jpg" },
