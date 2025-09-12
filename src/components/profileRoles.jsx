@@ -93,7 +93,6 @@ const canEditRoles = () => {
 
   return (
     <div className="profile-roles-wrapper" ref={dropdownRef}>
-      {/* Mostra i ruoli */}
       {userData.roles.length > 0 ? (
         userData.roles
           .sort((a, b) => {

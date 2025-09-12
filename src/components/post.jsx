@@ -165,7 +165,6 @@ function CreatePost({ user, onClose }) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // usa il content normale o quello salvato per la candidatura
       const finalContent = CandidaturaComponent
         ? candidatureContent[candidaturaKey] || ''
         : content;
@@ -219,8 +218,8 @@ function CreatePost({ user, onClose }) {
 
             {CandidaturaComponent ? (
               <CandidaturaComponent
-                key={candidaturaKey} // Forza il re-render quando cambia il tipo
-                value={candidatureContent[candidaturaKey] || ''} // Passa il valore corrente
+                key={candidaturaKey}
+                value={candidatureContent[candidaturaKey] || ''} 
                 onChange={(val) =>
                   setCandidatureContent(prev => ({
                     ...prev,

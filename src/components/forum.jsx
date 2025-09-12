@@ -15,7 +15,7 @@ export default function ForumPage({ user = null }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(user); // Stato locale per l'utente
+  const [currentUser, setCurrentUser] = useState(user); 
 
   const tagCategories = {
     'supporto': 'assistenza',
@@ -72,12 +72,10 @@ export default function ForumPage({ user = null }) {
     ]
   };
 
-  // Aggiorna l'utente quando cambia il prop
   useEffect(() => {
     setCurrentUser(user);
   }, [user]);
 
-  // Ascolta gli eventi di aggiornamento ruoli
   useEffect(() => {
     const handleUserRolesUpdated = async () => {
       try {
