@@ -21,7 +21,6 @@ function CandidaturaForm({ onChange }) {
   const [answers, setAnswers] = useState(Array(questions.length).fill(""));
 
   useEffect(() => {
-    // Quando answers cambia, generiamo il testo formattato
     const content = questions
       .map((q, i) => `${i + 1}. ${q}\n${answers[i]}\n`)
       .join("\n");

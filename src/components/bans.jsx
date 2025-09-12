@@ -21,20 +21,17 @@ function Bans() {
         
         const data = await res.json();
         
-        // Aggiungiamo il calcolo dello stato active per ogni ban
         const now = Date.now();
         const bansWithActiveStatus = data.map(ban => {
-          // Calcoliamo lo stato active basandoci sulla data di scadenza
           const isActive = ban.until === -1 || ban.until > now;
           return {
             ...ban,
-            active: isActive // Sovrascriviamo la proprietà active
+            active: isActive 
           };
         });
         
         setBans(bansWithActiveStatus);
       } catch (err) {
-        console.error('Errore fetch:', err);
         setError('Impossibile caricare la lista dei ban');
       } finally {
         setLoading(false);
@@ -74,7 +71,6 @@ function Bans() {
   const currentBans = bans.slice(0, visibleBans);
   const hasMoreBans = visibleBans < bans.length;
 
-  // Contatori aggiornati basati sulla proprietà active che abbiamo calcolato
   const activeBansCount = bans.filter(ban => ban.active).length;
   const expiredBansCount = bans.filter(ban => !ban.active).length;
 
@@ -128,7 +124,6 @@ function Bans() {
               <>
                 <div className="bans-grid">
                   {currentBans.map((ban) => {
-                    // Calcoliamo lo stato per questa card specifica
                     const isCurrentlyActive = ban.until === -1 || ban.until > Date.now();
                     
                     return (

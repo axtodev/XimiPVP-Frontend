@@ -17,26 +17,15 @@ export default function ProfileRoles({ userData, updateUserRoles, currentUserRol
   ];
 
 const canEditRoles = () => {
-  console.log('currentUserRoles:', currentUserRoles);
-  console.log('is Array?', Array.isArray(currentUserRoles));
-  
   if (!currentUserRoles || !Array.isArray(currentUserRoles)) {
-    console.log('Non è un array valido');
     return false;
   }
   
   const canEdit = currentUserRoles.includes('Owner') || 
                  currentUserRoles.includes('Amministratore');
   
-  console.log('Può modificare?', canEdit);
   return canEdit;
 };
-
-  useEffect(() => {
-    console.log('Ruoli utente corrente:', currentUserRoles);
-    console.log('Può modificare ruoli:', canEditRoles());
-  }, [currentUserRoles]);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -87,7 +76,6 @@ const canEditRoles = () => {
       if (!res.ok) throw new Error('Errore nel salvataggio dei ruoli');
 
       const updatedUser = await res.json();
-      console.log('Ruoli aggiornati dal backend:', updatedUser.roles);
       
       const normalizedRoles = updatedUser.roles.map(role => ({
         _id: role._id,
@@ -97,7 +85,7 @@ const canEditRoles = () => {
       updateUserRoles(normalizedRoles);
       
     } catch (err) {
-      console.error('Errore completo:', err);
+      
     } finally {
       setSaving(false);
     }

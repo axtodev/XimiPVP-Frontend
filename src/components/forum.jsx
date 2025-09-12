@@ -92,7 +92,6 @@ export default function ForumPage({ user = null }) {
           }
         }
       } catch (error) {
-        console.error('Errore nell\'aggiornamento utente:', error);
       }
     };
 
@@ -140,7 +139,6 @@ export default function ForumPage({ user = null }) {
 
         setCategories(organized);
       } catch (err) {
-        console.error('Errore nel fetch dei post:', err);
       } finally {
         setLoading(false);
       }
@@ -169,7 +167,6 @@ export default function ForumPage({ user = null }) {
           }
         });
       } catch (error) {
-        console.error('Errore nell\'aggiornamento last seen:', error);
       }
     };
 

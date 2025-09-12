@@ -17,15 +17,15 @@ function Footer() {
                     <h2>Info</h2>
                     <ul>
                         <li><Link to="/policy">Policy</Link></li>
-                        <li><Link to="/contatti">Contatti</Link></li>
+                        <li><a href="https://dsc.gg/ximipvp" target="_blank" rel="noopener noreferrer">Contatti</a></li>
                     </ul>
                 </div>
 
                 <div className="section">
                     <h2>Social</h2>
                     <ul>
-                        <li><a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord</a></li>
-                        <li><a href="https://telegram.org" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+                        <li><a href="https://dsc.gg/ximipvp" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                        <li><a href="https://t.me/XimiPvP" target="_blank" rel="noopener noreferrer">Telegram</a></li>
                         <li><Link to="/store">Store</Link></li>
                     </ul>
                 </div>

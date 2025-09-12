@@ -73,7 +73,6 @@ export default function StaffOnline({ token }) {
         });
         if (!res.ok) throw new Error('Token non valido');
       } catch (e) {
-        console.error('Errore updateLastSeen:', e.message);
       }
     };
     updateLastSeen();

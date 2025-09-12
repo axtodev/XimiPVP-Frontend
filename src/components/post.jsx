@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import TagSelector from './selectTag';
-import CandidaturaForm from './Candidature/staff';
+import CandidaturaStaffForm from './Candidature/staff';
+import DeveloperForm from './Candidature/developer';
+import BuilderForm from './Candidature/builder';
+import ScreenShareForm from './Candidature/screenshare';
 import '../style/post.css';
 
 async function creaPost(title, content, tags) {
@@ -26,6 +29,7 @@ async function creaPost(title, content, tags) {
 function CreatePost({ user, onClose }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [candidatureContent, setCandidatureContent] = useState({});
   const [tags, setTags] = useState([]);
   const [availableTags, setAvailableTags] = useState([]); 
   const [error, setError] = useState(null);
@@ -43,7 +47,6 @@ function CreatePost({ user, onClose }) {
     };
   }, []);
 
-  // Fetch dati utente aggiornati
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -56,7 +59,6 @@ function CreatePost({ user, onClose }) {
           setCurrentUser(data);
         }
       } catch (error) {
-        console.error('Errore nel fetching utente:', error);
       }
     };
     
@@ -75,55 +77,41 @@ function CreatePost({ user, onClose }) {
 
         const data = await res.json();
 
-        // Debug: verifica i dati
-        console.log('Dati utente corrente:', currentUser);
-        console.log('Ruoli raw dal DB:', currentUser?.roles);
-        console.log('Tutti i tag disponibili:', data);
-
-        // Tag nascosti per ruolo
         const roles = {
           Amministratore: [],
           Owner: [],
-          Moderatore: ['regolamento', 'candidatura staff'],
-          Developer: ['regolamento', 'candidatura developer'],
+          Moderatore: ['annunci','eventi', 'regolamento', 'candidatura staff'],
+          Builder: ['novita', 'annunci','eventi', 'regolamento', 'candidatura builder'],
+          Developer: ['eventi', 'regolamento', 'candidatura developer'],
+          Vip: ['novita', 'annunci', 'eventi', 'regolamento'],
+          Media: ['novita', 'annunci', 'eventi', 'regolamento'],
           Utente: ['novita', 'annunci', 'eventi', 'regolamento'],
         };
 
-        // ID ruolo -> nome
         const roleIdToName = {
           '68825b15b31d59e453e3061f': 'Amministratore',
           '68825b15b31d59e453e30623': 'Developer',
           '68825b15b31d59e453e30626': 'Moderatore',
           '68825b15b31d59e453e30629': 'Utente',
           '68b1b97a0042c37ceb374d8c': 'Owner', 
+          '68b1b5ad2069d4ab1f40868a': 'Builder',
+          '68b1b5ad2069d4ab1f40868e': 'Vip',
+          '68b1b97a0042c37ceb374d95': 'Media'
         };
 
-        // Processa i ruoli dell'utente
         const userRoles = (currentUser?.roles || []).map(r => {
-          // Se è una stringa (ID), cerca il nome nel mapping
-          if (typeof r === 'string') {
-            return roleIdToName[r];
-          }
-          // Se è un oggetto con proprietà name
-          if (r.name) {
-            return r.name;
-          }
-          // Se è un oggetto con _id
-          if (r._id) {
-            return roleIdToName[r._id];
-          }
+          if (typeof r === 'string') return roleIdToName[r];
+          if (r.name) return r.name;
+          if (r._id) return roleIdToName[r._id];
           return null;
         }).filter(Boolean);
 
-        console.log('Ruoli elaborati:', userRoles);
-
-        // Se l'utente ha almeno un ruolo privilegiato (Admin/Owner) vede tutto
         const privilegedRoles = ['Amministratore', 'Owner'];
         const isPrivileged = userRoles.some(role => privilegedRoles.includes(role));
 
         let filteredTags;
         if (isPrivileged) {
-          filteredTags = data; // vede tutto
+          filteredTags = data;
         } else {
           const hiddenSet = new Set(
             userRoles.flatMap(roleName => roles[roleName] || [])
@@ -135,7 +123,6 @@ function CreatePost({ user, onClose }) {
         setAvailableTags(filteredTags);
 
       } catch (err) {
-        console.error("Errore nel caricamento dei tag", err);
         setError("Impossibile caricare i tag");
       } finally {
         setIsLoadingTags(false);
@@ -147,25 +134,49 @@ function CreatePost({ user, onClose }) {
     }
   }, [currentUser]);
 
-  const candidaturaTag = availableTags.find(
-    tag => tag.name.toLowerCase() === 'candidatura staff'
+  const candidaturaMap = {
+    'candidatura staff': CandidaturaStaffForm,
+    'candidatura developer': DeveloperForm,
+    'candidatura builder': BuilderForm,
+    'candidatura screenshare': ScreenShareForm,
+  };
+
+  const candidaturaTag = availableTags.find(tag =>
+    Object.keys(candidaturaMap).includes(tag.name.toLowerCase()) &&
+    tags.includes(tag._id)
   );
-  const isCandidatura = candidaturaTag && tags.includes(candidaturaTag._id);
+
+  const CandidaturaComponent = candidaturaTag
+    ? candidaturaMap[candidaturaTag.name.toLowerCase()]
+    : null;
+
+  const candidaturaKey = candidaturaTag?.name.toLowerCase();
 
   useEffect(() => {
-    if(!isCandidatura) setContent('');
-  }, [isCandidatura]);
+    if (candidaturaKey) {
+      setCandidatureContent(prev => ({
+        ...prev,
+        [candidaturaKey]: prev[candidaturaKey] || ''
+      }));
+    }
+  }, [candidaturaKey]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await creaPost(title, content, tags);
+      // usa il content normale o quello salvato per la candidatura
+      const finalContent = CandidaturaComponent
+        ? candidatureContent[candidaturaKey] || ''
+        : content;
+
+      await creaPost(title, finalContent, tags);
       setSuccess('Post creato con successo!');
       setError(null);
       setTitle('');
       setContent('');
       setTags([]);
+      setCandidatureContent({});
       setTimeout(() => {
         onClose();
       }, 1500);
@@ -194,7 +205,7 @@ function CreatePost({ user, onClose }) {
           <p>Caricamento tag...</p>
         ) : (
           <form onSubmit={handleSubmit} className="post-form">
-            {!isCandidatura && (
+            {!CandidaturaComponent && (
               <input
                 type="text"
                 value={title}
@@ -206,8 +217,17 @@ function CreatePost({ user, onClose }) {
               />
             )}
 
-            {isCandidatura ? (
-              <CandidaturaForm onChange={setContent} />
+            {CandidaturaComponent ? (
+              <CandidaturaComponent
+                key={candidaturaKey} // Forza il re-render quando cambia il tipo
+                value={candidatureContent[candidaturaKey] || ''} // Passa il valore corrente
+                onChange={(val) =>
+                  setCandidatureContent(prev => ({
+                    ...prev,
+                    [candidaturaKey]: val,
+                  }))
+                }
+              />
             ) : (
               <textarea
                 value={content}
@@ -228,7 +248,10 @@ function CreatePost({ user, onClose }) {
               <button 
                 type="submit" 
                 className="submit-button"
-                disabled={isSubmitting || !content.trim() || (!isCandidatura && !title.trim())}
+                disabled={isSubmitting || 
+                  (!CandidaturaComponent && !content.trim()) ||
+                  (CandidaturaComponent && !(candidatureContent[candidaturaKey]?.trim()))
+                }
               >
                 {isSubmitting ? 'Creazione...' : 'Crea Post'}
               </button>

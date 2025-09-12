@@ -15,12 +15,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
-    "react-tsparticles": "^2.9.3",
     "react-window": "^2.1.0",
     "swiper": "^11.2.10",
-    "swiper-react": "^1.0.0",
-    "tsparticles": "^2.9.3",
-    "tsparticles-engine": "^2.9.3"
+    "swiper-react": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

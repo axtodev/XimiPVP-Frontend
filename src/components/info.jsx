@@ -30,7 +30,7 @@ export default function Slider() {
           pagination={{
             clickable: true,
           }}
-          loop={true}          // loop rimane
+          loop={true}          
           breakpoints={{
             0: { slidesPerView: 1 },
             768: { slidesPerView: 2 },

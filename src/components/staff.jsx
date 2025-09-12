@@ -6,7 +6,7 @@ function StaffList() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // <- qui inizializziamo navigate
+  const navigate = useNavigate(); 
 
   const roleOrder = ["Owner", "Amministratore", "Developer", "Moderatore", "Builder"];
 
@@ -23,7 +23,6 @@ function StaffList() {
         setStaff(allStaff);
         setLoading(false);
       } catch (err) {
-        console.error('Errore nel fetch:', err);
         setError("Staff non disponibile");
         setLoading(false);
       }
@@ -61,7 +60,7 @@ function StaffList() {
               <li
                 key={idx}
                 className="staff-member"
-                onClick={() => navigate(`/profile/${member.username}`)} // <- naviga al profilo dello staffer
+                onClick={() => navigate(`/profile/${member.username}`)} 
               >
                 <img
                   src={member.pfp}      

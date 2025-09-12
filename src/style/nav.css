@@ -84,6 +84,7 @@ nav .active:hover{
 @media (max-width: 768px) {
   .burger-menu {
     display: block;
+    z-index: 1501;
   }
   
   .nav-overlay.nav-open {
@@ -97,7 +98,7 @@ nav .active:hover{
     height: 100vh;
     width: 300px;
     clip-path: none;
-    z-index: 999;
+    z-index: 1500;
     flex-direction: column;
     justify-content: flex-start;
     padding-top: 70px;

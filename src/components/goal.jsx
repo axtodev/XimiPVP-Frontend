@@ -12,7 +12,6 @@ const Goal = () => {
         const data = await response.json();
         setCount(data.c || 0);
       } catch (error) {
-        console.error('Errore nel fetch del counter:', error);
       } finally {
         setLoading(false);
       }

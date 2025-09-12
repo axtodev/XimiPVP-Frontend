@@ -17,26 +17,15 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
   ];
 
   const canEditBadges = () => {
-    console.log('currentUserRoles per badge:', currentUserRoles);
-    console.log('is Array?', Array.isArray(currentUserRoles));
-    
     if (!currentUserRoles || !Array.isArray(currentUserRoles)) {
-      console.log('Non è un array valido');
       return false;
     }
     
     const canEdit = currentUserRoles.includes('Owner') || 
                    currentUserRoles.includes('Amministratore');
     
-    console.log('Può modificare badge?', canEdit);
     return canEdit;
   };
-
-  useEffect(() => {
-    console.log('Ruoli utente corrente per badge:', currentUserRoles);
-    console.log('Può modificare badge:', canEditBadges());
-  }, [currentUserRoles]);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -87,7 +76,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
       if (!res.ok) throw new Error('Errore nel salvataggio dei badge');
 
       const updatedUser = await res.json();
-      console.log('Badge aggiornati dal backend:', updatedUser.badges);
       
       const normalizedBadges = updatedUser.badges ? updatedUser.badges.map(badge => ({
         _id: badge._id,
@@ -97,7 +85,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
       updateUserBadges(normalizedBadges);
       
     } catch (err) {
-      console.error('Errore nel salvataggio badge:', err);
     } finally {
       setSaving(false);
     }
@@ -105,7 +92,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
 
   return (
     <div className="profile-badges-wrapper" ref={dropdownRef}>
-      {/* Mostra i badge */}
       <div className="user-badges">
         {userData.badges && userData.badges.length > 0 ? (
           userData.badges.map((badge, index) => (
@@ -124,7 +110,6 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
         </button>
       )}
 
-      {/* Dropdown dei badge */}
       {showBadgeMenu && canEditBadges() && (
         <div className="badge-dropdown-menu">
           <h4>Seleziona Badge</h4>

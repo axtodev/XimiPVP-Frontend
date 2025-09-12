@@ -32,7 +32,6 @@ function OnlinePlayer({ address }) {
         setTimeout(() => setShowNotification(false), 2500);
       })
       .catch(err => {
-        console.error("Errore durante la copia:", err);
         setError("Errore durante la copia dell'IP");
       });
   };

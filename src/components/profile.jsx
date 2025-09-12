@@ -39,7 +39,6 @@ export default function Profile() {
         });
         if (res.ok) {
           const data = await res.json();
-          console.log('Dati utente corrente:', data); 
           
           const roleNames = data.roles ? data.roles.map(role => {
             if (typeof role === 'string') return role;
@@ -50,7 +49,6 @@ export default function Profile() {
           setCurrentUserRoles(roleNames);
         }
       } catch (error) {
-        console.error('Errore nel fetching utente:', error);
       }
     };
     
@@ -66,19 +64,16 @@ export default function Profile() {
       ...prev,
       roles: newRoles.map(role => ({ ...role }))
     }));
-    
-    // Aggiorna anche nello storage per sincronizzazione
+
     const updatedUser = { 
       ...userData, 
       roles: newRoles,
-      // Mantieni altri dati importanti
       username: userData.username,
       pfp: userData.pfp
     };
     
     localStorage.setItem('userData', JSON.stringify(updatedUser));
     
-    // Invia evento per notificare altri componenti
     window.dispatchEvent(new Event('userRolesUpdated'));
   };
 
@@ -89,7 +84,6 @@ export default function Profile() {
     }));
   };
 
-  // Funzione per recuperare i post recenti dell'utente
   const fetchRecentPosts = async (userId) => {
     setLoadingPosts(true);
     try {
@@ -98,10 +92,8 @@ export default function Profile() {
         const data = await res.json();
         setRecentPosts(data.posts || []);
       } else {
-        console.error('Errore nel caricamento dei post');
       }
     } catch (err) {
-      console.error('Errore di connessione:', err);
     } finally {
       setLoadingPosts(false);
     }
@@ -139,7 +131,6 @@ useEffect(() => {
     }
   }
     } catch (err) {
-      console.error(err);
       setError(err.message);
     } finally {
       setIsLoading(false);
@@ -192,7 +183,6 @@ useEffect(() => {
       setFile(null);
       setPreview(null);
     } catch (err) {
-      console.error(err);
       setError(err.message);
     } finally {
       setIsLoading(false);
