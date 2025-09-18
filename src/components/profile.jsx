@@ -104,7 +104,7 @@ useEffect(() => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:3000/users/info/${username}`);
+      const res = await fetch(`https://ximipvp-backend-production.up.railway.app/users/info/${username}`);
       if (!res.ok) throw new Error('Utente non disponibile');
       const data = await res.json();
 
@@ -124,7 +124,7 @@ useEffect(() => {
       setUserData(prev => ({ ...prev, postsCount: count }));
     }
 
-    const countRepliesRes = await fetch(`http://localhost:3000/replies/count/${data._id}`);
+    const countRepliesRes = await fetch(`https://ximipvp-backend-production.up.railway.app/replies/count/${data._id}`);
     if (countRepliesRes.ok) {
       const { count } = await countRepliesRes.json();
       setUserData(prev => ({ ...prev, threadsCount: count }));
