@@ -13,7 +13,7 @@ function Bans() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch('http://localhost:3000/litebans');
+        const res = await fetch('https://ximipvp-backend-production.up.railway.app/litebans');
         
         if (!res.ok) {
           throw new Error(`Errore HTTP: ${res.status}`);
