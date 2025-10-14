@@ -65,7 +65,7 @@ const PolicyPage = () => {
     {
       title: "Contatti",
       points: [
-        "Per domande sulla privacy: assistenza@ximipvp.it"
+        "Per domande sulla privacy: assistenza@ximipvp.eu"
       ]
     }
   ];

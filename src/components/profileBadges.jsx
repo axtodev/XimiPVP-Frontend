@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { API_URL } from '../config/api';
 
 export default function ProfileBadges({ userData, updateUserBadges, currentUserRoles }) {
   const [showBadgeMenu, setShowBadgeMenu] = useState(false);
@@ -64,7 +65,7 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/users/${userData._id}/badges`, {
+      const res = await fetch(`${API_URL}/users/${userData._id}/badges`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

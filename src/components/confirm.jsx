@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config/api';
 import '../style/confirm.css';
 
 function ConfirmEmail() {
@@ -13,7 +14,7 @@ function ConfirmEmail() {
       return;
     }
 
-    fetch('http://localhost:3000/auth/confirm', {
+    fetch(`${API_URL}/auth/confirm`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),

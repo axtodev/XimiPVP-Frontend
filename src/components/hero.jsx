@@ -12,7 +12,11 @@ function Hero(){
             <h2>Chi siamo?</h2>
             </div> 
             <div className="par">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>XimiPvP è un server Minecraft dedicato ai veri appassionati del PvP e delle modalità competitive. Offriamo un ambiente curato e sempre aggiornato, con modalità come KitPvP, Practice, Speedbridge e, a breve, Skyblock.
+
+Il nostro obiettivo è creare un'esperienza di gioco fluida, bilanciata e divertente, sia per i nuovi giocatori che per i più esperti. Il team di XimiPvP lavora costantemente per migliorare le prestazioni del server, introdurre nuove funzionalità e mantenere una community attiva e rispettosa.
+
+Che tu voglia allenarti, competere o semplicemente divertirti con gli amici, su XimiPvP troverai sempre qualcosa da fare. Unisciti a noi e diventa parte della nostra community!</p>
            {/*Sostituisci la riga 15 con il testo */}
             </div>
         </section>

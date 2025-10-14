@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config/api';
 
 const Goal = () => {
   const [count, setCount] = useState(0);
@@ -8,7 +9,7 @@ const Goal = () => {
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const response = await fetch('http://localhost:3000/users/count');
+        const response = await fetch(`${API_URL}/users/count`);
         const data = await response.json();
         setCount(data.c || 0);
       } catch (error) {

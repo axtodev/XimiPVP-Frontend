@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 import TagSelector from './selectTag';
 import CandidaturaStaffForm from './Candidature/staff';
 import DeveloperForm from './Candidature/developer';
@@ -9,7 +10,7 @@ import '../style/post.css';
 async function creaPost(title, content, tags) {
   const token = localStorage.getItem('token');
 
-  const response = await fetch('http://localhost:3000/posts', {
+  const response = await fetch(`${API_URL}/posts`, {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -51,7 +52,7 @@ function CreatePost({ user, onClose }) {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/users/profile', {
+        const res = await fetch(`${API_URL}/users/profile`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -69,7 +70,7 @@ function CreatePost({ user, onClose }) {
     async function fetchTags() {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/tags', {
+        const res = await fetch(`${API_URL}/tags`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

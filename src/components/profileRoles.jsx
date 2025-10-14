@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { API_URL } from '../config/api';
 
 export default function ProfileRoles({ userData, updateUserRoles, currentUserRoles }) {
   const [showRoleMenu, setShowRoleMenu] = useState(false);
@@ -64,7 +65,7 @@ const canEditRoles = () => {
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/users/${userData._id}/roles`, {
+      const res = await fetch(`${API_URL}/users/${userData._id}/roles`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 import '../style/staff.css';
 
 function StaffList() {
@@ -15,7 +16,7 @@ function StaffList() {
       try {
         const allStaff = [];
         for (const role of roleOrder) {
-          const res = await fetch(`http://localhost:3000/users/by-role?role=${encodeURIComponent(role)}`);
+          const res = await fetch(`${API_URL}/users/by-role?role=${encodeURIComponent(role)}`);
           const data = await res.json();
           const membersWithRole = data.map(member => ({ ...member, role }));
           allStaff.push(...membersWithRole);

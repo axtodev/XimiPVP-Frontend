@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config/api';
 import '../style/ban.css'
 
 function Bans() {
@@ -13,7 +14,7 @@ function Bans() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch('http://localhost:3000/litebans');
+        const res = await fetch(`${API_URL}/litebans`);
         
         if (!res.ok) {
           throw new Error(`Errore HTTP: ${res.status}`);

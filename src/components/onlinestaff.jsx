@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../config/api';
 import '../style/onlineStaff.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,7 +41,7 @@ export default function StaffOnline({ token }) {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch('http://localhost:3000/users/staff/online');
+        const res = await fetch(`${API_URL}/users/staff/online`);
         if (!res.ok) throw new Error(`Errore: ${res.status}`);
         const data = await res.json();
 
@@ -67,7 +68,7 @@ export default function StaffOnline({ token }) {
     if (!token) return;
     const updateLastSeen = async () => {
       try {
-        const res = await fetch('http://localhost:3000/users/lastseen', {
+        const res = await fetch(`${API_URL}/users/lastseen`, {
           method: 'PATCH',
           headers: { Authorization: `Bearer ${token}` },
         });
