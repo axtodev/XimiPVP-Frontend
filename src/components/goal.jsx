@@ -8,7 +8,7 @@ const Goal = () => {
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const response = await fetch('http://ximi.ximipvp.com:3000/users/count');
+        const response = await fetch('https://api.ximi.lol/users/count');
         const data = await response.json();
         setCount(data.c || 0);
       } catch (error) {
