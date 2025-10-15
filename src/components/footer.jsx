@@ -9,7 +9,7 @@ function Footer() {
                 <div className="section">
                     <h2>Chi siamo?</h2>
                     <p>
-                        XimiPvP è un server Minecraft dedicato al PvP e al divertimento. Nato dalla passione per il gaming, offre un’esperienza unica con modalità competitive e una community attiva dal primo giorno.
+                        XimiPvP è un server Minecraft dedicato al PvP e al divertimento. Nato dalla passione per Java, offriamo un’esperienza unica con modalità competitive e una community attiva.
                     </p>
                     {/*Sostituisci la riga 12 con il testo */}
                 </div>
