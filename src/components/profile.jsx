@@ -34,7 +34,7 @@ export default function Profile() {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://ximi.ximipvp.com:3000/users/profile', {
+        const res = await fetch('https://api.ximi.lol/users/profile', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -87,7 +87,7 @@ export default function Profile() {
   const fetchRecentPosts = async (userId) => {
     setLoadingPosts(true);
     try {
-      const res = await fetch(`http://ximi.ximipvp.com:3000/posts/user/${userId}?limit=3`);
+      const res = await fetch(`https://api.ximi.lol/posts/user/${userId}?limit=3`);
       if (res.ok) {
         const data = await res.json();
         setRecentPosts(data.posts || []);
@@ -104,7 +104,7 @@ useEffect(() => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://ximi.ximipvp.com:3000/users/info/${username}`);
+      const res = await fetch(`https://api.ximi.lol/users/info/${username}`);
       if (!res.ok) throw new Error('Utente non disponibile');
       const data = await res.json();
 
@@ -118,13 +118,13 @@ useEffect(() => {
   if (data._id) {
     fetchRecentPosts(data._id);
 
-    const countPostsRes = await fetch(`http://ximi.ximipvp.com:3000/posts/count/${data._id}`);
+    const countPostsRes = await fetch(`https://api.ximi.lol/posts/count/${data._id}`);
     if (countPostsRes.ok) {
       const { count } = await countPostsRes.json();
       setUserData(prev => ({ ...prev, postsCount: count }));
     }
 
-    const countRepliesRes = await fetch(`http://ximi.ximipvp.com:3000/replies/count/${data._id}`);
+    const countRepliesRes = await fetch(`https://api.ximi.lol/replies/count/${data._id}`);
     if (countRepliesRes.ok) {
       const { count } = await countRepliesRes.json();
       setUserData(prev => ({ ...prev, threadsCount: count }));
@@ -167,7 +167,7 @@ useEffect(() => {
     formData.append('pfp', file);
 
     try {
-      const res = await fetch('http://ximi.ximipvp.com:3000/users/profile-picture', {
+      const res = await fetch('https://api.ximi.lol/users/profile-picture', {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: formData,
