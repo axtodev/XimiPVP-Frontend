@@ -4,14 +4,14 @@ import '../style/reply.css';
 async function fetchReplies(postId) {
   const token = localStorage.getItem('token');
   
-  const res = await fetch(`https://ximipvp-backend-production.up.railway.app/replies/post/${postId}`, {
+  const res = await fetch(`https://api.ximi.lol/replies/post/${postId}`, {
     headers: { 'Authorization': `Bearer ${token}` }
   });
   
   if (!res.ok) {
     if (res.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
+      window.location.href = '/#/login';
     }
     throw new Error('Errore nel caricamento delle reply');
   }
@@ -20,7 +20,7 @@ async function fetchReplies(postId) {
 
 async function createReply(postId, content) {
   const token = localStorage.getItem('token');
-  const res = await fetch('https://ximipvp-backend-production.up.railway.app/replies', {
+  const res = await fetch('https://api.ximi.lol/replies', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify({ content, post: postId }),
