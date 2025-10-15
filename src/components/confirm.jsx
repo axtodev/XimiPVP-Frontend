@@ -5,7 +5,9 @@ function ConfirmEmail() {
   const [message, setMessage] = useState({ text: 'Conferma in corso...', type: 'loading' });
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    // Con Hash Router, i parametri sono in window.location.hash
+    const hashParts = window.location.hash.split('?');
+    const urlParams = new URLSearchParams(hashParts[1] || '');
     const token = urlParams.get('token');
 
     if (!token) {
@@ -13,7 +15,7 @@ function ConfirmEmail() {
       return;
     }
 
-    fetch('https://ximipvp-backend-production.up.railway.app/auth/confirm', {
+    fetch('https://api.ximi.lol/auth/confirm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
