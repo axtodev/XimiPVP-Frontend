@@ -40,7 +40,7 @@ export default function StaffOnline({ token }) {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/staff/online');
+        const res = await fetch('https://api.ximi.lol/users/staff/online');
         if (!res.ok) throw new Error(`Errore: ${res.status}`);
         const data = await res.json();
 
@@ -67,7 +67,7 @@ export default function StaffOnline({ token }) {
     if (!token) return;
     const updateLastSeen = async () => {
       try {
-        const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/lastseen', {
+        const res = await fetch('https://api.ximi.lol/users/lastseen', {
           method: 'PATCH',
           headers: { Authorization: `Bearer ${token}` },
         });
