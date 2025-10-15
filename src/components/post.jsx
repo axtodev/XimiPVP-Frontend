@@ -9,7 +9,7 @@ import '../style/post.css';
 async function creaPost(title, content, tags) {
   const token = localStorage.getItem('token');
 
-  const response = await fetch('http://localhost:3000/posts', {
+  const response = await fetch('https://api.ximi.lol/posts', {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ function CreatePost({ user, onClose }) {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('http://localhost:3000/users/profile', {
+        const res = await fetch('https://api.ximi.lol/users/profile', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -69,7 +69,7 @@ function CreatePost({ user, onClose }) {
     async function fetchTags() {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('https://ximipvp-backend-production.up.railway.app/tags', {
+        const res = await fetch('https://api.ximi.lol/tags', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
