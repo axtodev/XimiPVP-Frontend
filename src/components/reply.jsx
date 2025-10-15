@@ -115,8 +115,8 @@ const handleSubmit = async (e) => {
             ) : (
               sortedReplies.map(r => {
                 const roles = r.author?.roles || [];
-                const isVip = roles.includes("68b1b5ad2069d4ab1f40868e");
-                const isMedia = roles.includes("68b1b97a0042c37ceb374d95");
+                const isVip = roles.includes("68efd499ebef2c1956dff96e");
+                const isMedia = roles.includes("68efc5d754fda135c66de403");
                 const staff = isStaffUser(roles);
                 const username = r.author?.username || "Utente eliminato";
                 const pfp = r.author?.pfp || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg";
@@ -130,16 +130,16 @@ const handleSubmit = async (e) => {
                           let roleName = "";
                           let roleClass = "";
 
-                          if (roleId === "68825b15b31d59e453e3061f") { 
+                          if (roleId === "68efd499ebef2c1956dff96a") { 
                             roleName = "[Admin]";
                             roleClass = "admin";
-                          } else if (roleId === "68825b15b31d59e453e30623") { 
+                          } else if (roleId === "68efd499ebef2c1956dff96b") { 
                             roleName = "[Developer]";
                             roleClass = "dev";
-                          } else if (roleId === "68825b15b31d59e453e30626") {
+                          } else if (roleId === "68efd499ebef2c1956dff96c") {
                             roleName = "[Mod]";
                             roleClass = "mod";
-                          } else if (roleId === "68b1b97a0042c37ceb374d8c") {
+                          } else if (roleId === "68efbfb7ebef2c1956dff5e0") {
                             roleName = "[Owner]";
                             roleClass = "owner";
                           }
