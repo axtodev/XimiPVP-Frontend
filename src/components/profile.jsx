@@ -34,7 +34,7 @@ export default function Profile() {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch('https://ximipvp-backend-production.up.railway.app/users/profile', {
+        const res = await fetch('http://ximi.ximipvp.com:3000/users/profile', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
