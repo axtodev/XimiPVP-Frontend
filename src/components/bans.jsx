@@ -13,7 +13,7 @@ function Bans() {
       try {
         setLoading(true);
         setError(null);
-        const res = await fetch('http://34.154.135.220:3000/litebans');
+        const res = await fetch('https://api.ximi.lol/litebans');
         
         if (!res.ok) {
           throw new Error(`Errore HTTP: ${res.status}`);
