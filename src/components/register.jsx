@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config/api';
 import '../style/register.css';
 
 function Register() {
@@ -26,7 +25,7 @@ function Register() {
     setError('');
 
     try {
-      const res = await fetch('api.ximi.lol/auth/register', {
+      const res = await fetch('https://ximipvp-backend-production.up.railway.app/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
