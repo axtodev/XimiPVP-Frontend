@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config/api';
 import '../style/register.css';
 
 function Register() {
   const [form, setForm] = useState({ email: '', password: '', username: '' });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Se l'utente è già loggato, reindirizza alla home
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,7 +26,7 @@ function Register() {
     setError('');
 
     try {
-      const res = await fetch('api.ximi.lol/auth/register', {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -28,12 +38,36 @@ function Register() {
         throw new Error(data.message || 'Registration failed');
       }
 
-      navigate('/login');
+      setSuccess(true);
 
     } catch (err) {
       setError(err.message);
     }
   };
+
+  if (success) {
+    return (
+      <div className="register-container">
+        <div className="register-success-box">
+          <div className="success-icon">✓</div>
+          <h2>Registrazione Avvenuta con Successo!</h2>
+          <p className="success-message">
+            Ti abbiamo inviato un'email di conferma all'indirizzo <strong>{form.email}</strong>.
+            <br />
+            Controlla la tua casella di posta e clicca sul link per attivare il tuo account.
+          </p>
+          <div className="success-actions">
+            <button onClick={() => navigate('/login')} className="btn-primary">
+              Vai al Login
+            </button>
+            <button onClick={() => navigate('/')} className="btn-secondary">
+              Torna alla Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="register-container">
@@ -69,7 +103,7 @@ function Register() {
 
         <div className="register-links">
           <p>Hai già un account?</p>
-          <a href="/#/login">Accedi</a>
+          <a href="/login">Accedi</a>
         </div>
       </div>
     </div>
