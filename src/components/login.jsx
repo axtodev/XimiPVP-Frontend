@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config/api';
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
@@ -21,12 +20,11 @@ function Login({ onLoginSuccess }) {
   setError('');
 
   try {
-    const res = await fetch(`api.ximi.lol/auth/login`, {
+    const res = await fetch('https://api.ximi.lol/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-
     if (!res.ok) {
       throw new Error('Credenziali non valide');
     }
@@ -74,7 +72,7 @@ function Login({ onLoginSuccess }) {
           <br />
            <div className="login-links">
           <p>Non hai un account?</p>
-          <a href="/#/register">Registrati</a>
+          <a href="#/register">Registrati</a>
         </div>
           {error && <p className="login-error">{error}</p>}
         </form>
