@@ -9,10 +9,10 @@ function Hero(){
         <div className="content-wrapper">
         <section>
             <div className="title">
-            <h2>Chi siamo?</h2>
+            <h2>Come è nato XimiPvP?</h2>
             </div> 
             <div className="par">
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            <p>XimiPvP è nato a marzo 2024 con l’obiettivo di superare tutti i server Practice di Minecraft. Il progetto ha avuto subito grande successo, ma il problema non erano i soldi, bensì il tempo. Dopo una pausa, a giugno 2025 abbiamo deciso di riaprirlo, con più esperienza e la stessa passione di sempre.</p>
            {/*Sostituisci la riga 15 con il testo */}
             </div>
         </section>
