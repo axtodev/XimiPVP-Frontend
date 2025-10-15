@@ -64,7 +64,7 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
     setSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`https://ximipvp-backend-production.up.railway.app/users/${userData._id}/badges`, {
+      const res = await fetch(`https://api.ximi.lol/users/${userData._id}/badges`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
