@@ -6,7 +6,7 @@ L'API backend è stata collegata con successo al frontend.
 
 ### URL API Configurato
 ```
-https://shitbackend.vercel.app
+http://ximi.ximipvp.com:3000
 ```
 
 ## Come Funziona
@@ -42,7 +42,7 @@ Tutti i seguenti componenti ora usano la configurazione centralizzata:
 ### Produzione
 Modifica il file `.env`:
 ```bash
-VITE_API_URL=https://tuo-nuovo-backend.com
+VITE_API_URL=http://ximi.ximipvp.com:3000
 ```
 
 ### Sviluppo Locale
