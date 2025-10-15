@@ -26,7 +26,7 @@ function Register() {
     setError('');
 
     try {
-      const res = await fetch('https://ximipvp-backend-production.up.railway.app/auth/register', {
+      const res = await fetch('api.ximi.lol/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
