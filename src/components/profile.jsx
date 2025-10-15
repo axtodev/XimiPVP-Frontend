@@ -118,7 +118,7 @@ useEffect(() => {
   if (data._id) {
     fetchRecentPosts(data._id);
 
-    const countPostsRes = await fetch(`https://ximipvp-backend-production.up.railway.app/posts/count/${data._id}`);
+    const countPostsRes = await fetch(`http://ximi.ximipvp.com:3000/posts/count/${data._id}`);
     if (countPostsRes.ok) {
       const { count } = await countPostsRes.json();
       setUserData(prev => ({ ...prev, postsCount: count }));
