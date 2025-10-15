@@ -6,14 +6,14 @@ export default function ProfileBadges({ userData, updateUserBadges, currentUserR
   const dropdownRef = useRef(null);
 
   const allBadges = [
-    { _id: '68b22595f070ae56104991c6', name: 'Donator' },
-    { _id: '68b22595f070ae56104991ca', name: 'Veterano' },
-    { _id: '68b22595f070ae56104991cd', name: 'Staff' },
-    { _id: '68b22595f070ae56104991d0', name: 'Beta Tester' },
-    { _id: '68b22595f070ae56104991d3', name: 'VIP' },
-    { _id: '68b22595f070ae56104991d6', name: 'Founder' },
-    { _id: '68b22595f070ae56104991d9', name: 'Sviluppo' },
-    { _id: '68b22a1bd1132a4472812809', name: '1# Donator' },
+    { _id: '68efc99febef2c1956dff7d2', name: 'Donator' },
+    { _id: '68efc99febef2c1956dff7d3', name: 'Veterano' },
+    { _id: '68efc99febef2c1956dff7d4', name: 'Staff' },
+    { _id: '68efc99febef2c1956dff7d5', name: 'Beta Tester' },
+    { _id: '68efc99febef2c1956dff7d6', name: 'VIP' },
+    { _id: '68efc99febef2c1956dff7d7', name: 'Founder' },
+    { _id: '68efc99febef2c1956dff7d8', name: 'Sviluppo' },
+    { _id: '68efc99febef2c1956dff7d1', name: '1# Donator' },
   ];
 
   const canEditBadges = () => {
