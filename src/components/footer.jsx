@@ -9,7 +9,7 @@ function Footer() {
                 <div className="section">
                     <h2>Chi siamo?</h2>
                     <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                        XimiPvP è un server Minecraft dedicato al PvP e al divertimento. Nato dalla passione per il gaming, offre un’esperienza unica con modalità competitive e una community attiva dal primo giorno.
                     </p>
                     {/*Sostituisci la riga 12 con il testo */}
                 </div>
