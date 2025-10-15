@@ -35,6 +35,30 @@ function Register() {
     }
   };
 
+  if (success) {
+    return (
+      <div className="register-container">
+        <div className="register-success-box">
+          <div className="success-icon">✓</div>
+          <h2>Registrazione Avvenuta con Successo!</h2>
+          <p className="success-message">
+            Ti abbiamo inviato un'email di conferma all'indirizzo <strong>{form.email}</strong>.
+            <br />
+            Controlla la tua casella di posta e clicca sul link per attivare il tuo account.
+          </p>
+          <div className="success-actions">
+            <button onClick={() => navigate('/login')} className="btn-primary">
+              Vai al Login
+            </button>
+            <button onClick={() => navigate('/')} className="btn-secondary">
+              Torna alla Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="register-container">
       <div className="register-form">
