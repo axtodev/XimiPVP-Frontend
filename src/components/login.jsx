@@ -10,7 +10,7 @@ function Login({ onLoginSuccess }) {
   setError('');
 
   try {
-    const res = await fetch('https://ximipvp-backend-production.up.railway.app/auth/login', {
+    const res = await fetch('https://api.ximi.lol/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
