@@ -11,6 +11,8 @@
   import Logins from './pages/auth/login.jsx';
   import Registers from './pages/auth/register.jsx';
   import Confirm from './pages/auth/confirm.jsx';
+  import ResetPassword from './pages/auth/ResetPassword.jsx';
+  import ResetPasswordConfirm from './pages/auth/ResetPasswordConfirm.jsx';
   import Forum from './pages/forum.jsx';
   import Profile from './pages/profile.jsx';
   import Bans from './pages/ban.jsx'
@@ -35,7 +37,7 @@
 
     return (
       <>
-        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' &&(  
+        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' && location.pathname !== '/reset-password' && location.pathname !== '/reset-password-confirm' &&(  
           <>
             <Head />
             <Nav />
@@ -53,6 +55,8 @@
       <Route path="/staff" element={<Staff />} />
       <Route path="/login" element={<Logins />} />
       <Route path="/confirm" element={<Confirm />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />} />
       <Route path="/forum" element={<Forum />} />
       <Route path="/profile/:username" element={<Profile />} />
       <Route path="/bans" element={<Bans />} />
