@@ -70,10 +70,13 @@ function Login({ onLoginSuccess }) {
           />
           <button type="submit">Login</button>
           <br />
-           <div className="login-links">
-          <p>Non hai un account?</p>
-          <a href="#/register">Registrati</a>
-        </div>
+          <div className="forgot-password-link">
+            <a href="#/reset-password">Password dimenticata?</a>
+          </div>
+          <div className="login-links">
+            <p>Non hai un account?</p>
+            <a href="#/register">Registrati</a>
+          </div>
           {error && <p className="login-error">{error}</p>}
         </form>
       </div>
