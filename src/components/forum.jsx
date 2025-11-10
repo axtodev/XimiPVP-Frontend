@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
+import { API_URL } from '../config/api';
+=======
+<<<<<<< HEAD
+=======
+import { API_URL } from '../config/api';
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
 import ReplyBlock from './reply';
 
 export default function ForumPage({ user = null }) {
@@ -81,7 +89,15 @@ export default function ForumPage({ user = null }) {
       try {
         const token = localStorage.getItem('token');
         if (token) {
+<<<<<<< HEAD
+          const res = await fetch(`${API_URL}/users/profile`, {
+=======
+<<<<<<< HEAD
           const res = await fetch('https://api.ximi.lol/users/profile', {
+=======
+          const res = await fetch(`${API_URL}/users/profile`, {
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (res.ok) {
@@ -104,7 +120,15 @@ export default function ForumPage({ user = null }) {
     const fetchAndOrganizePosts = async () => {
       setLoading(true);
       try {
+<<<<<<< HEAD
+        const res = await fetch(`${API_URL}/posts`);
+=======
+<<<<<<< HEAD
         const res = await fetch('https://api.ximi.lol/posts');
+=======
+        const res = await fetch(`${API_URL}/posts`);
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
         const posts = await res.json();
 
         const organized = JSON.parse(JSON.stringify(categories));
@@ -157,7 +181,15 @@ export default function ForumPage({ user = null }) {
 
     const updateLastSeen = async (token) => {
       try {
+<<<<<<< HEAD
+        await fetch(`${API_URL}/users/last-seen`, {
+=======
+<<<<<<< HEAD
         await fetch('https://api.ximi.lol/users/last-seen', {
+=======
+        await fetch(`${API_URL}/users/last-seen`, {
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
           method: 'PATCH',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -199,6 +231,9 @@ export default function ForumPage({ user = null }) {
                       key={sub.key}
                       className="subcategory-item"
                       onClick={() => {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
                         setSelectedCategory(catKey);
                         setSelectedSubCategory(sub.key);
                       }}
@@ -277,3 +312,88 @@ export default function ForumPage({ user = null }) {
     </div>
   );
 }
+=======
+>>>>>>> 0c76dc1 (Initial commit)
+                        setSelectedCategory(catKey);
+                        setSelectedSubCategory(sub.key);
+                      }}
+                    >
+                      {sub.label}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : selectedSubCategory && !selectedPost ? (
+        <>
+          <button onClick={() => setSelectedSubCategory(null)} style={{ marginBottom: '1rem' }}>
+            ← Indietro
+          </button>
+
+          {loading ? (
+            <p>Caricamento post...</p>
+          ) : filteredPosts().length > 0 ? (
+            filteredPosts().map(post => (
+              <article
+                key={post.id}
+                className="thread"
+                style={{ cursor: 'pointer' }}
+                onClick={() => setSelectedPost(post)}
+              >
+                <h3 className="post-title">{post.title}</h3>
+                <p className="post-preview">{post.content.slice(0, 100)}...</p>
+                <small className="post-meta">
+                  Autore: {post.author} | {post.timestamp}
+                </small>
+              </article>
+            ))
+          ) : (
+            <p>Nessun post in questa sotto-categoria.</p>
+          )}
+        </>
+      ) : selectedPost ? (
+        <div className="post-wrapper">
+          <section className="main-content">
+            <button 
+              className="btn back-button"
+              onClick={() => setSelectedPost(null)}
+            >
+              ← Torna ai post
+            </button>
+            
+            <div className="thread-container">
+              <h1 className="thread-title">{selectedPost.title}</h1>
+              <div className="thread-content">
+                {selectedPost.content.split('\n').map((paragraph, i) => (
+                  <p key={i} className="par">{paragraph}</p>
+                ))}
+
+                <div className="thread-meta">
+                  <span className="author">Autore: {selectedPost.author}</span>
+                  <span className="timestamp">{selectedPost.timestamp}</span>
+                  {selectedPost.tags && selectedPost.tags.length > 0 && (
+                    <div className="tags">
+                      {selectedPost.tags.map((tag, i) => (
+                        <span key={i} className="tag">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+          <ReplyBlock postId={selectedPost.id} user={currentUser} />
+        </div>
+      ) : null}
+    </div>
+  );
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)

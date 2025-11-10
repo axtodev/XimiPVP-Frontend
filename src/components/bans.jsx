@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
+import { API_URL } from '../config/api';
+=======
+<<<<<<< HEAD
+=======
+import { API_URL } from '../config/api';
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
 import '../style/ban.css'
 
 function Bans() {
@@ -13,7 +21,15 @@ function Bans() {
       try {
         setLoading(true);
         setError(null);
+<<<<<<< HEAD
+        const res = await fetch(`${API_URL}/litebans`);
+=======
+<<<<<<< HEAD
         const res = await fetch('https://api.ximi.lol/litebans');
+=======
+        const res = await fetch(`${API_URL}/litebans`);
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
         
         if (!res.ok) {
           throw new Error(`Errore HTTP: ${res.status}`);
@@ -196,4 +212,12 @@ function Bans() {
   );
 }
 
+<<<<<<< HEAD
 export default Bans;
+=======
+<<<<<<< HEAD
+export default Bans;
+=======
+export default Bans;
+>>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
+>>>>>>> 0c76dc1 (Initial commit)
