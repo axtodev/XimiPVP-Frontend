@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import '../style/nav.css';
 import { LayoutDashboard, MessageCircle, ShoppingCart, Users, ShieldBan, Menu, X } from 'lucide-react';
@@ -184,9 +181,5 @@ function Nav() {
     </>
   );
 }
-
-<<<<<<< HEAD
-=======
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
 >>>>>>> 0c76dc1 (Initial commit)
 export default Nav;
