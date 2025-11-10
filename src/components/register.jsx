@@ -1,27 +1,10 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config/api';
-=======
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-=======
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../config/api';
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
 import '../style/register.css';
 
 function Register() {
   const [form, setForm] = useState({ email: '', password: '', username: '' });
   const [error, setError] = useState('');
-<<<<<<< HEAD
-  const navigate = useNavigate();
-
-=======
-<<<<<<< HEAD
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
@@ -33,11 +16,6 @@ function Register() {
     }
   }, [navigate]);
 
-=======
-  const navigate = useNavigate();
-
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -47,15 +25,7 @@ function Register() {
     setError('');
 
     try {
-<<<<<<< HEAD
-      const res = await fetch(`${API_URL}/auth/register`, {
-=======
-<<<<<<< HEAD
       const res = await fetch('https://api.ximi.lol/auth/register', {
-=======
-      const res = await fetch(`${API_URL}/auth/register`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -67,24 +37,13 @@ function Register() {
         throw new Error(data.message || 'Registration failed');
       }
 
-<<<<<<< HEAD
-      navigate('/login');
-=======
-<<<<<<< HEAD
       setSuccess(true);
-=======
-      navigate('/login');
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
 
     } catch (err) {
       setError(err.message);
     }
   };
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
   if (success) {
     return (
       <div className="register-container">
@@ -109,9 +68,6 @@ function Register() {
     );
   }
 
-=======
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
   return (
     <div className="register-container">
       <div className="register-form">
@@ -146,19 +102,11 @@ function Register() {
 
         <div className="register-links">
           <p>Hai già un account?</p>
-          <a href="/login">Accedi</a>
+          <a href="#/login">Accedi</a>
         </div>
       </div>
     </div>
   );
 }
 
-<<<<<<< HEAD
 export default Register;
-=======
-<<<<<<< HEAD
-export default Register;
-=======
-export default Register;
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)

@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { API_URL } from '../config/api';
-=======
-<<<<<<< HEAD
-=======
-import { API_URL } from '../config/api';
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
 import '../style/confirm.css';
 
 function ConfirmEmail() {
   const [message, setMessage] = useState({ text: 'Conferma in corso...', type: 'loading' });
 
   useEffect(() => {
-<<<<<<< HEAD
-    const urlParams = new URLSearchParams(window.location.search);
-=======
-<<<<<<< HEAD
     // Con Hash Router, i parametri sono in window.location.hash
     const hashParts = window.location.hash.split('?');
     const urlParams = new URLSearchParams(hashParts[1] || '');
-=======
-    const urlParams = new URLSearchParams(window.location.search);
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
     const token = urlParams.get('token');
 
     if (!token) {
@@ -31,15 +15,7 @@ function ConfirmEmail() {
       return;
     }
 
-<<<<<<< HEAD
-    fetch(`${API_URL}/auth/confirm`, {
-=======
-<<<<<<< HEAD
     fetch('https://api.ximi.lol/auth/confirm', {
-=======
-    fetch(`${API_URL}/auth/confirm`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
@@ -80,12 +56,4 @@ function ConfirmEmail() {
   );
 }
 
-<<<<<<< HEAD
 export default ConfirmEmail;
-=======
-<<<<<<< HEAD
-export default ConfirmEmail;
-=======
-export default ConfirmEmail;
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)

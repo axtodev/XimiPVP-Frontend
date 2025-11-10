@@ -1,13 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-<<<<<<< HEAD
-import { API_URL } from '../config/api';
-=======
-<<<<<<< HEAD
-=======
-import { API_URL } from '../config/api';
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
 import ProfileRoles from './profileRoles';
 import ProfileBadges from './profileBadges';
 import '../style/profile.css';
@@ -42,15 +34,7 @@ export default function Profile() {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-<<<<<<< HEAD
-        const res = await fetch(`${API_URL}/users/profile`, {
-=======
-<<<<<<< HEAD
         const res = await fetch('https://api.ximi.lol/users/profile', {
-=======
-        const res = await fetch(`${API_URL}/users/profile`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -103,15 +87,7 @@ export default function Profile() {
   const fetchRecentPosts = async (userId) => {
     setLoadingPosts(true);
     try {
-<<<<<<< HEAD
-      const res = await fetch(`${API_URL}/posts/user/${userId}?limit=3`);
-=======
-<<<<<<< HEAD
       const res = await fetch(`https://api.ximi.lol/posts/user/${userId}?limit=3`);
-=======
-      const res = await fetch(`${API_URL}/posts/user/${userId}?limit=3`);
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
       if (res.ok) {
         const data = await res.json();
         setRecentPosts(data.posts || []);
@@ -128,15 +104,7 @@ useEffect(() => {
     setIsLoading(true);
     setError(null);
     try {
-<<<<<<< HEAD
-      const res = await fetch(`${API_URL}/users/info/${username}`);
-=======
-<<<<<<< HEAD
       const res = await fetch(`https://api.ximi.lol/users/info/${username}`);
-=======
-      const res = await fetch(`${API_URL}/users/info/${username}`);
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
       if (!res.ok) throw new Error('Utente non disponibile');
       const data = await res.json();
 
@@ -150,29 +118,13 @@ useEffect(() => {
   if (data._id) {
     fetchRecentPosts(data._id);
 
-<<<<<<< HEAD
-    const countPostsRes = await fetch(`${API_URL}/posts/count/${data._id}`);
-=======
-<<<<<<< HEAD
     const countPostsRes = await fetch(`https://api.ximi.lol/posts/count/${data._id}`);
-=======
-    const countPostsRes = await fetch(`${API_URL}/posts/count/${data._id}`);
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
     if (countPostsRes.ok) {
       const { count } = await countPostsRes.json();
       setUserData(prev => ({ ...prev, postsCount: count }));
     }
 
-<<<<<<< HEAD
-    const countRepliesRes = await fetch(`${API_URL}/replies/count/${data._id}`);
-=======
-<<<<<<< HEAD
     const countRepliesRes = await fetch(`https://api.ximi.lol/replies/count/${data._id}`);
-=======
-    const countRepliesRes = await fetch(`${API_URL}/replies/count/${data._id}`);
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
     if (countRepliesRes.ok) {
       const { count } = await countRepliesRes.json();
       setUserData(prev => ({ ...prev, threadsCount: count }));
@@ -215,15 +167,7 @@ useEffect(() => {
     formData.append('pfp', file);
 
     try {
-<<<<<<< HEAD
-      const res = await fetch(`${API_URL}/users/profile-picture`, {
-=======
-<<<<<<< HEAD
       const res = await fetch('https://api.ximi.lol/users/profile-picture', {
-=======
-      const res = await fetch(`${API_URL}/users/profile-picture`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         body: formData,
@@ -258,9 +202,6 @@ useEffect(() => {
   };
 
   const getLastSeen = (lastSeen) => {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     if (!lastSeen) return "Data non disponibile";
     const date = new Date(lastSeen);
     const now = new Date();
@@ -453,202 +394,3 @@ useEffect(() => {
     </div>
   );
 }
-=======
->>>>>>> 0c76dc1 (Initial commit)
-    if (!lastSeen) return "Data non disponibile";
-    const date = new Date(lastSeen);
-    const now = new Date();
-    const diffMs = now - date;
-    if (diffMs < 5*60*1000) return "Online";
-    if (diffMs < 60*60*1000) return `${Math.floor(diffMs/60000)} minuti fa`;
-    if (date.toDateString() === now.toDateString()) return `${Math.floor(diffMs/(60*60*1000))} ore fa`;
-    return date.toLocaleDateString('it-IT');
-  };
-
-  const seen = getLastSeen(userData.lastSeen);
-
-  function formatDateOnly(dateString) {
-    if (!dateString) return 'N/A';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('it-IT', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
-  }
-
-  if (isLoading) {
-    return (
-      <div className="profile-full-width">
-        <div className="profile-container">
-          <div className="loading-spinner">Caricamento...</div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error && !userData.username) {
-    return (
-      <div className="profile-full-width">
-        <div className="profile-container">
-          <div className="error-message">
-            <h3>Errore</h3>
-            <p>{error}</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="profile-full-width">
-      <div className="profile-header-banner"></div>
-      
-      <div className="profile-container">
-        {error && (
-          <div className="error-banner">
-            {error}
-            <button onClick={() => setError(null)}>X</button>
-          </div>
-        )}
-
-        <div className="profile-content">
-          <div className="profile-main">
-            <div className="profile-main-header">
-              <h1 className='title'>Profilo Utente</h1>
-            </div>
-
-            <div className="profile-card">
-              <div className="profile-header">
-                <div className="profile-picture-container"  onClick={() => isMyProfile && inputRef.current.click()}>
-                  <img
-                    src={preview || userData.pfp || 'https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg'}
-                    alt="Profile"
-                    className="profile-image"
-                  />
-                  {isMyProfile && (
-                    <div className="profile-picture-overlay">
-                      <span>Cambia immagine</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="profile-info">
-                  <h3 className="profile-username">{userData.username || 'Nome Utente'}</h3>
-                  <div className="profile-roles-container">
-                  <ProfileRoles 
-                    userData={userData} 
-                    updateUserRoles={updateUserRoles}
-                    currentUserRoles={currentUserRoles} 
-                  />
-                  </div>
-                  
-                  <div className="profile-stats">
-                    <div className="stat-item">
-                      <span className="stat-number">{userData.postsCount || 0}</span>
-                      <span className="stat-label">Post</span>
-                    </div>
-                    <div className="stat-item">
-                      <span className="stat-number">{userData.threadsCount || 0}</span>
-                      <span className="stat-label">Thread</span>
-                    </div>
-                    <div className="stat-item">
-                      <span className="stat-number">{userData.likesReceived || 0}</span>
-                      <span className="stat-label">Prossimamente</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <input
-                ref={inputRef}
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handleFileChange}
-              />
-
-              {isMyProfile && file && (
-                <div className="profile-save-button-container">
-                  <button 
-                    onClick={handleSave} 
-                    className="profile-save-button"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Salvataggio...' : 'Salva Nuova Immagine'}
-                  </button>
-                  <button 
-                    onClick={() => {
-                      setFile(null);
-                      setPreview(null);
-                    }} 
-                    className="profile-cancel-button"
-                  >
-                    Annulla
-                  </button>
-                </div>
-              )}
-
-              <div className="profile-details">
-                <div className="profile-detail-item">
-                  <p>Ultimo Accesso:</p> 
-                  <p className={`last-seen ${seen === "Online" ? "Online" : ""}`}>{seen}</p>
-                </div>
-                <div className="profile-detail-item">
-                  <p>Iscritto da:</p> 
-                  <p>{formatDateOnly(userData.createdAt)}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="profile-sidebar">
-            <div className="sidebar-section">
-              <h3>Attività Recente</h3>
-              <div className="recent-activity">
-                {loadingPosts ? (
-                  <p>Caricamento attività...</p>
-                ) : recentPosts.length > 0 ? (
-                  <ul className="recent-posts-list">
-                    {recentPosts.slice(0, 3).map(post => (   
-                      <li key={post._id} className="recent-post-item">
-                        <div className="post-content-preview">
-                          {post.content.length > 100 
-                            ? `${post.title.substring(0, 100)}...` 
-                            : post.title
-                          }
-                        </div>
-                        <div className="post-meta">
-                          <span className="post-date">
-                            {formatDate(post.createdAt)}
-                          </span>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-
-                ) : (
-                  <p>Nessuna attività recente</p>
-                )}
-              </div>
-            </div>
-            
-            <div className="sidebar-section">
-              <h3>Badge</h3>
-              <ProfileBadges 
-                userData={userData} 
-                updateUserBadges={updateUserBadges}
-                currentUserRoles={currentUserRoles} 
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)

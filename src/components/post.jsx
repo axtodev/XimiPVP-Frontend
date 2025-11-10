@@ -1,12 +1,4 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { API_URL } from '../config/api';
-=======
-<<<<<<< HEAD
-=======
-import { API_URL } from '../config/api';
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
 import TagSelector from './selectTag';
 import CandidaturaStaffForm from './Candidature/staff';
 import DeveloperForm from './Candidature/developer';
@@ -17,15 +9,7 @@ import '../style/post.css';
 async function creaPost(title, content, tags) {
   const token = localStorage.getItem('token');
 
-<<<<<<< HEAD
-  const response = await fetch(`${API_URL}/posts`, {
-=======
-<<<<<<< HEAD
   const response = await fetch('https://api.ximi.lol/posts', {
-=======
-  const response = await fetch(`${API_URL}/posts`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
@@ -67,15 +51,7 @@ function CreatePost({ user, onClose }) {
     const fetchCurrentUser = async () => {
       try {
         const token = localStorage.getItem('token');
-<<<<<<< HEAD
-        const res = await fetch(`${API_URL}/users/profile`, {
-=======
-<<<<<<< HEAD
         const res = await fetch('https://api.ximi.lol/users/profile', {
-=======
-        const res = await fetch(`${API_URL}/users/profile`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (res.ok) {
@@ -93,15 +69,7 @@ function CreatePost({ user, onClose }) {
     async function fetchTags() {
       try {
         const token = localStorage.getItem('token');
-<<<<<<< HEAD
-        const res = await fetch(`${API_URL}/tags`, {
-=======
-<<<<<<< HEAD
         const res = await fetch('https://api.ximi.lol/tags', {
-=======
-        const res = await fetch(`${API_URL}/tags`, {
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -121,19 +89,6 @@ function CreatePost({ user, onClose }) {
         };
 
         const roleIdToName = {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-          '68f151d8bde29ee6d2793e1c': 'Owner',
-          '68f151d8bde29ee6d2793e21': 'Amministratore',
-          '68f151d8bde29ee6d2793e25': 'Developer',
-          '68f151d8bde29ee6d2793e28': 'Moderatore',
-          '68f151d8bde29ee6d2793e2b': 'Builder',
-          '68f151d8bde29ee6d2793e2e': 'Vip',
-          '68f151d8bde29ee6d2793e31': 'Media',
-          '68f151d8bde29ee6d2793e34': 'Utente'
-=======
->>>>>>> 0c76dc1 (Initial commit)
           '68825b15b31d59e453e3061f': 'Amministratore',
           '68825b15b31d59e453e30623': 'Developer',
           '68825b15b31d59e453e30626': 'Moderatore',
@@ -142,10 +97,6 @@ function CreatePost({ user, onClose }) {
           '68b1b5ad2069d4ab1f40868a': 'Builder',
           '68b1b5ad2069d4ab1f40868e': 'Vip',
           '68b1b97a0042c37ceb374d95': 'Media'
-<<<<<<< HEAD
-=======
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)
         };
 
         const userRoles = (currentUser?.roles || []).map(r => {
@@ -253,9 +204,6 @@ function CreatePost({ user, onClose }) {
           <p>Caricamento tag...</p>
         ) : (
           <form onSubmit={handleSubmit} className="post-form">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
             {!CandidaturaComponent && (
               <input
                 type="text"
@@ -318,72 +266,3 @@ function CreatePost({ user, onClose }) {
 }
 
 export default CreatePost;
-=======
->>>>>>> 0c76dc1 (Initial commit)
-            {!CandidaturaComponent && (
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Titolo del post"
-                className="post-title-input"
-                required
-                maxLength="100"
-              />
-            )}
-
-            {CandidaturaComponent ? (
-              <CandidaturaComponent
-                key={candidaturaKey}
-                value={candidatureContent[candidaturaKey] || ''} 
-                onChange={(val) =>
-                  setCandidatureContent(prev => ({
-                    ...prev,
-                    [candidaturaKey]: val,
-                  }))
-                }
-              />
-            ) : (
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Scrivi un messaggio..."
-                className="post-textarea"
-                required
-              />
-            )}
-
-            <TagSelector 
-              tags={availableTags} 
-              selectedTags={tags} 
-              setSelectedTags={setTags} 
-            />
-
-            <div className="form-actions">
-              <button 
-                type="submit" 
-                className="submit-button"
-                disabled={isSubmitting || 
-                  (!CandidaturaComponent && !content.trim()) ||
-                  (CandidaturaComponent && !(candidatureContent[candidaturaKey]?.trim()))
-                }
-              >
-                {isSubmitting ? 'Creazione...' : 'Crea Post'}
-              </button>
-            </div>
-
-            {error && <p className="error-message">{error}</p>}
-            {success && <p className="success-message">{success}</p>}
-          </form>
-        )}
-      </div>
-    </div>
-  );
-}
-
-<<<<<<< HEAD
-export default CreatePost;
-=======
-export default CreatePost;
->>>>>>> 6fb4cbabb18bdf363ddb9fdc66e5684e693227d1
->>>>>>> 0c76dc1 (Initial commit)

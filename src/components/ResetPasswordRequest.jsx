@@ -53,7 +53,7 @@ function ResetPasswordRequest() {
             {isLoading ? 'Invio in corso...' : 'Invia link di reset'}
           </button>
           <div className="login-links">
-            <a href="/login">Torna al login</a>
+            <a href="#/login">Torna al login</a>
           </div>
           {message && <p className="success-message">{message}</p>}
           {error && <p className="login-error">{error}</p>}

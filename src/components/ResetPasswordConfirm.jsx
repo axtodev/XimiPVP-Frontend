@@ -93,7 +93,7 @@ function ResetPasswordConfirm() {
             {isLoading ? 'Salvataggio...' : 'Reimposta Password'}
           </button>
           <div className="login-links">
-            <a href="/login">Torna al login</a>
+            <a href="#/login">Torna al login</a>
           </div>
           {message && <p className="success-message">{message}</p>}
           {error && <p className="login-error">{error}</p>}
