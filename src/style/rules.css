@@ -1,9 +1,9 @@
 .rules-page {
   width: 100%;
   min-height: 100vh;
-  background-color: #f0f0f0;
-  font-family: 'Arial', sans-serif;
-  padding: 40px 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.06) 100%);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+  padding: 56px 16px;
   display: flex;
   justify-content: center;
 }
@@ -11,64 +11,76 @@
 .rules-container {
   width: 100%;
   max-width: 800px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 40px 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  padding: 32px 28px;
 }
 
 .rules-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
 }
 
 .rules-header h1 {
-  font-size: 28px;
+  font-size: 30px;
   color: var(--primary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
 }
 
 .rules-header p {
   font-size: 14px;
-  color: #666;
+  color: #667085;
   margin: 4px 0;
 }
 
 .rules-subtitle {
   font-size: 13px;
-  color: #e74c3c;
-  font-weight: 500;
-  margin-top: 12px !important;
+  color: #d92d20;
+  font-weight: 600;
+  margin-top: 10px !important;
 }
 
 .rules-main {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 .rules-section {
   padding: 16px 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eef2f7;
+  padding: 18px 16px;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.rules-section:hover {
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
+  transform: translateY(-1px);
 }
 
 .rules-title {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--primary);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .rules-description {
   font-size: 14px;
-  color: #555;
+  color: #475569;
   line-height: 1.6;
   margin: 0;
 }
 
 .rules-divider {
   border: none;
-  border-top: 1px solid #ddd;
-  margin: 16px 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, #e5e7eb 20%, #e5e7eb 80%, rgba(0,0,0,0) 100%);
+  margin: 14px 0 0;
 }
 
 .rules-points {
@@ -77,9 +89,9 @@
 }
 
 .rules-points li {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-size: 14px;
-  color: #555;
+  color: #475569;
   line-height: 1.6;
 }
 
@@ -89,12 +101,12 @@
 
 @media (max-width: 768px) {
   .rules-container {
-    padding: 30px 20px;
-    width: 90%;
+    padding: 22px 16px;
+    width: 100%;
   }
 
   .rules-header h1 {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .rules-title {

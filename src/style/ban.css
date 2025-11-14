@@ -30,13 +30,62 @@
 .bans-main-header {
   padding: 24px;
   border-bottom: 1px solid #eee;
-  background: linear-gradient(to right, #f9f9f9, #fff);
+  background: linear-gradient(90deg, #ffb300, #ff9800);
 }
 
 .bans-main-header h2 {
   font-size: 28px;
-  color: #333;
+  color: #2b2b2b;
   margin-bottom: 8px;
+}
+
+/* Search bar styles */
+.bans-search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.bans-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 6px 8px 6px 12px;
+}
+
+.bans-search-input {
+  background: rgba(0, 0, 0, 0.08);
+  border: none;
+  outline: none;
+  color: #f5f5f5;
+  padding: 10px 12px;
+  border-radius: 8px;
+  min-width: 260px;
+}
+
+.bans-search-input::placeholder {
+  color: rgba(255,255,255,0.8);
+}
+
+.bans-search-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: transform .15s ease, background .15s ease;
+}
+
+.bans-search-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.06);
 }
 
 .bans-grid {
