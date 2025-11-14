@@ -58,6 +58,9 @@
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />} />
       <Route path="/forum" element={<Forum />} />
+      <Route path="/forum/:category" element={<Forum />} />
+      <Route path="/forum/:category/:sub" element={<Forum />} />
+      <Route path="/forum/:category/:sub/:postId" element={<Forum />} />
       <Route path="/profile/:username" element={<Profile />} />
       <Route path="/bans" element={<Bans />} />
       <Route path="/store" element={<Store />} />
