@@ -11,7 +11,7 @@ async function fetchReplies(postId) {
   if (!res.ok) {
     if (res.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/#/login';
+      window.location.href = '/login';
     }
     throw new Error('Errore nel caricamento delle reply');
   }

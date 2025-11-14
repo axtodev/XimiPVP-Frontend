@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import '../style/confirm.css';
 
 function ConfirmEmail() {
   const [message, setMessage] = useState({ text: 'Conferma in corso...', type: 'loading' });
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    // Con Hash Router, i parametri sono in window.location.hash
-    const hashParts = window.location.hash.split('?');
-    const urlParams = new URLSearchParams(hashParts[1] || '');
-    const token = urlParams.get('token');
+    let token = searchParams.get('token');
+    if (!token) {
+      const hashParts = window.location.hash.split('?');
+      const urlParams = new URLSearchParams(hashParts[1] || '');
+      token = urlParams.get('token');
+    }
 
     if (!token) {
       setMessage({ text: 'Token mancante o non valido.', type: 'error' });
@@ -32,7 +36,7 @@ function ConfirmEmail() {
       .catch(err => {
         setMessage({ text: 'Errore nella conferma: ' + err.message, type: 'error' });
       });
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="confirm-container">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReplyBlock from './reply';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export default function ForumPage({ user = null }) {
   const [selectedPost, setSelectedPost] = useState(null);
@@ -16,6 +17,8 @@ export default function ForumPage({ user = null }) {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(user); 
+  const params = useParams();
+  const navigate = useNavigate();
 
   const tagCategories = {
     'supporto': 'assistenza',
@@ -145,6 +148,24 @@ export default function ForumPage({ user = null }) {
     fetchAndOrganizePosts();
   }, []);
 
+  // Created by my prof LMFAO
+  useEffect(() => {
+    const { category, sub, postId } = params;
+    const decodedSub = sub ? decodeURIComponent(sub) : null;
+
+    if (category) setSelectedCategory(category);
+    if (decodedSub) setSelectedSubCategory(decodedSub);
+
+    if (postId && category && decodedSub && categories[category]) {
+      const postsInSub = categories[category].posts.filter(p => p.tags.includes(decodedSub));
+      const found = postsInSub.find(p => p.id === postId);
+      if (found) setSelectedPost(found);
+    } else if (!postId) {
+      setSelectedPost(null);
+    }
+
+  }, [params, categories]);
+
   const filteredPosts = () => {
     if (!selectedCategory || !selectedSubCategory) return [];
     return categories[selectedCategory].posts.filter(post =>
@@ -187,10 +208,7 @@ export default function ForumPage({ user = null }) {
               <h2>{catKey.charAt(0).toUpperCase() + catKey.slice(1)}</h2>
               <div className="category-stats">
                 <span>Discussioni: {catData.stats.total}</span>
-                {catData.stats.resolved !== undefined && (
-                  <>
-                  </>
-                )}
+                {catData.stats.resolved !== undefined && <></>}
               </div>
               {subCategoriesMap[catKey] && (
                 <div className="subcategories">
@@ -201,6 +219,7 @@ export default function ForumPage({ user = null }) {
                       onClick={() => {
                         setSelectedCategory(catKey);
                         setSelectedSubCategory(sub.key);
+                        navigate(`/forum/${catKey}/${encodeURIComponent(sub.key)}`);
                       }}
                     >
                       {sub.label}
@@ -213,7 +232,7 @@ export default function ForumPage({ user = null }) {
         </div>
       ) : selectedSubCategory && !selectedPost ? (
         <>
-          <button onClick={() => setSelectedSubCategory(null)} style={{ marginBottom: '1rem' }}>
+          <button onClick={() => { setSelectedSubCategory(null); navigate('/forum'); }} style={{ marginBottom: '1rem' }}>
             ← Indietro
           </button>
 
@@ -225,7 +244,7 @@ export default function ForumPage({ user = null }) {
                 key={post.id}
                 className="thread"
                 style={{ cursor: 'pointer' }}
-                onClick={() => setSelectedPost(post)}
+                onClick={() => { setSelectedPost(post); navigate(`/forum/${selectedCategory}/${encodeURIComponent(selectedSubCategory)}/${post.id}`); }}
               >
                 <h3 className="post-title">{post.title}</h3>
                 <p className="post-preview">{post.content.slice(0, 100)}...</p>
@@ -243,7 +262,7 @@ export default function ForumPage({ user = null }) {
           <section className="main-content">
             <button 
               className="btn back-button"
-              onClick={() => setSelectedPost(null)}
+              onClick={() => { setSelectedPost(null); navigate(`/forum/${selectedCategory}/${encodeURIComponent(selectedSubCategory)}`); }}
             >
               ← Torna ai post
             </button>
