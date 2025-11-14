@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Search } from 'lucide-react';
 import '../style/ban.css'
 
 function Bans() {
@@ -110,13 +111,20 @@ function Bans() {
           <div className="bans-main">
             <div className="bans-main-header">
               <h2>Lista Ban <span className="bans-count">{bans.length}</span></h2>
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => { setVisibleBans(50); setQuery(e.target.value); }}
-                placeholder="Cerca per nickname, motivo o staffer"
-                className="bans-search-input"
-              />
+              <div className="bans-search-bar">
+                <div className="bans-search-field">
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => { setVisibleBans(50); setQuery(e.target.value); }}
+                    placeholder="Player name"
+                    className="bans-search-input"
+                  />
+                  <button type="button" className="bans-search-btn" aria-label="Cerca">
+                    <Search size={18} />
+                  </button>
+                </div>
+              </div>
             </div>
             
             <div className="bans-stats">
