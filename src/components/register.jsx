@@ -102,7 +102,7 @@ function Register() {
 
         <div className="register-links">
           <p>Hai già un account?</p>
-          <a href="#/login">Accedi</a>
+          <a href="/login">Accedi</a>
         </div>
       </div>
     </div>
