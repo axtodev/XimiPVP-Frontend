@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 const slides = [
   //Sostituisci con le immagini
-  { image: "https://api.ximi.lol/uploads/alepractec.png" },
+  { image: "https://i.imgur.com/VIgfuzj.png" },
   { image: "https://www.coralmc.it/_next/static/media/bwpractice.61da28cb.jpg" },
   { image: "https://www.coralmc.it/_next/static/media/sandbox.71daa8fa.jpg" },
   { image: "https://www.coralmc.it/_next/static/media/roleplay.ebe9b37e.jpg" },
