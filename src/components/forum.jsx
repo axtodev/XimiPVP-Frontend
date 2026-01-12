@@ -16,7 +16,7 @@ export default function ForumPage({ user = null }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState(user); 
+  const [currentUser, setCurrentUser] = useState(user);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -51,14 +51,14 @@ export default function ForumPage({ user = null }) {
     assistenza: [
       { key: 'supporto minecraft', label: 'Supporto Modalità' },
       { key: 'supporto web', label: 'Supporto Sito Web' },
-      { key: 'supporto discord', label: 'Supporto Discord'}
+      { key: 'supporto discord', label: 'Supporto Discord' }
     ],
     candidature: [
       { key: 'candidatura staff', label: 'Staff' },
-      {key: 'candidatura ss', label: 'SS'},
-      { key: 'candidatura developer', label: 'developer'},
+      { key: 'candidatura ss', label: 'SS' },
+      { key: 'candidatura developer', label: 'developer' },
       { key: 'candidatura builder', label: 'Builder' },
-      { key: 'candidatura social', label: 'Social'}
+      { key: 'candidatura social', label: 'Social' }
     ],
     modalita: [
       { key: 'kitpvp', label: 'KitPvP' },
@@ -97,7 +97,7 @@ export default function ForumPage({ user = null }) {
     };
 
     window.addEventListener('userRolesUpdated', handleUserRolesUpdated);
-    
+
     return () => {
       window.removeEventListener('userRolesUpdated', handleUserRolesUpdated);
     };
@@ -123,7 +123,7 @@ export default function ForumPage({ user = null }) {
 
           organized[category].posts.push({
             id: post._id,
-            title: post.content.substring(0, 50),
+            title: post.title,
             content: post.content,
             author: post.author?.username || 'Utente eliminato',
             timestamp: new Date(post.createdAt).toLocaleString(),
@@ -174,7 +174,7 @@ export default function ForumPage({ user = null }) {
   };
 
   useEffect(() => {
-    if(!currentUser || !currentUser.token) return;
+    if (!currentUser || !currentUser.token) return;
 
     const updateLastSeen = async (token) => {
       try {
@@ -260,13 +260,13 @@ export default function ForumPage({ user = null }) {
       ) : selectedPost ? (
         <div className="post-wrapper">
           <section className="main-content">
-            <button 
+            <button
               className="btn back-button"
               onClick={() => { setSelectedPost(null); navigate(`/forum/${selectedCategory}/${encodeURIComponent(selectedSubCategory)}`); }}
             >
               ← Torna ai post
             </button>
-            
+
             <div className="thread-container">
               <h1 className="thread-title">{selectedPost.title}</h1>
               <div className="thread-content">
