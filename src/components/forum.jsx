@@ -17,6 +17,7 @@ export default function ForumPage({ user = null }) {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(user);
+  const [isDeleting, setIsDeleting] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -107,7 +108,9 @@ export default function ForumPage({ user = null }) {
     const fetchAndOrganizePosts = async () => {
       setLoading(true);
       try {
-        const res = await fetch('https://api.ximi.lol/posts');
+        const token = localStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        const res = await fetch('https://api.ximi.lol/posts', { headers });
         const posts = await res.json();
 
         const organized = JSON.parse(JSON.stringify(categories));
@@ -197,6 +200,51 @@ export default function ForumPage({ user = null }) {
 
     return () => clearInterval(interval);
   }, [currentUser]);
+
+  const canDeletePost = (post) => {
+    if (!currentUser || !currentUser.username) return false;
+
+    // Check if user is the author
+    if (post.author === currentUser.username) return true;
+
+    // Check if user has Moderatore, Amministratore, or Owner role
+    const userRoles = currentUser.roles || [];
+    const roleNames = userRoles.map(role => typeof role === 'string' ? role : role.name);
+    return roleNames.some(role => ['Moderatore', 'Amministratore', 'Owner'].includes(role));
+  };
+
+  const handleDeletePost = async (postId) => {
+    if (!window.confirm('Sei sicuro di voler eliminare questo post?')) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`https://api.ximi.lol/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error(error.message || 'Errore durante l\'eliminazione del post');
+      }
+
+      // Navigate back and refresh
+      setSelectedPost(null);
+      navigate(`/forum/${selectedCategory}/${encodeURIComponent(selectedSubCategory)}`);
+
+      // Refresh posts
+      window.location.reload();
+    } catch (error) {
+      alert(error.message || 'Errore durante l\'eliminazione del post');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="Forum XimiPVP">
