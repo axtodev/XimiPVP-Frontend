@@ -335,6 +335,25 @@ export default function ForumPage({ user = null }) {
                     </div>
                   )}
                 </div>
+                 {canDeletePost(selectedPost) && (
+                   <button 
+                     className="btn delete-button" 
+                     onClick={() => handleDeletePost(selectedPost.id)}
+                     disabled={isDeleting}
+                     style={{ 
+                       marginTop: '1rem', 
+                       backgroundColor: '#dc3545', 
+                       color: 'white',
+                       padding: '0.5rem 1rem',
+                       border: 'none',
+                       borderRadius: '4px',
+                       cursor: isDeleting ? 'not-allowed' : 'pointer',
+                       opacity: isDeleting ? 0.6 : 1
+                     }}
+                   >
+                     {isDeleting ? 'Eliminazione...' : '??? Elimina Post'}
+                   </button>
+                 )}
               </div>
             </div>
           </section>
