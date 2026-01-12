@@ -230,7 +230,7 @@ export default function ForumPage({ user = null }) {
 
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Errore durante l\\'eliminazione del post');
+        throw new Error(error.message || "Errore durante l'eliminazione del post");
       }
 
       // Navigate back and refresh
@@ -240,7 +240,7 @@ export default function ForumPage({ user = null }) {
       // Refresh posts
       window.location.reload();
     } catch (error) {
-      alert(error.message || 'Errore durante l\\'eliminazione del post');
+      alert(error.message || "Errore durante l'eliminazione del post");
     } finally {
       setIsDeleting(false);
     }
