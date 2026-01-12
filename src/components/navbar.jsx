@@ -35,7 +35,7 @@ function Nav() {
   return (
     <>
       {isMobile && (
-        <button 
+        <button
           className="burger-menu"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
@@ -43,45 +43,49 @@ function Nav() {
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       )}
-      
+
       {isMobile && isOpen && (
-        <div 
+        <div
           className="nav-overlay"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
-      
+
       <nav className={`${isOpen ? 'nav-open' : ''} ${isMobile ? 'nav-mobile' : ''}`}>
         <ul>
-          <li 
+          <li
             onClick={() => handleNavClick('/')}
             className={isActive('/') ? 'active' : ''}
           >
             <LayoutDashboard /> Home
           </li>
-          <li 
+          <li
             onClick={() => handleNavClick('/staff')}
             className={isActive('/staff') ? 'active' : ''}
           >
             <Users /> Staff
           </li>
-          <li 
+          <li
             onClick={() => handleNavClick('/forum')}
             className={isActive('/forum') ? 'active' : ''}
           >
             <MessageCircle /> Forum
           </li>
-          <li 
-            onClick={() => handleNavClick('store.ximipvp.eu')}
-            className={isActive('store.ximipvp.eu') ? 'active' : ''}
-          >
-            <ShoppingCart /> Store
+          <li>
+            <a
+              href="https://store.ximipvp.eu"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: 'inherit' }}
+            >
+              <ShoppingCart /> Store
+            </a>
           </li>
-          <li 
+          <li
             onClick={() => handleNavClick('/bans')}
             className={isActive('/bans') ? 'active' : ''}
           >
-            <ShieldBan/> Bans
+            <ShieldBan /> Bans
           </li>
         </ul>
       </nav>
