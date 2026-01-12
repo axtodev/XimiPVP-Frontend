@@ -72,8 +72,8 @@ function Nav() {
             <MessageCircle /> Forum
           </li>
           <li 
-            onClick={() => handleNavClick('/store')}
-            className={isActive('/store') ? 'active' : ''}
+            onClick={() => handleNavClick('store.ximipvp.eu')}
+            className={isActive('store.ximipvp.eu') ? 'active' : ''}
           >
             <ShoppingCart /> Store
           </li>
