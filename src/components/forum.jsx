@@ -230,7 +230,7 @@ export default function ForumPage({ user = null }) {
 
       if (!res.ok) {
         const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Errore durante l\'eliminazione del post');
+        throw new Error(error.message || 'Errore durante l\\'eliminazione del post');
       }
 
       // Navigate back and refresh
@@ -240,7 +240,7 @@ export default function ForumPage({ user = null }) {
       // Refresh posts
       window.location.reload();
     } catch (error) {
-      alert(error.message || 'Errore durante l\'eliminazione del post');
+      alert(error.message || 'Errore durante l\\'eliminazione del post');
     } finally {
       setIsDeleting(false);
     }
@@ -335,26 +335,27 @@ export default function ForumPage({ user = null }) {
                     </div>
                   )}
                 </div>
-                 {canDeletePost(selectedPost) && (
-                   <button 
-                     className="btn delete-button" 
-                     onClick={() => handleDeletePost(selectedPost.id)}
-                     disabled={isDeleting}
-                     style={{ 
-                       marginTop: '1rem', 
-                       backgroundColor: '#dc3545', 
-                       color: 'white',
-                       padding: '0.5rem 1rem',
-                       border: 'none',
-                       borderRadius: '4px',
-                       cursor: isDeleting ? 'not-allowed' : 'pointer',
-                       opacity: isDeleting ? 0.6 : 1
-                     }}
-                   >
-                     {isDeleting ? 'Eliminazione...' : '??? Elimina Post'}
-                   </button>
-                 )}
               </div>
+
+              {canDeletePost(selectedPost) && (
+                <button
+                  className="btn delete-button"
+                  onClick={() => handleDeletePost(selectedPost.id)}
+                  disabled={isDeleting}
+                  style={{
+                    marginTop: '1rem',
+                    backgroundColor: '#dc3545',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: isDeleting ? 'not-allowed' : 'pointer',
+                    opacity: isDeleting ? 0.6 : 1
+                  }}
+                >
+                  {isDeleting ? 'Eliminazione...' : 'Elimina Post'}
+                </button>
+              )}
             </div>
           </section>
           <ReplyBlock postId={selectedPost.id} user={currentUser} />
