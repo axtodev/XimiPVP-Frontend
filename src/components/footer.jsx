@@ -33,7 +33,7 @@ function Footer() {
             </footer>
 
             <div className="under">
-                © {new Date().getFullYear()} XimiPVP. Tutti i diritti riservati. Non affiliato con Mojang Studios. <a href="https://lc.cx/p4L-AP" target="_blank" rel="noopener noreferrer"> Designed by ZeRo</a>
+                © {new Date().getFullYear()} XimiPVP. Tutti i diritti riservati. Non affiliato con Mojang Studios. <a href="https://lc.cx/poDIXR" target="_blank" rel="noopener noreferrer"> Designed by ZeRo</a>
             </div>
         </>
     );
