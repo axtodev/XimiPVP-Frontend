@@ -164,7 +164,7 @@ function Bans() {
                               alt={ban.nickname} 
                               className="player-avatar"
                               onError={(e) => {
-                                e.target.src = 'https://crafatar.com/avatars/8667ba71b85a4004af54457a9734eed7?size=100&overlay';
+                                e.target.src = 'https://mc-heads.net/avatar/';
                               }}
                             />
                             <div className="player-info">
@@ -194,7 +194,7 @@ function Bans() {
                                 alt={ban.staffer} 
                                 className="staff-avatar"
                                 onError={(e) => {
-                                  e.target.src = 'https://crafatar.com/avatars/4e03150512d84609830c86121e1f86b9?size=100&overlay';
+                                  e.target.src = 'https://mc-heads.net/avatar/';
                                 }}
                               />
                               <span className="staff-name">
