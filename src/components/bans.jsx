@@ -160,11 +160,11 @@ function Bans() {
                         <div key={`${ban.uuid}-${ban.time}`} className="ban-card">
                           <div className="ban-header">
                             <img 
-                              src={ban.skinUrl} 
+                              src={`https://mc-heads.net/avatar/${ban.uuid}`} 
                               alt={ban.nickname} 
                               className="player-avatar"
                               onError={(e) => {
-                                e.target.src = 'https://mc-heads.net/avatar/';
+                                e.target.src = 'https://mc-heads.net/avatar/MHF_Steve';
                               }}
                             />
                             <div className="player-info">
@@ -190,11 +190,11 @@ function Bans() {
                           <div className="staff-info">
                             <div className="staff-header">
                               <img 
-                                src={ban.staffSkinUrl} 
+                                src={ban.staffUuid ? `https://mc-heads.net/avatar/${ban.staffUuid}` : 'https://mc-heads.net/avatar/MHF_Steve'} 
                                 alt={ban.staffer} 
                                 className="staff-avatar"
                                 onError={(e) => {
-                                  e.target.src = 'https://mc-heads.net/avatar/';
+                                  e.target.src = 'https://mc-heads.net/avatar/MHF_Steve';
                                 }}
                               />
                               <span className="staff-name">
