@@ -1,25 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 .stats-page-wrapper {
-    /* CoralMC Inspired Colors - Orange Edition */
-    --bg-main: #06101c;
-    --bg-card: #0a1626;
-    --bg-card-hover: #0e1e33;
-    --bg-table-header: #0d1a2d;
+    /* XimiPVP Light Mode - Orange Edition */
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --bg-table-header: #f1f5f9;
 
     --primary: #ff8c00;
     /* Main Orange */
-    --primary-light: #ff9f43;
-    --primary-dim: rgba(255, 140, 0, 0.1);
+    --primary-light: #ffa502;
+    --primary-dim: rgba(255, 140, 0, 0.05);
 
     --win-color: #ff8c00;
-    /* Changed from blue to orange */
     --loss-color: #ff4757;
 
-    --text-main: #ffffff;
-    --text-dim: #8ba3c7;
-    --border: rgba(255, 255, 255, 0.05);
-    --border-accent: rgba(255, 140, 0, 0.2);
+    --text-main: #1e293b;
+    --text-dim: #64748b;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-accent: rgba(255, 140, 0, 0.15);
 
     background-color: var(--bg-main);
     min-height: 100vh;
@@ -53,8 +52,8 @@
 }
 
 .page-btn {
-    background: #15253a;
-    border: none;
+    background: #ffffff;
+    border: 1px solid var(--border);
     color: var(--text-dim);
     width: 32px;
     height: 32px;
@@ -71,19 +70,20 @@
 .page-btn.active {
     background: var(--primary);
     color: #fff;
+    border-color: var(--primary);
 }
 
 .page-btn:hover:not(.active) {
-    background: #1e334d;
+    background: #f8fafc;
 }
 
-/* Leaderboard Table - Coral Style */
+/* Leaderboard Table - White Style */
 .leaderboard-card {
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border);
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .stats-table {
@@ -125,7 +125,7 @@
 .player-rank-icon {
     width: 32px;
     height: 32px;
-    background: #1c2e45;
+    background: #f1f5f9;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -195,13 +195,13 @@
 .wl-percentage {
     font-size: 0.8rem;
     font-weight: 800;
-    color: #fff;
+    color: var(--text-main);
 }
 
 .wl-progress-track {
     height: 6px;
-    background: var(--loss-color);
-    /* Default loss background */
+    background: #f1f5f9;
+    /* Soft background */
     border-radius: 10px;
     position: relative;
     overflow: hidden;
@@ -215,9 +215,9 @@
 
 /* Profile Detail View */
 .back-btn-top {
-    background: #15253a;
-    border: none;
-    color: #fff;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    color: var(--text-main);
     padding: 0.7rem 1.4rem;
     border-radius: 8px;
     font-weight: 700;
@@ -227,6 +227,7 @@
     align-items: center;
     gap: 0.6rem;
     margin-bottom: 2.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .profile-hero {
@@ -238,12 +239,14 @@
     align-items: center;
     gap: 2.5rem;
     margin-bottom: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
 
 .profile-avatar-box {
     width: 120px;
     height: 120px;
-    background: #15253a;
+    background: #f8fafc;
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 12px;
 }
@@ -351,7 +354,7 @@
 
 .circle-bg {
     fill: none;
-    stroke: #15253a;
+    stroke: #f1f5f9;
     stroke-width: 3.5;
 }
 
@@ -364,7 +367,7 @@
 }
 
 .wr-text {
-    fill: #fff;
+    fill: var(--text-main);
     font-size: 0.5rem;
     font-weight: 900;
     text-anchor: middle;
@@ -389,7 +392,7 @@
 
 /* Generic Layout Items */
 .search-box-coral {
-    background: #0d1a2d;
+    background: #ffffff;
     border: 1px solid var(--border);
     padding: 0.8rem 1.5rem;
     border-radius: 10px;
@@ -398,15 +401,20 @@
     gap: 12px;
     width: 100%;
     max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
 .search-box-coral input {
     background: transparent;
     border: none;
-    color: #fff;
+    color: var(--text-main);
     outline: none;
     font-weight: 600;
     width: 100%;
+}
+
+.search-box-coral input::placeholder {
+    color: #94a3b8;
 }
 
 .loading-state {
