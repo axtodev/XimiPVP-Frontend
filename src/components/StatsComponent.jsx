@@ -14,9 +14,7 @@ const StatsComponent = () => {
 
     const fetchStats = async () => {
         try {
-            // Assuming backend is running on default port or proxied. 
-            // Adjust URL if needed.
-            const response = await axios.get('http://localhost:3000/stats');
+            const response = await axios.get('http://api.ximi.lol/stats');
             setStats(response.data);
             setLoading(false);
         } catch (error) {
@@ -53,12 +51,11 @@ const StatsComponent = () => {
                             <tr>
                                 <th>#</th>
                                 <th>Player</th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Crosshair size={16} /> Kills</div></th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Skull size={16} /> Deaths</div></th>
-                                <th>K/D</th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Trophy size={16} /> Wins</div></th>
-                                <th>Losses</th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Crown size={16} /> Elo</div></th>
+                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Crown size={16} /> Global Elo</div></th>
+                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Trophy size={16} /> Streak</div></th>
+                                <th>Matches</th>
+                                <th>Coins</th>
+                                <th>Level</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,12 +70,11 @@ const StatsComponent = () => {
                                         />
                                         {player.name}
                                     </td>
-                                    <td>{player.kills}</td>
-                                    <td>{player.deaths}</td>
-                                    <td>{(player.kills / (player.deaths || 1)).toFixed(2)}</td>
-                                    <td>{player.wins}</td>
-                                    <td>{player.losses}</td>
-                                    <td>{player.elo}</td>
+                                    <td>{player.globalElo}</td>
+                                    <td>{player.currentWinStreak}</td>
+                                    <td>{player.matchesPlayed}</td>
+                                    <td>{player.coins || 0}</td>
+                                    <td>{player.level || 0}</td>
                                 </tr>
                             ))}
                         </tbody>
