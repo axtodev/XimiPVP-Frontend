@@ -141,11 +141,11 @@ const StatsComponent = () => {
                                 <div className="wr-legend">
                                     <div className="legend-item">
                                         <div className="legend-row"><span>Vittorie</span><span>{formatNumber(selectedPlayer.wins)}</span></div>
-                                        <div className="wl-progress-track"><div className="wl-progress-fill" style={{ width: `${winPercent}%` }}></div></div>
+                                        <div className="wl-progress-track"><div className="wl-progress-fill" style={{ width: `${winRate}%` }}></div></div>
                                     </div>
                                     <div className="legend-item">
                                         <div className="legend-row"><span>Sconfitte</span><span>{formatNumber(selectedPlayer.losses)}</span></div>
-                                        <div className="wl-progress-track" style={{ background: '#15253a' }}><div className="wl-progress-fill" style={{ width: `${100 - winPercent}%`, background: 'var(--loss-color)' }}></div></div>
+                                        <div className="wl-progress-track" style={{ background: '#15253a' }}><div className="wl-progress-fill" style={{ width: `${100 - winRate}%`, background: 'var(--loss-color)' }}></div></div>
                                     </div>
                                 </div>
                             </div>
