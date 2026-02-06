@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Search } from 'lucide-react';
+import { Search, ArrowLeft, Share2, Calendar, Trophy, Skull, Crosshair, Crown, MousePointer2 } from 'lucide-react';
 import '../style/stats.css';
 
 const StatsComponent = () => {
@@ -16,7 +16,7 @@ const StatsComponent = () => {
     const fetchStats = async () => {
         try {
             const response = await axios.get('https://api.ximi.lol/stats');
-            setStats(response.data);
+            setStats(response.data || []);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching stats:', error);
@@ -28,84 +28,122 @@ const StatsComponent = () => {
         (player.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const formatNumber = (num) => {
+        return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
+
     if (selectedPlayer) {
-        const winRate = ((selectedPlayer.wins || 0) / Math.max(selectedPlayer.losses || 0, 1) * 100);
+        const total = (selectedPlayer.wins || 0) + (selectedPlayer.losses || 0);
+        const winRate = total > 0 ? ((selectedPlayer.wins || 0) / total * 100) : 0;
+        const joinedDate = selectedPlayer.firstLogin ? new Date(selectedPlayer.firstLogin).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Sconosciuto';
 
         return (
             <div className="stats-container detail-view">
-                <button className="back-button" onClick={() => setSelectedPlayer(null)}>
-                    Back to Leaderboards
-                </button>
+                <div className="stats-header-top">
+                    <button className="back-button" onClick={() => setSelectedPlayer(null)}>
+                        <ArrowLeft size={16} /> Torna alle classifiche
+                    </button>
+                    <button className="share-button">
+                        <Share2 size={18} />
+                    </button>
+                </div>
 
-                <div className="profile-hero">
-                    <div className="hero-body-render">
+                <div className="profile-main-card">
+                    <div className="profile-avatar-large">
                         <img
-                            src={`https://mc-heads.net/body/${selectedPlayer.name || 'steve'}`}
+                            src={`https://mc-heads.net/avatar/${selectedPlayer.name || 'steve'}/100`}
                             alt={selectedPlayer.name}
                         />
                     </div>
-                    <div className="hero-info">
-                        <h2>{selectedPlayer.name || 'Unknown'}</h2>
-                        <div className="player-rank-tag">Default</div>
+                    <div className="profile-name-info">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#00ff00' }}></div>
+                            <h2>{selectedPlayer.name || 'Unknown'}</h2>
+                        </div>
+                        <div style={{ color: 'var(--text-dim)', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '4px', textTransform: 'uppercase' }}>
+                            {selectedPlayer.rank || 'default'}
+                        </div>
+                        {selectedPlayer.isStaff && (
+                            <div className="badge-staff">
+                                <MousePointer2 size={12} /> Staff
+                            </div>
+                        )}
+                    </div>
+                    <div className="profile-joined-date">
+                        <Calendar size={14} /> Entrato il: {joinedDate}
                     </div>
                 </div>
 
-                <div className="stats-section">
-                    <div className="section-label">General Info</div>
-                    <div className="info-grid">
-                        <div className="info-row">
-                            <span className="info-label">Current Level</span>
-                            <span className="info-value text-primary">{selectedPlayer.level || 0}</span>
+                <div className="section-header-row">
+                    <div className="section-title-box">
+                        <div className="section-icon">
+                            <Trophy size={18} />
                         </div>
-                        <div className="info-row">
-                            <span className="info-label">Global Rank</span>
-                            <span className="info-value">#{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}</span>
-                        </div>
-                        <div className="info-row">
-                            <span className="info-label">Total Coins</span>
-                            <span className="info-value">{selectedPlayer.coins || 0}</span>
-                        </div>
+                        Statistiche Practice
+                    </div>
+                    <button className="guarda-partite-btn">Guarda le partite</button>
+                </div>
+
+                <div className="detailed-stats-grid">
+                    <div className="stat-square-card">
+                        <div className="square-label"><Crosshair size={14} /> Global Elo</div>
+                        <div className="square-value">{formatNumber(selectedPlayer.globalElo)}</div>
+                    </div>
+                    <div className="stat-square-card">
+                        <div className="square-label"><Skull size={14} /> Perdite</div>
+                        <div className="square-value">{formatNumber(selectedPlayer.losses)}</div>
+                    </div>
+                    <div className="stat-square-card">
+                        <div className="square-label"><Trophy size={14} /> Vittorie</div>
+                        <div className="square-value">{formatNumber(selectedPlayer.wins)}</div>
+                    </div>
+                    <div className="stat-square-card">
+                        <div className="square-label"><Crown size={14} /> Winstreak</div>
+                        <div className="square-value">{formatNumber(selectedPlayer.currentWinStreak)}</div>
                     </div>
                 </div>
 
-                <div className="stats-section">
-                    <div className="section-label">Practice Statistics</div>
-                    <div className="gamemodes-grid">
-                        <div className="gamemode-card">
-                            <div className="card-title-bar">Overall</div>
-                            <div className="card-body">
-                                <div className="card-stat-row">
-                                    <span className="row-label">Global Elo</span>
-                                    <span className="row-value">{selectedPlayer.globalElo}</span>
-                                </div>
-                                <div className="card-stat-row">
-                                    <span className="row-label">Wins</span>
-                                    <span className="row-value">{selectedPlayer.wins || 0}</span>
-                                </div>
-                                <div className="card-stat-row">
-                                    <span className="row-label">Losses</span>
-                                    <span className="row-value">{selectedPlayer.losses || 0}</span>
-                                </div>
-                                <div className="card-stat-row">
-                                    <span className="row-label">Current Streak</span>
-                                    <span className="row-value">{selectedPlayer.currentWinStreak}</span>
-                                </div>
-                            </div>
-                            <div className="card-footer-rate">
-                                {winRate.toFixed(2)}% WIN RATE
-                            </div>
+                <div className="profile-bottom-grid">
+                    <div className="level-card-custom">
+                        <div className="card-title-custom">
+                            <Crown size={20} color="#00a8ff" /> Livello Player {selectedPlayer.level || 0}
                         </div>
+                        <div className="level-number">
+                            #{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}
+                        </div>
+                        <div className="rank-global-label">Classifica globale</div>
+                    </div>
 
-                        <div className="gamemode-card">
-                            <div className="card-title-bar">Matches</div>
-                            <div className="card-body">
-                                <div className="card-stat-row">
-                                    <span className="row-label">Total Played</span>
-                                    <span className="row-value">{selectedPlayer.matchesPlayed}</span>
+                    <div className="winrate-card-custom">
+                        <div className="card-title-custom">
+                            Win rate
+                        </div>
+                        <div className="winrate-content-box">
+                            <div className="circular-container">
+                                <svg viewBox="0 0 36 36" className="circular-chart">
+                                    <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path className="circle" strokeDasharray={`${winRate}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.35" className="percentage-text">{winRate.toFixed(1)}%</text>
+                                </svg>
+                            </div>
+                            <div className="winrate-bars">
+                                <div className="bar-item">
+                                    <div className="bar-label-row">
+                                        <span>Wins</span>
+                                        <span>{formatNumber(selectedPlayer.wins)}</span>
+                                    </div>
+                                    <div className="bar-outer">
+                                        <div className="bar-inner wins" style={{ width: `${winRate}%` }}></div>
+                                    </div>
                                 </div>
-                                <div className="card-stat-row">
-                                    <span className="row-label">W/L Ratio</span>
-                                    <span className="row-value">{((selectedPlayer.wins || 0) / Math.max(selectedPlayer.losses || 0, 1)).toFixed(2)}</span>
+                                <div className="bar-item">
+                                    <div className="bar-label-row">
+                                        <span>Losses</span>
+                                        <span>{formatNumber(selectedPlayer.losses)}</span>
+                                    </div>
+                                    <div className="bar-outer">
+                                        <div className="bar-inner losses" style={{ width: `${100 - winRate}%` }}></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -117,13 +155,14 @@ const StatsComponent = () => {
 
     return (
         <div className="stats-container">
-            <div className="stats-header">
-                <h1>Leaderboards</h1>
+            <h1 className="leaderboard-title">Classifiche Server</h1>
+
+            <div className="search-container">
                 <div className="search-bar">
-                    <Search size={20} color="#777" />
+                    <Search size={20} color="#8ba3c7" />
                     <input
                         type="text"
-                        placeholder="Search for a player..."
+                        placeholder="Cerca un giocatore..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -131,43 +170,51 @@ const StatsComponent = () => {
             </div>
 
             {loading ? (
-                <div className="loading">Loading stats...</div>
+                <div className="loading">Caricamento classifiche...</div>
             ) : (
                 <div className="table-responsive">
                     <table className="stats-table">
                         <thead>
                             <tr>
-                                <th className="rank-cell">#</th>
-                                <th>Player</th>
+                                <th>#</th>
+                                <th>Giocatore</th>
                                 <th>Elo</th>
                                 <th>Streak</th>
                                 <th>Wins</th>
                                 <th>Losses</th>
                                 <th>W/L</th>
                                 <th>Matches</th>
-                                <th>Coins</th>
-                                <th>Level</th>
+                                <th>Livello</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredStats.map((player, index) => (
                                 <tr key={player.uuid} onClick={() => setSelectedPlayer(player)}>
-                                    <td className="rank-cell">#{index + 1}</td>
+                                    <td style={{ fontWeight: '800', color: '#8ba3c7' }}>#{index + 1}</td>
                                     <td className="player-cell">
-                                        <img
-                                            src={`https://mc-heads.net/avatar/${player.name || 'steve'}/32`}
-                                            alt={player.name}
-                                            className="player-head"
-                                        />
-                                        {player.name || 'Unknown'}
+                                        <div style={{ position: 'relative' }}>
+                                            <img
+                                                src={`https://mc-heads.net/avatar/${player.name || 'steve'}/32`}
+                                                alt={player.name}
+                                                className="player-head"
+                                            />
+                                            {player.isStaff && (
+                                                <div style={{ position: 'absolute', bottom: '-2px', right: '-2px', width: '10px', height: '10px', background: 'var(--primary)', borderRadius: '50%', border: '2px solid var(--bg-card)' }}></div>
+                                            )}
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span>{player.name || 'Unknown'}</span>
+                                            <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 'bold' }}>
+                                                {player.rank !== 'default' ? player.rank : ''}
+                                            </span>
+                                        </div>
                                     </td>
-                                    <td style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{player.globalElo}</td>
-                                    <td>{player.currentWinStreak}</td>
-                                    <td>{player.wins || 0}</td>
-                                    <td>{player.losses || 0}</td>
+                                    <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.globalElo)}</td>
+                                    <td>{formatNumber(player.currentWinStreak)}</td>
+                                    <td>{formatNumber(player.wins)}</td>
+                                    <td>{formatNumber(player.losses)}</td>
                                     <td>{((player.wins || 0) / Math.max(player.losses || 0, 1)).toFixed(2)}</td>
-                                    <td>{player.matchesPlayed}</td>
-                                    <td>{player.coins || 0}</td>
+                                    <td>{formatNumber(player.matchesPlayed)}</td>
                                     <td>{player.level || 0}</td>
                                 </tr>
                             ))}
