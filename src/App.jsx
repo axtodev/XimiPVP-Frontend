@@ -1,30 +1,30 @@
-  import React, { useEffect, useState } from 'react';
-  import { Routes, Route, useLocation } from 'react-router-dom';
-  import Banner from './biscotti/biscotti.jsx';
-  import './App.css';
-  import Head from './components/header';
-  import Nav from './components/navbar';
-  import Hero from './components/hero';
-  import Slider from './components/info';
-  import Footer from './components/footer';
-  import Staff from './pages/staff.jsx';
-  import Logins from './pages/auth/login.jsx';
-  import Registers from './pages/auth/register.jsx';
-  import Confirm from './pages/auth/confirm.jsx';
-  import ResetPassword from './pages/auth/ResetPassword.jsx';
-  import ResetPasswordConfirm from './pages/auth/ResetPasswordConfirm.jsx';
-  import Forum from './pages/forum.jsx';
-  import Profile from './pages/profile.jsx';
-  import Bans from './pages/ban.jsx'
-  import Store from './pages/store.jsx';
-  import PolicyPage from './pages/policy.jsx';
-  import './style/Root.css';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Banner from './biscotti/biscotti.jsx';
+import './App.css';
+import Head from './components/header';
+import Nav from './components/navbar';
+import Hero from './components/hero';
+import Slider from './components/info';
+import Footer from './components/footer';
+import Staff from './pages/staff.jsx';
+import Logins from './pages/auth/login.jsx';
+import Registers from './pages/auth/register.jsx';
+import Confirm from './pages/auth/confirm.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx';
+import ResetPasswordConfirm from './pages/auth/ResetPasswordConfirm.jsx';
+import Forum from './pages/forum.jsx';
+import Profile from './pages/profile.jsx';
+import Stats from './pages/stats.jsx';
+import Store from './pages/store.jsx';
+import PolicyPage from './pages/policy.jsx';
+import './style/Root.css';
 
-  function App() {
-    const location = useLocation();
-    const [user, setUser] = useState(null);
+function App() {
+  const location = useLocation();
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
@@ -35,46 +35,46 @@
     }
   }, []);
 
-    return (
-      <>
-        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' && location.pathname !== '/reset-password' && location.pathname !== '/reset-password-confirm' &&(  
-          <>
-            <Head />
-            <Nav />
-          </>
-        )}
-
-    <Routes>
-      <Route path="/" element={
+  return (
+    <>
+      {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/confirm' && location.pathname !== '/reset-password' && location.pathname !== '/reset-password-confirm' && (
         <>
-          <Hero />
-          <Slider />
+          <Head />
+          <Nav />
         </>
-      } />
-      <Route path="/register" element={<Registers />} />
-      <Route path="/staff" element={<Staff />} />
-      <Route path="/login" element={<Logins />} />
-      <Route path="/confirm" element={<Confirm />} />
-      <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />} />
-      <Route path="/forum" element={<Forum />} />
-      <Route path="/forum/:category" element={<Forum />} />
-      <Route path="/forum/:category/:sub" element={<Forum />} />
-      <Route path="/forum/:category/:sub/:postId" element={<Forum />} />
-      <Route path="/profile/:username" element={<Profile />} />
-      <Route path="/bans" element={<Bans />} />
-      <Route path="/store" element={<Store />} />
-      <Route path="/policy" element={<PolicyPage />} />
-    </Routes>
+      )}
 
-        {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/profile' && (
+      <Routes>
+        <Route path="/" element={
           <>
-            <Footer />
+            <Hero />
+            <Slider />
           </>
-        )}  
-        <Banner />
-      </>
-    );
-  }
+        } />
+        <Route path="/register" element={<Registers />} />
+        <Route path="/staff" element={<Staff />} />
+        <Route path="/login" element={<Logins />} />
+        <Route path="/confirm" element={<Confirm />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/reset-password-confirm" element={<ResetPasswordConfirm />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/:category" element={<Forum />} />
+        <Route path="/forum/:category/:sub" element={<Forum />} />
+        <Route path="/forum/:category/:sub/:postId" element={<Forum />} />
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/policy" element={<PolicyPage />} />
+      </Routes>
 
-  export default App;
+      {location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/profile' && (
+        <>
+          <Footer />
+        </>
+      )}
+      <Banner />
+    </>
+  );
+}
+
+export default App;
