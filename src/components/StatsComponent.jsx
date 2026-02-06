@@ -125,117 +125,117 @@ const StatsComponent = () => {
                             <div style={{ fontSize: '3.5rem', fontWeight: '900', color: 'var(--primary)' }}>
                                 #{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}
                             </div>
-                            <div style={{ color: var(--text-dim), fontSize: '0.9rem', marginTop: '5px' }}>Classifica globale</div>
-                    </div>
+                            <div style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginTop: '5px' }}>Classifica globale</div>
+                        </div>
 
-                    <div className="panel-card">
-                        <div className="panel-title"><Trophy size={20} color="var(--primary)" /> Win Rate</div>
-                        <div className="wr-flex">
-                            <div className="wr-chart-mini">
-                                <svg viewBox="0 0 36 36">
-                                    <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path className="circle-fill" strokeDasharray={`${winRate}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.35" className="wr-text">{winRate.toFixed(1)}%</text>
-                                </svg>
-                            </div>
-                            <div className="wr-legend">
-                                <div className="legend-item">
-                                    <div className="legend-row"><span>Vittorie</span><span>{formatNumber(selectedPlayer.wins)}</span></div>
-                                    <div className="wl-progress-track"><div className="wl-progress-fill" style={{ width: `${winRate}%` }}></div></div>
+                        <div className="panel-card">
+                            <div className="panel-title"><Trophy size={20} color="var(--primary)" /> Win Rate</div>
+                            <div className="wr-flex">
+                                <div className="wr-chart-mini">
+                                    <svg viewBox="0 0 36 36">
+                                        <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path className="circle-fill" strokeDasharray={`${winRate}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" className="wr-text">{winRate.toFixed(1)}%</text>
+                                    </svg>
                                 </div>
-                                <div className="legend-item">
-                                    <div className="legend-row"><span>Sconfitte</span><span>{formatNumber(selectedPlayer.losses)}</span></div>
-                                    <div className="wl-progress-track" style={{ background: '#15253a' }}><div className="wl-progress-fill" style={{ width: `${100 - winRate}%`, background: 'var(--loss-color)' }}></div></div>
+                                <div className="wr-legend">
+                                    <div className="legend-item">
+                                        <div className="legend-row"><span>Vittorie</span><span>{formatNumber(selectedPlayer.wins)}</span></div>
+                                        <div className="wl-progress-track"><div className="wl-progress-fill" style={{ width: `${winPercent}%` }}></div></div>
+                                    </div>
+                                    <div className="legend-item">
+                                        <div className="legend-row"><span>Sconfitte</span><span>{formatNumber(selectedPlayer.losses)}</span></div>
+                                        <div className="wl-progress-track" style={{ background: '#15253a' }}><div className="wl-progress-fill" style={{ width: `${100 - winPercent}%`, background: 'var(--loss-color)' }}></div></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
-                    <button className="guarda-partite-btn-coral" onClick={() => fetchPlayerDetail(selectedPlayer.uuid)}>
-                        VEDI CRONOLOGIA MATCH
-                    </button>
+                    <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
+                        <button className="guarda-partite-btn-coral" onClick={() => fetchPlayerDetail(selectedPlayer.uuid)}>
+                            VEDI CRONOLOGIA MATCH
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div >
         );
     }
 
-return (
-    <div className="stats-page-wrapper">
-        <div className="stats-container">
-            <div className="stats-header-top">
-                <span className="update-status">Ultimo aggiornamento: pochi secondi fa</span>
-                <div className="pagination-mini">
-                    <button className="page-btn active">1</button>
-                    <button className="page-btn">2</button>
-                    <button className="page-btn">3</button>
+    return (
+        <div className="stats-page-wrapper">
+            <div className="stats-container">
+                <div className="stats-header-top">
+                    <span className="update-status">Ultimo aggiornamento: pochi secondi fa</span>
+                    <div className="pagination-mini">
+                        <button className="page-btn active">1</button>
+                        <button className="page-btn">2</button>
+                        <button className="page-btn">3</button>
+                    </div>
                 </div>
-            </div>
 
-            <div className="search-container" style={{ marginBottom: '2rem' }}>
-                <div className="search-box-coral">
-                    <Search size={18} color="var(--primary)" />
-                    <input
-                        placeholder="Cerca un utente..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                <div className="search-container" style={{ marginBottom: '2rem' }}>
+                    <div className="search-box-coral">
+                        <Search size={18} color="var(--primary)" />
+                        <input
+                            placeholder="Cerca un utente..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="leaderboard-card">
-                <table className="stats-table">
-                    <thead>
-                        <tr>
-                            <th style={{ width: '80px' }}>Rank</th>
-                            <th>Nome Utente</th>
-                            <th style={{ width: '120px' }}>Global Elo</th>
-                            <th style={{ width: '100px' }}>Vittorie</th>
-                            <th style={{ width: '100px' }}>Sconfitte</th>
-                            <th style={{ width: '180px' }}>W/L Ratio</th>
-                            <th style={{ width: '100px' }}>Livello</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? (
-                            <tr><td colSpan="7" className="loading-state">CARICAMENTO DATI...</td></tr>
-                        ) : filteredStats.map((player, index) => (
-                            <tr key={player.uuid} onClick={() => fetchPlayerDetail(player.uuid)}>
-                                <td>
-                                    <div className={`player-rank-icon ${getRankClass(index)}`}>
-                                        {index + 1}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="player-cell">
-                                        <div className="player-img-wrapper">
-                                            <img src={`https://mc-heads.net/avatar/${player.name}/32`} className="player-head-img" alt="h" />
+                <div className="leaderboard-card">
+                    <table className="stats-table">
+                        <thead>
+                            <tr>
+                                <th style={{ width: '80px' }}>Rank</th>
+                                <th>Nome Utente</th>
+                                <th style={{ width: '120px' }}>Global Elo</th>
+                                <th style={{ width: '100px' }}>Vittorie</th>
+                                <th style={{ width: '100px' }}>Sconfitte</th>
+                                <th style={{ width: '180px' }}>W/L Ratio</th>
+                                <th style={{ width: '100px' }}>Livello</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loading ? (
+                                <tr><td colSpan="7" className="loading-state">CARICAMENTO DATI...</td></tr>
+                            ) : filteredStats.map((player, index) => (
+                                <tr key={player.uuid} onClick={() => fetchPlayerDetail(player.uuid)}>
+                                    <td>
+                                        <div className={`player-rank-icon ${getRankClass(index)}`}>
+                                            {index + 1}
                                         </div>
-                                        <div className="player-name-wrapper">
-                                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                <span className="player-name-text">{player.name}</span>
-                                                <span className="player-level-badge">{player.level || 0}</span>
+                                    </td>
+                                    <td>
+                                        <div className="player-cell">
+                                            <div className="player-img-wrapper">
+                                                <img src={`https://mc-heads.net/avatar/${player.name}/32`} className="player-head-img" alt="h" />
+                                            </div>
+                                            <div className="player-name-wrapper">
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <span className="player-name-text">{player.name}</span>
+                                                    <span className="player-level-badge">{player.level || 0}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.globalElo)}</td>
-                                <td>{formatNumber(player.wins)}</td>
-                                <td>{formatNumber(player.losses)}</td>
-                                <td>
-                                    <ProgressBar wins={player.wins} losses={player.losses} />
-                                </td>
-                                <td style={{ fontWeight: '800' }}>{player.level || 0}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                    </td>
+                                    <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.globalElo)}</td>
+                                    <td>{formatNumber(player.wins)}</td>
+                                    <td>{formatNumber(player.losses)}</td>
+                                    <td>
+                                        <ProgressBar wins={player.wins} losses={player.losses} />
+                                    </td>
+                                    <td style={{ fontWeight: '800' }}>{player.level || 0}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-);
+    );
 };
 
 export default StatsComponent;
