@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../style/nav.css';
-import { LayoutDashboard, MessageCircle, ShoppingCart, Users, ShieldBan, Menu, X } from 'lucide-react';
+import { LayoutDashboard, MessageCircle, ShoppingCart, Users, Trophy, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function Nav() {
@@ -82,10 +82,10 @@ function Nav() {
             </a>
           </li>
           <li
-            onClick={() => handleNavClick('/bans')}
-            className={isActive('/bans') ? 'active' : ''}
+            onClick={() => handleNavClick('/stats')}
+            className={isActive('/stats') ? 'active' : ''}
           >
-            <ShieldBan /> Bans
+            <Trophy /> Stats
           </li>
         </ul>
       </nav>
