@@ -14,7 +14,7 @@ const StatsComponent = () => {
 
     const fetchStats = async () => {
         try {
-            const response = await axios.get('http://api.ximi.lol/stats');
+            const response = await axios.get('https://api.ximi.lol/stats');
             setStats(response.data);
             setLoading(false);
         } catch (error) {
@@ -86,3 +86,4 @@ const StatsComponent = () => {
 };
 
 export default StatsComponent;
+
