@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Search, Trophy, Skull, Crosshair, Crown } from 'lucide-react';
+import { Search } from 'lucide-react';
 import '../style/stats.css';
 
 const StatsComponent = () => {
@@ -34,74 +34,78 @@ const StatsComponent = () => {
         return (
             <div className="stats-container detail-view">
                 <button className="back-button" onClick={() => setSelectedPlayer(null)}>
-                    ← Torna alle classifiche
+                    Back to Leaderboards
                 </button>
 
                 <div className="profile-hero">
-                    <div className="hero-avatar">
+                    <div className="hero-body-render">
                         <img
-                            src={`https://mc-heads.net/avatar/${selectedPlayer.uuid}/100`}
+                            src={`https://mc-heads.net/body/${selectedPlayer.name || 'steve'}`}
                             alt={selectedPlayer.name}
                         />
                     </div>
                     <div className="hero-info">
                         <h2>{selectedPlayer.name || 'Unknown'}</h2>
-                        <div className="badges">
-                            <span className="badge staff">Staff</span>
+                        <div className="player-rank-tag">Default</div>
+                    </div>
+                </div>
+
+                <div className="stats-section">
+                    <div className="section-label">General Info</div>
+                    <div className="info-grid">
+                        <div className="info-row">
+                            <span className="info-label">Current Level</span>
+                            <span className="info-value text-primary">{selectedPlayer.level || 0}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">Global Rank</span>
+                            <span className="info-value">#{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">Total Coins</span>
+                            <span className="info-value">{selectedPlayer.coins || 0}</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="stats-grid">
-                    <div className="stat-card">
-                        <div className="stat-icon"><Crosshair size={20} /></div>
-                        <div className="stat-label">Global Elo</div>
-                        <div className="stat-value">{selectedPlayer.globalElo}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-icon"><Trophy size={20} /></div>
-                        <div className="stat-label">WinStreak</div>
-                        <div className="stat-value">{selectedPlayer.currentWinStreak}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-icon"><Crown size={20} /></div>
-                        <div className="stat-label">Matches</div>
-                        <div className="stat-value">{selectedPlayer.matchesPlayed}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-icon"><Skull size={20} /></div>
-                        <div className="stat-label">Coins</div>
-                        <div className="stat-value">{selectedPlayer.coins || 0}</div>
-                    </div>
-                </div>
-
-                <div className="bottom-row">
-                    <div className="level-card">
-                        <div className="level-header">
-                            <Crown size={20} /> Livello {selectedPlayer.level || 0}
-                        </div>
-                        <div className="level-info">
-                            <div className="global-rank">#{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}</div>
-                            <div className="rank-label">Classifica globale</div>
-                        </div>
-                    </div>
-
-                    <div className="win-rate-card">
-                        <div className="card-header">Win rate</div>
-                        <div className="win-rate-content">
-                            <div className="rate-circle">
-                                <svg viewBox="0 0 36 36" className="circular-chart">
-                                    <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path className="circle" strokeDasharray={`${Math.min(winRate, 100)}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <text x="18" y="20.35" className="percentage">{winRate.toFixed(1)}%</text>
-                                </svg>
-                            </div>
-                            <div className="rate-details">
-                                <div className="rate-item">
-                                    <span className="dot win"></span> Wins: {selectedPlayer.wins || 0}
+                <div className="stats-section">
+                    <div className="section-label">Practice Statistics</div>
+                    <div className="gamemodes-grid">
+                        <div className="gamemode-card">
+                            <div className="card-title-bar">Overall</div>
+                            <div className="card-body">
+                                <div className="card-stat-row">
+                                    <span className="row-label">Global Elo</span>
+                                    <span className="row-value">{selectedPlayer.globalElo}</span>
                                 </div>
-                                <div className="rate-item">
-                                    <span className="dot loss"></span> Losses: {selectedPlayer.losses || 0}
+                                <div className="card-stat-row">
+                                    <span className="row-label">Wins</span>
+                                    <span className="row-value">{selectedPlayer.wins || 0}</span>
+                                </div>
+                                <div className="card-stat-row">
+                                    <span className="row-label">Losses</span>
+                                    <span className="row-value">{selectedPlayer.losses || 0}</span>
+                                </div>
+                                <div className="card-stat-row">
+                                    <span className="row-label">Current Streak</span>
+                                    <span className="row-value">{selectedPlayer.currentWinStreak}</span>
+                                </div>
+                            </div>
+                            <div className="card-footer-rate">
+                                {winRate.toFixed(2)}% WIN RATE
+                            </div>
+                        </div>
+
+                        <div className="gamemode-card">
+                            <div className="card-title-bar">Matches</div>
+                            <div className="card-body">
+                                <div className="card-stat-row">
+                                    <span className="row-label">Total Played</span>
+                                    <span className="row-value">{selectedPlayer.matchesPlayed}</span>
+                                </div>
+                                <div className="card-stat-row">
+                                    <span className="row-label">W/L Ratio</span>
+                                    <span className="row-value">{((selectedPlayer.wins || 0) / Math.max(selectedPlayer.losses || 0, 1)).toFixed(2)}</span>
                                 </div>
                             </div>
                         </div>
@@ -114,12 +118,12 @@ const StatsComponent = () => {
     return (
         <div className="stats-container">
             <div className="stats-header">
-                <h1>Server Statistics</h1>
+                <h1>Leaderboards</h1>
                 <div className="search-bar">
-                    <Search size={20} />
+                    <Search size={20} color="#777" />
                     <input
                         type="text"
-                        placeholder="Search player..."
+                        placeholder="Search for a player..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -133,10 +137,10 @@ const StatsComponent = () => {
                     <table className="stats-table">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th className="rank-cell">#</th>
                                 <th>Player</th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Crown size={16} /> Global Elo</div></th>
-                                <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Trophy size={16} /> Streak</div></th>
+                                <th>Elo</th>
+                                <th>Streak</th>
                                 <th>Wins</th>
                                 <th>Losses</th>
                                 <th>W/L</th>
@@ -147,17 +151,17 @@ const StatsComponent = () => {
                         </thead>
                         <tbody>
                             {filteredStats.map((player, index) => (
-                                <tr key={player.uuid} onClick={() => setSelectedPlayer(player)} style={{ cursor: 'pointer' }}>
-                                    <td className={`rank-cell rank-${index + 1}`}>#{index + 1}</td>
+                                <tr key={player.uuid} onClick={() => setSelectedPlayer(player)}>
+                                    <td className="rank-cell">#{index + 1}</td>
                                     <td className="player-cell">
                                         <img
-                                            src={`https://mc-heads.net/avatar/${player.uuid}/32`}
+                                            src={`https://mc-heads.net/avatar/${player.name || 'steve'}/32`}
                                             alt={player.name}
                                             className="player-head"
                                         />
                                         {player.name || 'Unknown'}
                                     </td>
-                                    <td>{player.globalElo}</td>
+                                    <td style={{ color: 'var(--primary)', fontWeight: 'bold' }}>{player.globalElo}</td>
                                     <td>{player.currentWinStreak}</td>
                                     <td>{player.wins || 0}</td>
                                     <td>{player.losses || 0}</td>
