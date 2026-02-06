@@ -24,7 +24,7 @@ const StatsComponent = () => {
     };
 
     const filteredStats = stats.filter(player =>
-        player.name.toLowerCase().includes(searchTerm.toLowerCase())
+        (player.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -53,6 +53,9 @@ const StatsComponent = () => {
                                 <th>Player</th>
                                 <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Crown size={16} /> Global Elo</div></th>
                                 <th><div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><Trophy size={16} /> Streak</div></th>
+                                <th>Wins</th>
+                                <th>Losses</th>
+                                <th>W/L</th>
                                 <th>Matches</th>
                                 <th>Coins</th>
                                 <th>Level</th>
@@ -68,10 +71,13 @@ const StatsComponent = () => {
                                             alt={player.name}
                                             className="player-head"
                                         />
-                                        {player.name}
+                                        {player.name || 'Unknown'}
                                     </td>
                                     <td>{player.globalElo}</td>
                                     <td>{player.currentWinStreak}</td>
+                                    <td>{player.wins || 0}</td>
+                                    <td>{player.losses || 0}</td>
+                                    <td>{((player.wins || 0) / Math.max(player.losses || 0, 1)).toFixed(2)}</td>
                                     <td>{player.matchesPlayed}</td>
                                     <td>{player.coins || 0}</td>
                                     <td>{player.level || 0}</td>
@@ -86,4 +92,3 @@ const StatsComponent = () => {
 };
 
 export default StatsComponent;
-
