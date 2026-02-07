@@ -50,6 +50,24 @@ const StatsComponent = () => {
         (player.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const getRankDisplay = (rank = 'Default') => {
+        const r = rank.toLowerCase();
+        if (r === 'owner') return 'OWNER';
+        if (r === 'manager') return 'MANAGER';
+        if (r === 'sradmin') return 'SR-ADMIN';
+        if (r === 'admin') return 'ADMIN';
+        if (r === 'srmod') return 'SR-MOD';
+        if (r === 'mod') return 'MOD';
+        if (r === 'trialmod' || r === 't-mod') return 'TRIAL-MOD';
+        return r.toUpperCase();
+    };
+
+    const getRankBadgeClass = (rank = 'default') => {
+        const r = rank.toLowerCase();
+        if (r === 't-mod') return 'rank-trialmod';
+        return `rank-${r}`;
+    };
+
     const getRankClass = (index) => {
         if (index === 0) return 'top-1';
         if (index === 1) return 'top-2';
@@ -150,9 +168,9 @@ const StatsComponent = () => {
                                 <div className="online-dot"></div>
                                 <h2>{selectedPlayer.name}</h2>
                             </div>
-                            <div className="profile-rank-tag">
-                                {selectedPlayer.isStaff && <MousePointer2 size={14} />}
-                                {selectedPlayer.rank || 'PLAYER'}
+                            <div className={`rank-badge ${getRankBadgeClass(selectedPlayer.rank)}`}>
+                                {selectedPlayer.isStaff && <MousePointer2 size={12} style={{ marginRight: '4px' }} />}
+                                {getRankDisplay(selectedPlayer.rank)}
                             </div>
                         </div>
                         <div style={{ marginLeft: 'auto', color: 'var(--text-dim)', fontSize: '0.85rem' }}>
@@ -174,7 +192,7 @@ const StatsComponent = () => {
                         <KitPvPStatsGrid player={selectedPlayer.kitpvp} />
                     </div>
 
-                    <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
+                    <div style={{ marginTop: '3.5rem', textAlign: 'center' }}>
                         <button className="guarda-partite-btn-coral" onClick={() => setView('leaderboard')}>
                             CHIUDI SCHEDA PLAYER
                         </button>
@@ -269,7 +287,10 @@ const StatsComponent = () => {
                                                 <img src={`https://mc-heads.net/avatar/${player.name}/32`} className="player-head-img" alt="h" />
                                             </div>
                                             <div className="player-name-wrapper">
-                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span className={`rank-badge ${getRankBadgeClass(player.rank)}`}>
+                                                        {getRankDisplay(player.rank)}
+                                                    </span>
                                                     <span className="player-name-text">{player.name}</span>
                                                     {mode === 'practice' && <span className="player-level-badge">{player.level || 0}</span>}
                                                 </div>
