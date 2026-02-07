@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ReplyBlock from './reply';
 import { useParams, useNavigate } from 'react-router-dom';
+import { MessageSquare, MessageCircle, Info, Shield, Bell, HelpCircle, FileText, Swords, ShieldCheck, Flag, Users, MoreHorizontal, User, Calendar, List, MessageSquareText } from 'lucide-react';
 
 export default function ForumPage({ user = null }) {
   const [selectedPost, setSelectedPost] = useState(null);
@@ -25,9 +26,14 @@ export default function ForumPage({ user = null }) {
     'supporto': 'assistenza',
     'aiuto-generale': 'assistenza',
     'supporto-tecnico': 'assistenza',
+    'supporto minecraft': 'assistenza',
+    'supporto web': 'assistenza',
+    'supporto discord': 'assistenza',
     'candidature': 'candidature',
     'staff': 'candidature',
     'builder': 'candidature',
+    'candidatura staff': 'candidature',
+    'candidatura builder': 'candidature',
     'SS': 'candidature',
     'kitpvp': 'modalita',
     'practice': 'modalita',
@@ -43,37 +49,63 @@ export default function ForumPage({ user = null }) {
   };
 
   const subCategoriesMap = {
-    novita: [
-      { key: 'regolamento', label: 'Regolamento' },
-      { key: 'novita', label: 'Novità' },
-      { key: 'annunci', label: 'Annunci' },
-      { key: 'eventi', label: 'Eventi' }
-    ],
-    assistenza: [
-      { key: 'supporto minecraft', label: 'Supporto Modalità' },
-      { key: 'supporto web', label: 'Supporto Sito Web' },
-      { key: 'supporto discord', label: 'Supporto Discord' }
-    ],
-    candidature: [
-      { key: 'candidatura staff', label: 'Staff' },
-      { key: 'candidatura ss', label: 'SS' },
-      { key: 'candidatura developer', label: 'developer' },
-      { key: 'candidatura builder', label: 'Builder' },
-      { key: 'candidatura social', label: 'Social' }
-    ],
-    modalita: [
-      { key: 'kitpvp', label: 'KitPvP' },
-      { key: 'practice', label: 'Practice' },
-      { key: 'speedbridge', label: 'Speedbridge' }
-    ],
-    segnalazioni: [
-      { key: 'player-report', label: 'Segnalazione giocatore' },
-      { key: 'bug-report', label: 'Segnalazione bug' }
-    ],
-    altri: [
-      { key: 'off-topic', label: 'Off-topic' },
-      { key: 'altro', label: 'Altro' }
-    ]
+    novita: {
+      label: 'Amministrazione Server & Regolamenti',
+      description: 'Informazioni riguardo aggiornamenti relativi alle varie modalità di XimiPVP, eventi e tornei!',
+      icon: <List size={22} />,
+      subs: [
+        { key: 'annunci', label: 'News & Annunci', desc: 'Tutte le novità principali del server.', icon: <MessageSquare size={20} /> },
+        { key: 'regolamento', label: 'Regolamenti & Informazioni', desc: 'Leggi attentamente per non ricevere sanzioni.', icon: <MessageSquare size={20} /> },
+        { key: 'eventi', label: 'Eventi', desc: 'Rimani aggiornato su tutte le attività extra.', icon: <MessageSquare size={20} /> }
+      ]
+    },
+    modalita: {
+      label: 'Modalità',
+      description: 'Discussioni specifiche per ogni modalità di gioco disponibile.',
+      icon: <List size={22} />,
+      subs: [
+        { key: 'kitpvp', label: 'KitPvP', desc: 'Discussioni riguardo la modalità KitPvP.', icon: <Swords size={20} /> },
+        { key: 'practice', label: 'Practice', desc: 'Discussioni riguardo la modalità Practice.', icon: <Shield size={20} /> },
+        { key: 'speedbridge', label: 'Speedbridge', desc: 'Discussioni riguardo la modalità Speedbridge.', icon: <Shield size={20} /> }
+      ]
+    },
+    assistenza: {
+      label: 'Assistenza',
+      description: 'Apri una segnalazione o richiedi assistenza specifica.',
+      icon: <HelpCircle size={22} />,
+      subs: [
+        { key: 'supporto minecraft', label: 'Supporto Minecraft', desc: 'Aiuto in-game per problemi tecnici.', icon: <HelpCircle size={20} /> },
+        { key: 'supporto web', label: 'Supporto Sito Web', desc: 'Assistenza per il forum e il sito.', icon: <HelpCircle size={20} /> },
+        { key: 'supporto discord', label: 'Supporto Discord', desc: 'Assistenza per il nostro server Discord.', icon: <HelpCircle size={20} /> }
+      ]
+    },
+    candidature: {
+      label: 'Candidature',
+      description: 'Entra a far parte dello staff di XimiPVP.',
+      icon: <Users size={22} />,
+      subs: [
+        { key: 'candidatura staff', label: 'Staff Candidature', desc: 'Proponiti come Helper/Mod.', icon: <User size={20} /> },
+        { key: 'candidatura builder', label: 'Builder Candidature', desc: 'Proponiti per il team building.', icon: <User size={20} /> }
+      ]
+    },
+    segnalazioni: {
+      label: 'Segnalazioni',
+      description: 'Segnala bug o utenti molesti del server.',
+      icon: <Flag size={22} />,
+      subs: [
+        { key: 'player-report', label: 'Segnalazione Giocatori', desc: 'Segnala chi non rispetta le regole.', icon: <Flag size={20} /> },
+        { key: 'bug-report', label: 'Segnalazione Bug', desc: 'Aiutaci a migliorare il server.', icon: <Flag size={20} /> }
+      ]
+    },
+    altri: {
+      label: 'Zona Social',
+      description: 'Discussioni generali non legate direttamente al gioco.',
+      icon: <MoreHorizontal size={22} />,
+      subs: [
+        { key: 'off-topic', label: 'Off-topic', desc: 'Discussioni libere di ogni genere.', icon: <MessageCircle size={20} /> },
+        { key: 'altro', label: 'Altro', desc: 'Qualsiasi altra cosa!', icon: <MessageCircle size={20} /> }
+      ]
+    }
   };
 
   useEffect(() => {
@@ -246,35 +278,86 @@ export default function ForumPage({ user = null }) {
     }
   };
 
+  const getLatestPost = (catKey, subKey) => {
+    const posts = categories[catKey]?.posts || [];
+    const subPosts = posts.filter(p => p.tags.includes(subKey));
+    if (subPosts.length === 0) return null;
+    return subPosts.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
+  };
+
+  const getSubStats = (catKey, subKey) => {
+    const posts = categories[catKey]?.posts || [];
+    const subPosts = posts.filter(p => p.tags.includes(subKey));
+    return {
+      disc: subPosts.length,
+      msgs: subPosts.length // In a real scenario we'd count replies, but here we estimate
+    };
+  };
+
   return (
-    <div className="Forum XimiPVP">
+    <div className="Forum-Coral-Wrapper">
       {!selectedSubCategory && !selectedPost ? (
-        <div className="categories-vertical">
-          <h1 className="title">Forum XimiPVP</h1>
-          {Object.entries(categories).map(([catKey, catData]) => (
-            <div className="category-row" key={catKey}>
-              <h2>{catKey.charAt(0).toUpperCase() + catKey.slice(1)}</h2>
-              <div className="category-stats">
-                <span>Discussioni: {catData.stats.total}</span>
-                {catData.stats.resolved !== undefined && <></>}
+        <div className="categories-vertical-panel">
+          {Object.entries(subCategoriesMap).map(([catKey, catData]) => (
+            <div className="category-panel" key={catKey}>
+              <div className="category-panel-header">
+                <div className="cat-icon-box">{catData.icon}</div>
+                <div className="cat-header-text">
+                  <h2>{catData.label}</h2>
+                  <p>{catData.description}</p>
+                </div>
               </div>
-              {subCategoriesMap[catKey] && (
-                <div className="subcategories">
-                  {subCategoriesMap[catKey].map(sub => (
+
+              <div className="sub-rows-container">
+                {catData.subs.map(sub => {
+                  const stats = getSubStats(catKey, sub.key);
+                  const latest = getLatestPost(catKey, sub.key);
+
+                  return (
                     <div
                       key={sub.key}
-                      className="subcategory-item"
+                      className="forum-row"
                       onClick={() => {
                         setSelectedCategory(catKey);
                         setSelectedSubCategory(sub.key);
                         navigate(`/forum/${catKey}/${encodeURIComponent(sub.key)}`);
                       }}
                     >
-                      {sub.label}
+                      <div className="row-main-col">
+                        <div className="row-icon-side">{sub.icon}</div>
+                        <div className="row-text-side">
+                          <h3>{sub.label}</h3>
+                          <p>{sub.desc}</p>
+                        </div>
+                      </div>
+
+                      <div className="row-stats-col">
+                        <div className="stat-item">
+                          <span className="stat-label">Discussioni</span>
+                          <span className="stat-value">{stats.disc}</span>
+                        </div>
+                        <div className="stat-item">
+                          <span className="stat-label">Messaggi</span>
+                          <span className="stat-value">{stats.msgs}</span>
+                        </div>
+                      </div>
+
+                      <div className="row-latest-col">
+                        {latest ? (
+                          <div className="latest-post-box">
+                            <span className="latest-title">{latest.title.length > 30 ? latest.title.slice(0, 30) + '...' : latest.title}</span>
+                            <span className="latest-meta">
+                              {latest.timestamp.split(',')[0]} • <span className="author">{latest.author}</span>
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="no-latest">Nessun messaggio</span>
+                        )}
+                      </div>
                     </div>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
