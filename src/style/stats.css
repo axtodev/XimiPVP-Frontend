@@ -1,3 +1,55 @@
+/* Rank Styles */
+.rank-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #fff !important;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rank-owner,
+.rank-manager {
+    background: #8b0000 !important;
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.4);
+}
+
+.rank-admin,
+.rank-sradmin {
+    background: #ff4d4d !important;
+}
+
+.rank-srmod {
+    background: #008b8b !important;
+}
+
+.rank-mod {
+    background: #800080 !important;
+}
+
+.rank-trialmod {
+    background: #ffd700 !important;
+    color: #333 !important;
+}
+
+.rank-default {
+    background: #7f8c8d !important;
+}
+
+.rank-vip,
+.rank-vip-plus {
+    background: #00aaff !important;
+}
+
+.rank-mvp,
+.rank-mvp-plus {
+    background: #00ffff !important;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
 /* Mode Selection Styles */
