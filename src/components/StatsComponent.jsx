@@ -168,10 +168,7 @@ const StatsComponent = () => {
                                 <div className="online-dot"></div>
                                 <h2>{selectedPlayer.name}</h2>
                             </div>
-                            <div className={`rank-badge ${getRankBadgeClass(selectedPlayer.rank)}`}>
-                                {selectedPlayer.isStaff && <MousePointer2 size={12} style={{ marginRight: '4px' }} />}
-                                {getRankDisplay(selectedPlayer.rank)}
-                            </div>
+                            {/* Rank removed as requested */}
                         </div>
                         <div style={{ marginLeft: 'auto', color: 'var(--text-dim)', fontSize: '0.85rem' }}>
                             <Calendar size={14} style={{ marginRight: '5px' }} /> Entrato il: <b>{joinedDate}</b>
@@ -288,9 +285,7 @@ const StatsComponent = () => {
                                             </div>
                                             <div className="player-name-wrapper">
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span className={`rank-badge ${getRankBadgeClass(player.rank)}`}>
-                                                        {getRankDisplay(player.rank)}
-                                                    </span>
+                                                    {/* Rank removed as requested */}
                                                     <span className="player-name-text">{player.name}</span>
                                                     {mode === 'practice' && <span className="player-level-badge">{player.level || 0}</span>}
                                                 </div>
