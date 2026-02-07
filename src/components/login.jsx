@@ -74,7 +74,7 @@ function Login({ onLoginSuccess }) {
             />
             <Lock size={20} />
           </div>
-          <button type="submit">Accedi al Portale</button>
+          <button type="submit">Accedi</button>
 
           <div className="forgot-password-link">
             <a href="/reset-password">Hai dimenticato la password?</a>
