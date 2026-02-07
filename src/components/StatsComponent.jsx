@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Search, ArrowLeft, Share2, Calendar, Trophy, Skull, Crosshair, Crown, MousePointer2 } from 'lucide-react';
+import { Search, ArrowLeft, Share2, Calendar, Trophy, Skull, Crosshair, Crown, MousePointer2, Sword, Shield, Target, Flame } from 'lucide-react';
 import '../style/stats.css';
 
 const StatsComponent = () => {
@@ -9,16 +9,18 @@ const StatsComponent = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const [view, setView] = useState('leaderboard');
-    const [selectedMatch, setSelectedMatch] = useState(null);
+    const [mode, setMode] = useState('practice');
 
     useEffect(() => {
-        fetchStats();
-    }, []);
+        if (view === 'leaderboard') {
+            fetchStats();
+        }
+    }, [mode, view]);
 
     const fetchStats = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('https://api.ximi.lol/stats');
+            const response = await axios.get(`https://api.ximi.lol/stats?mode=${mode}`);
             setStats(response.data || []);
             setLoading(false);
         } catch (error) {
@@ -44,11 +46,10 @@ const StatsComponent = () => {
         return (num || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
 
-    const filteredStats = stats.filter(player =>
+    const filteredStats = (stats || []).filter(player =>
         (player.name || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Render Helpers
     const getRankClass = (index) => {
         if (index === 0) return 'top-1';
         if (index === 1) return 'top-2';
@@ -69,9 +70,68 @@ const StatsComponent = () => {
         );
     };
 
+    const PracticeStatsGrid = ({ player }) => {
+        if (!player) return <div className="no-data-msg">Nessun dato Practice trovato</div>;
+        return (
+            <div className="stats-grid-coral">
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Crosshair size={14} /> Global Elo</div>
+                    <div className="stat-card-value">{formatNumber(player.globalElo)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Trophy size={14} /> Vittorie</div>
+                    <div className="stat-card-value">{formatNumber(player.wins)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Skull size={14} /> Sconfitte</div>
+                    <div className="stat-card-value">{formatNumber(player.losses)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Crown size={14} /> Winstreak</div>
+                    <div className="stat-card-value">{formatNumber(player.currentWinStreak)}</div>
+                </div>
+            </div>
+        );
+    };
+
+    const KitPvPStatsGrid = ({ player }) => {
+        if (!player) return <div className="no-data-msg">Nessun dato KitPvP trovato</div>;
+        const kd = player.deaths > 0 ? (player.kills / player.deaths).toFixed(2) : (player.kills || 0).toFixed(2);
+        return (
+            <div className="stats-grid-coral">
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Sword size={14} /> Uccisioni</div>
+                    <div className="stat-card-value">{formatNumber(player.kills)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Skull size={14} /> Morti</div>
+                    <div className="stat-card-value">{formatNumber(player.deaths)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Target size={14} /> Rapporto K/D</div>
+                    <div className="stat-card-value">{kd}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Flame size={14} /> Killstreak</div>
+                    <div className="stat-card-value">{formatNumber(player.killstreak)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Crown size={14} /> Killstreak Massima</div>
+                    <div className="stat-card-value">{formatNumber(player.maxKillstreak)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Trophy size={14} /> Taglia Attuale</div>
+                    <div className="stat-card-value">{formatNumber(player.bounty)}</div>
+                </div>
+                <div className="stat-card-clean">
+                    <div className="stat-card-header"><Target size={14} /> Taglia Massima</div>
+                    <div className="stat-card-value">{formatNumber(player.maxBounty)}</div>
+                </div>
+            </div>
+        );
+    };
+
     if (view === 'detail' && selectedPlayer) {
-        const total = (selectedPlayer.wins || 0) + (selectedPlayer.losses || 0);
-        const winRate = total > 0 ? ((selectedPlayer.wins || 0) / total * 100) : 0;
         const joinedDate = selectedPlayer.firstLogin ? new Date(selectedPlayer.firstLogin).toLocaleDateString('it-IT') : 'Recente';
 
         return (
@@ -100,61 +160,23 @@ const StatsComponent = () => {
                         </div>
                     </div>
 
-                    <div className="stats-grid-coral">
-                        <div className="stat-card-clean">
-                            <div className="stat-card-header"><Crosshair size={14} /> Global Elo</div>
-                            <div className="stat-card-value highlight">{formatNumber(selectedPlayer.globalElo)}</div>
+                    <div className="stats-section-container">
+                        <div className="section-divider">
+                            <div className="section-icon"><Shield size={20} /></div>
+                            <h2>Statistiche Practice</h2>
                         </div>
-                        <div className="stat-card-clean">
-                            <div className="stat-card-header"><Trophy size={14} /> Vittorie</div>
-                            <div className="stat-card-value">{formatNumber(selectedPlayer.wins)}</div>
-                        </div>
-                        <div className="stat-card-clean">
-                            <div className="stat-card-header"><Skull size={14} /> Sconfitte</div>
-                            <div className="stat-card-value">{formatNumber(selectedPlayer.losses)}</div>
-                        </div>
-                        <div className="stat-card-clean">
-                            <div className="stat-card-header"><Crown size={14} /> Winstreak</div>
-                            <div className="stat-card-value">{formatNumber(selectedPlayer.currentWinStreak)}</div>
-                        </div>
-                    </div>
+                        <PracticeStatsGrid player={selectedPlayer.practice} />
 
-                    <div className="bottom-panels">
-                        <div className="panel-card">
-                            <div className="panel-title"><Crown size={20} color="var(--primary)" /> Livello Player</div>
-                            <div style={{ fontSize: '3.5rem', fontWeight: '900', color: 'var(--primary)' }}>
-                                #{stats.findIndex(p => p.uuid === selectedPlayer.uuid) + 1}
-                            </div>
-                            <div style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginTop: '5px' }}>Classifica globale</div>
+                        <div className="section-divider">
+                            <div className="section-icon"><Sword size={20} /></div>
+                            <h2>Statistiche KitPvP</h2>
                         </div>
-
-                        <div className="panel-card">
-                            <div className="panel-title"><Trophy size={20} color="var(--primary)" /> Win Rate</div>
-                            <div className="wr-flex">
-                                <div className="wr-chart-mini">
-                                    <svg viewBox="0 0 36 36">
-                                        <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                        <path className="circle-fill" strokeDasharray={`${winRate}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                        <text x="18" y="20.35" className="wr-text">{winRate.toFixed(1)}%</text>
-                                    </svg>
-                                </div>
-                                <div className="wr-legend">
-                                    <div className="legend-item">
-                                        <div className="legend-row"><span>Vittorie</span><span>{formatNumber(selectedPlayer.wins)}</span></div>
-                                        <div className="wl-progress-track"><div className="wl-progress-fill" style={{ width: `${winRate}%` }}></div></div>
-                                    </div>
-                                    <div className="legend-item">
-                                        <div className="legend-row"><span>Sconfitte</span><span>{formatNumber(selectedPlayer.losses)}</span></div>
-                                        <div className="wl-progress-track" style={{ background: '#15253a' }}><div className="wl-progress-fill" style={{ width: `${100 - winRate}%`, background: 'var(--loss-color)' }}></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <KitPvPStatsGrid player={selectedPlayer.kitpvp} />
                     </div>
 
                     <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
-                        <button className="guarda-partite-btn-coral" onClick={() => fetchPlayerDetail(selectedPlayer.uuid)}>
-                            VEDI CRONOLOGIA MATCH
+                        <button className="guarda-partite-btn-coral" onClick={() => setView('leaderboard')}>
+                            CHIUDI SCHEDA PLAYER
                         </button>
                     </div>
                 </div>
@@ -165,12 +187,31 @@ const StatsComponent = () => {
     return (
         <div className="stats-page-wrapper">
             <div className="stats-container">
+                <div className="mode-selection-grid">
+                    <div className={`mode-card ${mode === 'practice' ? 'active' : ''}`} onClick={() => setMode('practice')}>
+                        <div className="mode-card-header">
+                            <div className="mode-icon-box" style={{ background: mode === 'practice' ? 'var(--primary)' : '#cbd5e1' }}><Shield size={24} /></div>
+                            <h3>Practice</h3>
+                        </div>
+                        <p className="mode-card-description">
+                            Affronta duelli in diverse modalità, migliora le tue abilità e scala le classifiche globali Elo.
+                        </p>
+                    </div>
+                    <div className={`mode-card ${mode === 'kitpvp' ? 'active' : ''}`} onClick={() => setMode('kitpvp')}>
+                        <div className="mode-card-header">
+                            <div className="mode-icon-box" style={{ background: mode === 'kitpvp' ? 'var(--primary)' : '#cbd5e1' }}><Sword size={24} /></div>
+                            <h3>KitPvP</h3>
+                        </div>
+                        <p className="mode-card-description">
+                            Scegli il tuo kit, combatti nel tutti contro tutti e accumula uccisioni e taglie spettacolari.
+                        </p>
+                    </div>
+                </div>
+
                 <div className="stats-header-top">
-                    <span className="update-status">Ultimo aggiornamento: pochi secondi fa</span>
+                    <span className="update-status">Ultimo aggiornamento automatico: ora</span>
                     <div className="pagination-mini">
                         <button className="page-btn active">1</button>
-                        <button className="page-btn">2</button>
-                        <button className="page-btn">3</button>
                     </div>
                 </div>
 
@@ -178,7 +219,7 @@ const StatsComponent = () => {
                     <div className="search-box-coral">
                         <Search size={18} color="var(--primary)" />
                         <input
-                            placeholder="Cerca un utente..."
+                            placeholder="Cerca il nick di un giocatore..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -188,19 +229,33 @@ const StatsComponent = () => {
                 <div className="leaderboard-card">
                     <table className="stats-table">
                         <thead>
-                            <tr>
-                                <th style={{ width: '80px' }}>Rank</th>
-                                <th>Nome Utente</th>
-                                <th style={{ width: '120px' }}>Global Elo</th>
-                                <th style={{ width: '100px' }}>Vittorie</th>
-                                <th style={{ width: '100px' }}>Sconfitte</th>
-                                <th style={{ width: '180px' }}>W/L Ratio</th>
-                                <th style={{ width: '100px' }}>Livello</th>
-                            </tr>
+                            {mode === 'practice' ? (
+                                <tr>
+                                    <th style={{ width: '80px' }}>RANK</th>
+                                    <th>USERNAME</th>
+                                    <th style={{ width: '120px' }}>GLOBAL ELO</th>
+                                    <th style={{ width: '100px' }}>VITTORIE</th>
+                                    <th style={{ width: '100px' }}>SCONFITTE</th>
+                                    <th style={{ width: '180px' }}>W/L RATIO</th>
+                                    <th style={{ width: '100px' }}>LIVELLO</th>
+                                </tr>
+                            ) : (
+                                <tr>
+                                    <th style={{ width: '80px' }}>RANK</th>
+                                    <th>USERNAME</th>
+                                    <th style={{ width: '100px' }}>UCCISIONI</th>
+                                    <th style={{ width: '100px' }}>MORTI</th>
+                                    <th style={{ width: '80px' }}>K/D</th>
+                                    <th style={{ width: '80px' }}>STREAK</th>
+                                    <th style={{ width: '120px' }}>MAX STREAK</th>
+                                    <th style={{ width: '100px' }}>TAGLIA</th>
+                                    <th style={{ width: '120px' }}>MAX TAGLIA</th>
+                                </tr>
+                            )}
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="7" className="loading-state">CARICAMENTO DATI...</td></tr>
+                                <tr><td colSpan="9" className="loading-state">CARICAMENTO DATI IN CORSO...</td></tr>
                             ) : filteredStats.map((player, index) => (
                                 <tr key={player.uuid} onClick={() => fetchPlayerDetail(player.uuid)}>
                                     <td>
@@ -216,18 +271,32 @@ const StatsComponent = () => {
                                             <div className="player-name-wrapper">
                                                 <div style={{ display: 'flex', alignItems: 'center' }}>
                                                     <span className="player-name-text">{player.name}</span>
-                                                    <span className="player-level-badge">{player.level || 0}</span>
+                                                    {mode === 'practice' && <span className="player-level-badge">{player.level || 0}</span>}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.globalElo)}</td>
-                                    <td>{formatNumber(player.wins)}</td>
-                                    <td>{formatNumber(player.losses)}</td>
-                                    <td>
-                                        <ProgressBar wins={player.wins} losses={player.losses} />
-                                    </td>
-                                    <td style={{ fontWeight: '800' }}>{player.level || 0}</td>
+                                    {mode === 'practice' ? (
+                                        <>
+                                            <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.globalElo)}</td>
+                                            <td>{formatNumber(player.wins)}</td>
+                                            <td>{formatNumber(player.losses)}</td>
+                                            <td>
+                                                <ProgressBar wins={player.wins} losses={player.losses} />
+                                            </td>
+                                            <td style={{ fontWeight: '800' }}>{player.level || 0}</td>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.kills)}</td>
+                                            <td>{formatNumber(player.deaths)}</td>
+                                            <td>{player.deaths > 0 ? (player.kills / player.deaths).toFixed(2) : (player.kills || 0).toFixed(2)}</td>
+                                            <td style={{ fontWeight: '700' }}>{formatNumber(player.killstreak)}</td>
+                                            <td>{formatNumber(player.maxKillstreak)}</td>
+                                            <td style={{ color: 'var(--primary)', fontWeight: '800' }}>{formatNumber(player.bounty)}</td>
+                                            <td>{formatNumber(player.maxBounty)}</td>
+                                        </>
+                                    )}
                                 </tr>
                             ))}
                         </tbody>
